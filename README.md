@@ -79,3 +79,187 @@ Make sure your compiled CSS is included in the `<head>` (your framework might ha
 ```
 
 ---
+
+# Folder Structure
+
+Create a some Folder
+
+```jsx
+  - src
+    - components
+    - context
+    - pages
+    - redux
+    - firebase
+```
+
+## **Step 1 : Create a Navbar Folder**
+
+```jsx
+  - components
+  - navbar
+    - Navbar.jsx
+```
+
+```jsx
+import React from 'react'
+
+const Navbar = () => {
+  return (
+    <div>Navbar</div>
+  )
+}
+
+export default Navbar
+```
+
+## **Step 2 : Create a Footer Folder**
+
+```jsx
+  - components
+  - footer
+    - Footer.jsx
+```
+
+```jsx
+import React from 'react'
+
+function Footer() {
+  return (
+    <div>Footer</div>
+  )
+}
+
+export default Footer
+```
+
+## **Step 3 : Create a Layout Folder**
+
+```jsx
+  - components
+  - layout
+    - Layout.jsx
+```
+
+**`Layout.jsx`**
+
+```jsx
+import React from 'react'
+import Footer from '../footer/Footer'
+import Navbar from '../navbar/Navbar'
+
+function Layout({ children }) {
+  return (
+    <div>
+      <Navbar />
+      <div className="content">
+        {children}
+      </div>
+      <Footer />
+    </div>
+  )
+}
+
+export default Layout
+```
+
+## **Step 4 : Create a Page**
+
+```jsx
+  - pages
+    - home
+      - Home.jsx
+    - allproducts
+      - AllProducts.jsx
+    - Order
+      - Order.jsx
+    - cart
+      - Cart.jsx
+    - admin
+      - dashboard
+        - Dashboard.jsx
+    - nopage
+      - NoPage.jsx
+```
+
+**`Home.jsx`**
+
+```jsx
+import React from 'react'
+
+function Home() {
+  return (
+    <div>Home</div>
+  )
+}
+
+export default Home
+```
+
+## **Step 5 : Import Layout in Home.jsx**
+
+```jsx
+import React from 'react'
+import Layout from '../../components/layout/Layout'
+
+function Home() {
+  return (
+    <Layout>Home</Layout>
+  )
+}
+
+export default Home
+```
+
+## **Step 6 : Create a route of all page**
+
+### Install React router dom for routing
+
+```jsx
+npm i react-router-dom
+```
+
+### **Define routes in App.jsx**
+
+**Import `BrowserRouter as Router`, `Route`, `Routes`, from react-router-dom**
+
+```jsx
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+} from "react-router-dom";
+```
+
+## Complete Code
+
+```jsx
+import React from 'react'
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+} from "react-router-dom";
+
+import Home from './pages/home/Home';
+import Order from './pages/order/Order';
+import Cart from './pages/cart/Cart';
+import Dashboard from './pages/admin/dashboard/Dashboard';
+import NoPage from './pages/nopage/NoPage';
+
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home/>} />
+        <Route path="/order" element={<Order/>} />
+        <Route path="/cart" element={<Cart/>} />
+        <Route path="/dashboard" element={<Dashboard/>} />
+        <Route path="/*" element={<NoPage/>} />
+      </Routes>
+    </Router>
+  )
+}
+
+export default App
+```
