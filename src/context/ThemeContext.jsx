@@ -10,21 +10,32 @@ export const useTheme = () => {
 
 // ThemeProvider component to wrap the part of the app that needs theme state
 export const ThemeProvider = ({ children }) => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const savedTheme = localStorage.getItem('isDarkMode');
+  const [isDarkMode, setIsDarkMode] = useState(savedTheme === 'true');
 
   const toggleTheme = () => {
-    // Toggle the theme and update the background color
-    if (isDarkMode) {
-      document.body.style.backgroundColor = 'white'; 
-      document.body.style.color = 'black';
-
-    } else {
-      document.body.style.backgroundColor = 'black'; 
+    const newTheme = !isDarkMode;
+    if (newTheme) {
+      document.body.style.backgroundColor = 'black';
       document.body.style.color = 'white';
+    } else {
+      document.body.style.backgroundColor = 'white';
+      document.body.style.color = 'black';
     }
-    setIsDarkMode(prevMode => !prevMode); 
+
+    setIsDarkMode(newTheme);
+    localStorage.setItem('isDarkMode', newTheme);
   };
 
+  useEffect(() => {
+    if (isDarkMode) {
+      document.body.style.backgroundColor = 'black';
+      document.body.style.color = 'white';
+    } else {
+      document.body.style.backgroundColor = 'white';
+      document.body.style.color = 'black';
+    }
+  }, [isDarkMode]);
 
   return (
     <ThemeContext.Provider value={{ isDarkMode, toggleTheme }}>

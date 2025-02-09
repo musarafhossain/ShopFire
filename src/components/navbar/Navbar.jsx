@@ -60,7 +60,7 @@ const Navbar = () => {
         </Link>
 
         {/* Mode changing button */}
-        <button type='button' onClick={toggleTheme} className='cursor-pointer duration-500'>
+        <button type='button' onClick={toggleTheme} className='cursor-pointer'>
           {isDarkMode ? <FiSun size={25} /> : <IoMoonOutline size={25} />}
         </button>
         {/* User Profile Icon */}
