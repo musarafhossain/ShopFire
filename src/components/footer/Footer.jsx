@@ -54,7 +54,7 @@ const Footer = () => {
 
       {/* Footer Text */}
       <p className='text-sm text-gray-500 border-t border-[#ccc] py-4'>
-        &copy; 2025 ShopFire. All rights reserved.
+        &copy; 2025 <Link to='/' className='text-red-400 font-medium'>ShopFire</Link>. All rights reserved.
       </p>
     </footer>
   )
