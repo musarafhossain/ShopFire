@@ -14,7 +14,9 @@ const Navbar = () => {
       {/* Logo */}
       <div className='flex justify-center items-center select-none'>
         <HiMiniBars3BottomRight className='cursor-pointer md:hidden' size={25} />
-        <img src="/logo.png" alt="Logo" className='w-[170px] md:w-[200px] py-1.5 rounded-xl' />
+        <Link to='/'>
+          <img src="/logo.png" alt="Logo" className='w-[170px] md:w-[200px] py-1.5 rounded-xl' />
+        </Link>
       </div>
       
       {/* Navigation Menu */}
@@ -23,6 +25,8 @@ const Navbar = () => {
           <li><Link className='hover:text-blue-500' to="/">Home</Link></li>
           <li><Link className='hover:text-blue-500' to="/all-products">All Products</Link></li>
           <li><Link className='hover:text-blue-500' to="/order">My Orders</Link></li>
+          <li><Link className='hover:text-blue-500' to="/about-us">About Us</Link></li>
+          <li><Link className='hover:text-blue-500' to="/contact-us">Contact Us</Link></li>
         </ul>
       </nav>
       
