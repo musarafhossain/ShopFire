@@ -1,10 +1,12 @@
 import React from 'react'
 import { Link } from "react-router-dom";
 import { FaInstagram, FaFacebook, FaLinkedin, FaTwitter, FaYoutube } from "react-icons/fa";
+import { useTheme } from '../../context/ThemeContext';
 
 const Footer = () => {
+  const { isDarkMode, toggleTheme } = useTheme();
   return (
-    <footer className='bg-gray-100 text-center'>
+    <footer className={`${isDarkMode ? 'bg-[#3e3e3e]' : 'bg-gray-100'} text-center`}>
       {/* Footer Content */}
       <div className='flex justify-center flex-col lg:flex-row gap-6 py-6'>
         <div className='flex-1 px-4'>
@@ -41,21 +43,22 @@ const Footer = () => {
             </ul>
           </div>
           <div className='flex-1'>
-            <h2 className='font-semibold text-lg mb-3'>Customer Service</h2>
+            <h2 className='font-semibold text-lg mb-3'>Others</h2>
             <ul className='space-y-2'>
+              <li><Link className='hover:text-blue-500' to='/about-us'>About Us</Link></li>
+              <li><Link className='hover:text-blue-500' to='/contact-us'>Contact Us</Link></li>
               <li><Link className='hover:text-blue-500' to='/support'>Support</Link></li>
               <li><Link className='hover:text-blue-500' to='/faq'>FAQ</Link></li>
-              <li><Link className='hover:text-blue-500' to='/shipping'>Shipping Information</Link></li>
-              <li><Link className='hover:text-blue-500' to='/returns'>Returns & Exchanges</Link></li>
             </ul>
           </div>
         </div>
       </div>
 
       {/* Footer Text */}
-      <p className='text-sm text-gray-500 border-t border-[#ccc] py-4'>
-        &copy; 2025 <Link to='/' className='text-red-400 font-medium'>ShopFire</Link>. All rights reserved.
+      <p className={`text-sm border-t py-4 ${isDarkMode ? 'dark:border-gray-500 dark:text-gray-300' : 'border-[#ccc] text-gray-700'} text-center`}>
+        &copy; {new Date().getFullYear()} <Link to='/' className='text-red-400 font-medium'>ShopFire</Link>. All rights reserved.
       </p>
+
     </footer>
   )
 }

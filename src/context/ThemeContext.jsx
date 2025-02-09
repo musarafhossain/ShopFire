@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 
 // Create a Context
 const ThemeContext = createContext();
@@ -13,8 +13,18 @@ export const ThemeProvider = ({ children }) => {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   const toggleTheme = () => {
-    setIsDarkMode(prevMode => !prevMode);
+    // Toggle the theme and update the background color
+    if (isDarkMode) {
+      document.body.style.backgroundColor = 'white'; 
+      document.body.style.color = 'black';
+
+    } else {
+      document.body.style.backgroundColor = 'black'; 
+      document.body.style.color = 'white';
+    }
+    setIsDarkMode(prevMode => !prevMode); 
   };
+
 
   return (
     <ThemeContext.Provider value={{ isDarkMode, toggleTheme }}>
