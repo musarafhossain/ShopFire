@@ -6,9 +6,11 @@ const Layout = ({ children }) => {
   return (
     <>
       <Navbar />
-      <div className='content'>
-        {children}
-      </div>
+      <center>
+        <div className='content max-w-[1440px]'>
+          {children}
+        </div>
+      </center>
       <Footer />
     </>
   )
