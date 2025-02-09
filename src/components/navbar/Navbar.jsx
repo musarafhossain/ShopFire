@@ -34,7 +34,7 @@ const Navbar = () => {
         <div className='flex justify-center items-center select-none'>
           {/* Hamburger Icon */}
           <HiMiniBars3BottomRight
-            className='cursor-pointer md:hidden'
+            className='cursor-pointer md:hidden ml-1'
             size={25}
             onClick={toggleSidebar}
           />
@@ -74,7 +74,7 @@ const Navbar = () => {
           {/* Cart Icon with Badge */}
           <Link to="/cart" className='relative'>
             <FiShoppingCart size={25} />
-            <span className='absolute top-[-7px] right-[-7px] aspect-square flex justify-center items-center bg-red-600 text-white text-xs rounded-full h-[20px]'>
+            <span className='absolute top-[-7px] right-[-7px] aspect-square justify-center items-center bg-red-600 text-white text-xs rounded-full h-[20px] hidden'>
               99
             </span>
           </Link>
