@@ -1,11 +1,11 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { GiShoppingBag } from "react-icons/gi";
 import { FaUserCircle } from "react-icons/fa";
 
 const Navbar = () => {
   return (
-    <header className='flex items-center justify-between border-b border-[#ccc] px-5'>
+    <header className='flex items-center justify-between px-5 [box-shadow:rgba(60,_64,_67,_0.3)_0px_1px_2px_0px,_rgba(60,_64,_67,_0.15)_0px_1px_3px_1px]'>
       {/* Logo */}
       <img src="/logo.png" alt="Logo" className='w-[200px] p-2 rounded-xl' />
       
@@ -23,7 +23,6 @@ const Navbar = () => {
         {/* Cart Icon with Badge */}
         <a href="/cart" className='relative'>
           <GiShoppingBag size={25} />
-          {/* Cart Badge positioned top-right */}
           <span className='absolute top-[-7px] right-[-7px] aspect-square flex justify-center items-center bg-red-600 text-white text-xs rounded-full h-[20px]'>
             99
           </span>
