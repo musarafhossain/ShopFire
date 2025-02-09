@@ -2,15 +2,19 @@ import React from 'react'
 import { Link } from "react-router-dom";
 import { GiShoppingBag } from "react-icons/gi";
 import { FaUserCircle } from "react-icons/fa";
+import { HiMiniBars3BottomRight } from "react-icons/hi2";
 
 const Navbar = () => {
   return (
-    <header className='flex items-center justify-between px-5 [box-shadow:rgba(60,_64,_67,_0.3)_0px_1px_2px_0px,_rgba(60,_64,_67,_0.15)_0px_1px_3px_1px]'>
+    <header className='flex items-center justify-between px-2 md:px-5 [box-shadow:rgba(60,_64,_67,_0.3)_0px_1px_2px_0px,_rgba(60,_64,_67,_0.15)_0px_1px_3px_1px]'>
       {/* Logo */}
-      <img src="/logo.png" alt="Logo" className='w-[200px] p-2 rounded-xl' />
+      <div className='flex justify-center items-center select-none'>
+        <HiMiniBars3BottomRight className='cursor-pointer md:hidden' size={25} />
+        <img src="/logo.png" alt="Logo" className='w-[170px] md:w-[200px] py-1.5 rounded-xl' />
+      </div>
       
       {/* Navigation Menu */}
-      <nav>
+      <nav className='hidden md:block'>
         <ul className='flex gap-6 text-md'>
           <li><Link className='hover:text-blue-500' to="/">Home</Link></li>
           <li><Link className='hover:text-blue-500' to="/all-products">All Products</Link></li>
@@ -19,7 +23,7 @@ const Navbar = () => {
       </nav>
       
       {/* User & Cart */}
-      <div className='flex items-center gap-6'>
+      <div className='flex items-center gap-4 md:gap-6'>
         {/* Cart Icon with Badge */}
         <a href="/cart" className='relative'>
           <GiShoppingBag size={25} />
