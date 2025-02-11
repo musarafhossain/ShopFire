@@ -59,7 +59,7 @@ const Navbar = () => {
         {/* Logo */}
         <div className='flex justify-center items-center select-none' ref={logoRef}>
           <HiMiniBars3BottomRight
-            className='cursor-pointer md:hidden ml-1'
+            className='cursor-pointer lg:hidden ml-1'
             size={25}
             onClick={toggleSidebar}
           />
@@ -67,30 +67,30 @@ const Navbar = () => {
             <img
               src={`${isDarkMode ? '/logo-invert.png' : '/logo.png'}`}
               alt='Logo'
-              className='w-[170px] hidden lg:block lg:w-[200px] py-1.5 rounded-xl'
+              className='w-[170px] hidden sm:block lg:w-[200px] py-1.5 rounded-xl'
             />
           </Link>
         </div>
 
         {/* Navigation Menu - Sidebar for Mobile */}
         <nav
-          className={`absolute md:block md:static top-[60px] left-0 w-[250px] md:w-fit ${isDarkMode ? 'bg-[#363636]' : 'bg-gray-200'} md:bg-transparent h-[100dvh] md:h-fit md:transform md:translate-x-0 transition-transform duration-300 ${isSidebarOpen ? 'transform translate-x-0' : 'transform -translate-x-full'}`}
+          className={`absolute lg:block lg:static top-[60px] left-0 w-[250px] lg:w-fit ${isDarkMode ? 'bg-[#363636]' : 'bg-gray-200'} lg:bg-transparent h-[100dvh] lg:h-fit md:transform lg:translate-x-0 transition-transform duration-300 ${isSidebarOpen ? 'transform translate-x-0' : 'transform -translate-x-full'}`}
         >
-          <ul className='flex md:gap-6 text-lg flex-col text-nowrap md:flex-row pt-5 md:pt-0'>
+          <ul className='flex lg:gap-6 text-lg flex-col text-nowrap lg:flex-row pt-5 lg:pt-0'>
             <li className='nav-link'>
-              <Link className='hover:text-blue-500 font-bold flex gap-1 items-center px-8 py-4 md:px-0 md:py-0 md:justify-center' to="/" onClick={closeSidebar}>
+              <Link className='hover:text-blue-500 font-bold flex gap-1 items-center px-8 py-4 lg:px-0 lg:py-0 lg:justify-center' to="/" onClick={closeSidebar}>
                 <IoHomeOutline size={20} />
                 Home
               </Link>
             </li>
             <li className='nav-link'>
-              <Link className='hover:text-blue-500 flex gap-1 items-center px-8 py-4 md:px-0 md:py-0 md:justify-center' to="/all-products" onClick={closeSidebar}>
+              <Link className='hover:text-blue-500 flex gap-1 items-center px-8 py-4 lg:px-0 lg:py-0 lg:justify-center' to="/all-products" onClick={closeSidebar}>
                 <FiShoppingBag size={20} />
                 All Products
               </Link>
             </li>
             <li className='nav-link'>
-              <Link className='hover:text-blue-500 flex gap-1 items-center px-8 py-4 md:px-0 md:py-0 md:justify-center' to="/order" onClick={closeSidebar}>
+              <Link className='hover:text-blue-500 flex gap-1 items-center px-8 py-4 lg:px-0 lg:py-0 lg:justify-center' to="/order" onClick={closeSidebar}>
                 <BsTruck size={21} />
                 My Orders
               </Link>
@@ -128,7 +128,7 @@ const Navbar = () => {
       {/* Overlay (visible when sidebar is open) */}
       {isSidebarOpen && (
         <div
-          className="fixed inset-0 bg-black opacity-50 z-[10] md:hidden"
+          className="fixed inset-0 bg-black opacity-50 z-[10] lg:hidden"
           onClick={closeSidebar}
         ></div>
       )}
