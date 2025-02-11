@@ -7,7 +7,7 @@ const Layout = ({ children }) => {
     <>
       <Navbar />
       <center>
-        <div className='content max-w-[1440px] h-[100dvh]'>
+        <div className='content max-w-[1440px] h-[70dvh] flex items-center justify-center'>
           {children}
         </div>
       </center>

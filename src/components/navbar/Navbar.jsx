@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Link } from "react-router-dom";
-import { FaUserCircle } from "react-icons/fa";
+import { FaUserCircle, FaSearch } from "react-icons/fa";
 import { HiMiniBars3BottomRight } from "react-icons/hi2";
 import { IoMoonOutline } from "react-icons/io5";
 import { FiSun } from "react-icons/fi";
@@ -22,7 +22,6 @@ const Navbar = () => {
 
   // Refs for elements to animate
   const logoRef = useRef(null);
-  const rightIconsRef = useRef(null);
 
   // State to handle sidebar visibility
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
@@ -53,7 +52,7 @@ const Navbar = () => {
   return (
     <>
       <header
-        className={`flex sticky w-full top-0 z-[999] left-0 items-center justify-between px-2 md:px-5 
+        className={`flex sticky w-full min-h-[60px] top-0 z-[999] left-0 items-center justify-between px-2 md:pr-5 
                   [box-shadow:rgba(60,_64,_67,_0.3)_0px_1px_2px_0px,_rgba(60,_64,_67,_0.15)_0px_1px_3px_1px] 
                   ${isDarkMode ? 'bg-[#1f1f1f]' : 'bg-white'}`}
       >
@@ -68,7 +67,7 @@ const Navbar = () => {
             <img
               src={`${isDarkMode ? '/logo-invert.png' : '/logo.png'}`}
               alt='Logo'
-              className='w-[170px] md:w-[200px] py-1.5 rounded-xl'
+              className='w-[170px] hidden lg:block lg:w-[200px] py-1.5 rounded-xl'
             />
           </Link>
         </div>
@@ -77,7 +76,7 @@ const Navbar = () => {
         <nav
           className={`absolute md:block md:static top-[60px] left-0 w-[250px] md:w-fit ${isDarkMode ? 'bg-[#363636]' : 'bg-gray-200'} md:bg-transparent h-[100dvh] md:h-fit md:transform md:translate-x-0 transition-transform duration-300 ${isSidebarOpen ? 'transform translate-x-0' : 'transform -translate-x-full'}`}
         >
-          <ul className='flex md:gap-6 text-lg flex-col md:flex-row pt-5 md:pt-0'>
+          <ul className='flex md:gap-6 text-lg flex-col text-nowrap md:flex-row pt-5 md:pt-0'>
             <li className='nav-link'>
               <Link className='hover:text-blue-500 font-bold flex gap-1 items-center px-8 py-4 md:px-0 md:py-0 md:justify-center' to="/" onClick={closeSidebar}>
                 <IoHomeOutline size={20} />
@@ -99,11 +98,19 @@ const Navbar = () => {
           </ul>
         </nav>
 
+
         {/* User & Cart */}
-        <div className='flex items-center gap-4 md:gap-6'>
+        <div className='flex items-center gap-3 md:gap-4'>
+          <div className={`right-icon border ${isDarkMode ? 'border-[#6e6e6e]' : 'border-[#ccc]'} py-2 px-4 rounded-4xl flex justify-center items-center`}>
+            <input type="text" name="search" id="search" className='focus:outline-none' placeholder='Search...' />
+            <button type="button" className='cursor-pointer'>
+              <FaSearch size={20} />
+            </button>
+          </div>
+
           <Link to="/cart" className='relative right-icon'>
             <FiShoppingCart size={25} />
-            <span className='absolute top-[-7px] right-[-7px] aspect-square justify-center items-center bg-red-600 text-white text-xs rounded-full h-[20px] hidden'>
+            <span className='absolute top-[-7px] right-[-7px] aspect-square justify-center items-center bg-red-600 text-white text-xs rounded-full h-[20px] flex'>
               99
             </span>
           </Link>
