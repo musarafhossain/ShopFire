@@ -76,7 +76,7 @@ const Navbar = () => {
 
   return (
     <>
-      <header className={`${isDarkMode ? 'bg-[#1f1f1f]' : 'bg-white'} [box-shadow:rgba(60,_64,_67,_0.3)_0px_1px_2px_0px,_rgba(60,_64,_67,_0.15)_0px_1px_3px_1px] z-[999] sticky top-0 left-0`} ref={navbarRef}>
+      <header className={`${isDarkMode ? 'bg-[#002031]' : 'bg-white'} [box-shadow:rgba(60,_64,_67,_0.3)_0px_1px_2px_0px,_rgba(60,_64,_67,_0.15)_0px_1px_3px_1px] z-[999] sticky top-0 left-0`} ref={navbarRef}>
         <center>
           <div
             className={`flex max-w-[1440px] w-full min-h-[60px] items-center justify-between px-2 md:pr-5 `}  >

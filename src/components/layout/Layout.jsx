@@ -7,9 +7,9 @@ const Layout = ({ children }) => {
     <>
       <Navbar />
       <center>
-        <div className='content max-w-[1440px] h-[70dvh] flex items-center justify-center'>
+        <main className='content'>
           {children}
-        </div>
+        </main>
       </center>
       <Footer />
     </>

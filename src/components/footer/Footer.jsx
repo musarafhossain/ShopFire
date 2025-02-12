@@ -6,7 +6,7 @@ import { useTheme } from '../../context/ThemeContext';
 const Footer = () => {
   const { isDarkMode, toggleTheme } = useTheme();
   return (
-    <footer className={`${isDarkMode ? 'bg-[#3e3e3e]' : 'bg-gray-100'} text-center`}>
+    <footer className={`${isDarkMode ? 'bg-[#002031]' : 'bg-gray-100'} text-center`}>
       <center>
         <div className='max-w-[1440px]'>
       {/* Footer Content */}
