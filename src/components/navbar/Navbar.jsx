@@ -1,5 +1,8 @@
-import React, { useState, useRef } from 'react';
+//import react libraries
+import React, { useState, useRef, useEffect } from 'react';
 import { Link } from "react-router-dom";
+
+//import react icons
 import { FaUserCircle, FaSearch } from "react-icons/fa";
 import { HiMiniBars3BottomRight } from "react-icons/hi2";
 import { IoMoonOutline } from "react-icons/io5";
@@ -8,7 +11,11 @@ import { IoHomeOutline } from "react-icons/io5";
 import { FiShoppingCart } from "react-icons/fi";
 import { FiShoppingBag } from "react-icons/fi";
 import { BsTruck } from "react-icons/bs";
+
+//import context
 import { useTheme } from '../../context/ThemeContext';
+
+//import other libraries
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/all';
@@ -22,16 +29,33 @@ const Navbar = () => {
 
   // Refs for elements to animate
   const logoRef = useRef(null);
+  const navbarRef = useRef(null);
 
   // State to handle sidebar visibility
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
   const closeSidebar = () => setIsSidebarOpen(false);
 
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+    ScrollTrigger.create({
+      onUpdate: (self) => {
+        const direction = self.direction;
+        if (direction === 1) {
+          gsap.to(navbarRef.current, { y: "-100%", duration: 0.5, ease: "power4.inOut" });
+        } else {
+          gsap.to(navbarRef.current, { y: "0%", duration: 0.5, ease: "power4.inOut" });
+        }
+        lastScrollY = self.scroll();
+      },
+    });
+  }, []);
+
   useGSAP(() => {
     gsap.from(logoRef.current, {
       x: -200,
       duration: 1,
-      ease: "power3.out"
+      ease: "power3.out",
+      opacity: 0,
     });
 
     gsap.from('.right-icon', {
@@ -39,6 +63,7 @@ const Navbar = () => {
       duration: 1,
       ease: "power3.out",
       stagger: 0.3,
+      opacity: 0,
     });
 
     gsap.from('.nav-link', {
@@ -51,80 +76,79 @@ const Navbar = () => {
 
   return (
     <>
-      <header
-        className={`flex sticky w-full min-h-[60px] top-0 z-[999] left-0 items-center justify-between px-2 md:pr-5 
-                  [box-shadow:rgba(60,_64,_67,_0.3)_0px_1px_2px_0px,_rgba(60,_64,_67,_0.15)_0px_1px_3px_1px] 
-                  ${isDarkMode ? 'bg-[#1f1f1f]' : 'bg-white'}`}
-      >
-        {/* Logo */}
-        <div className='flex justify-center items-center select-none' ref={logoRef}>
-          <HiMiniBars3BottomRight
-            className='cursor-pointer lg:hidden ml-1'
-            size={25}
-            onClick={toggleSidebar}
-          />
-          <Link to='/'>
-            <img
-              src={`${isDarkMode ? '/logo-invert.png' : '/logo.png'}`}
-              alt='Logo'
-              className='w-[170px] hidden sm:block lg:w-[200px] py-1.5 rounded-xl'
-            />
-          </Link>
-        </div>
-
-        {/* Navigation Menu - Sidebar for Mobile */}
-        <nav
-          className={`absolute lg:block lg:static top-[60px] left-0 w-[250px] lg:w-fit ${isDarkMode ? 'bg-[#363636]' : 'bg-gray-200'} lg:bg-transparent h-[100dvh] lg:h-fit md:transform lg:translate-x-0 transition-transform duration-300 ${isSidebarOpen ? 'transform translate-x-0' : 'transform -translate-x-full'}`}
-        >
-          <ul className='flex lg:gap-6 text-lg flex-col text-nowrap lg:flex-row pt-5 lg:pt-0'>
-            <li className='nav-link'>
-              <Link className='hover:text-blue-500 font-bold flex gap-1 items-center px-8 py-4 lg:px-0 lg:py-0 lg:justify-center' to="/" onClick={closeSidebar}>
-                <IoHomeOutline size={20} />
-                Home
+      <div className={`${isDarkMode ? 'bg-[#1f1f1f]' : 'bg-white'} [box-shadow:rgba(60,_64,_67,_0.3)_0px_1px_2px_0px,_rgba(60,_64,_67,_0.15)_0px_1px_3px_1px] z-[999] sticky top-0 left-0`} ref={navbarRef}>
+        <center>
+          <header
+            className={`flex max-w-[1440px] w-full min-h-[60px] items-center justify-between px-2 md:pr-5 `}  >
+            {/* Logo */}
+            <div className='flex justify-center items-center select-none' ref={logoRef}>
+              <HiMiniBars3BottomRight
+                className='cursor-pointer lg:hidden ml-1'
+                size={25}
+                onClick={toggleSidebar}
+              />
+              <Link to='/'>
+                <img
+                  src={`${isDarkMode ? '/logo-invert.png' : '/logo.png'}`}
+                  alt='Logo'
+                  className='w-[170px] hidden sm:block lg:w-[200px] py-1.5 rounded-xl'
+                />
               </Link>
-            </li>
-            <li className='nav-link'>
-              <Link className='hover:text-blue-500 flex gap-1 items-center px-8 py-4 lg:px-0 lg:py-0 lg:justify-center' to="/all-products" onClick={closeSidebar}>
-                <FiShoppingBag size={20} />
-                All Products
+            </div>
+
+            {/* Navigation Menu - Sidebar for Mobile */}
+            <nav
+              className={`absolute lg:block lg:static top-[60px] left-0 w-[250px] lg:w-fit ${isDarkMode ? 'bg-[#363636]' : 'bg-gray-200'} lg:bg-transparent h-[100dvh] lg:h-fit md:transform lg:translate-x-0 transition-transform duration-300 ${isSidebarOpen ? 'transform translate-x-0' : 'transform -translate-x-full'}`}
+            >
+              <ul className='flex lg:gap-6 text-lg flex-col text-nowrap lg:flex-row pt-5 lg:pt-0'>
+                <li className='nav-link'>
+                  <Link className='hover:text-blue-500 flex gap-1 items-center px-8 py-4 lg:px-0 lg:py-0 lg:justify-center' to="/" onClick={closeSidebar}>
+                    <IoHomeOutline size={20} />
+                    Home
+                  </Link>
+                </li>
+                <li className='nav-link'>
+                  <Link className='hover:text-blue-500 flex gap-1 items-center px-8 py-4 lg:px-0 lg:py-0 lg:justify-center' to="/all-products" onClick={closeSidebar}>
+                    <FiShoppingBag size={20} />
+                    All Products
+                  </Link>
+                </li>
+                <li className='nav-link'>
+                  <Link className='hover:text-blue-500 flex gap-1 items-center px-8 py-4 lg:px-0 lg:py-0 lg:justify-center' to="/order" onClick={closeSidebar}>
+                    <BsTruck size={21} />
+                    My Orders
+                  </Link>
+                </li>
+              </ul>
+            </nav>
+
+            {/* User & Cart */}
+            <div className='flex items-center gap-3 md:gap-4'>
+              <div className={`right-icon border ${isDarkMode ? 'border-[#6e6e6e]' : 'border-[#ccc]'} py-2 px-4 rounded-4xl flex justify-center items-center`}>
+                <input type="text" name="search" id="search" className='focus:outline-none' placeholder='Search...' />
+                <button type="button" className='cursor-pointer'>
+                  <FaSearch size={20} />
+                </button>
+              </div>
+
+              <Link to="/cart" className='relative right-icon'>
+                <FiShoppingCart size={25} />
+                <span className='absolute top-[-7px] right-[-7px] aspect-square justify-center items-center bg-red-600 text-white text-xs rounded-full h-[20px] flex'>
+                  99
+                </span>
               </Link>
-            </li>
-            <li className='nav-link'>
-              <Link className='hover:text-blue-500 flex gap-1 items-center px-8 py-4 lg:px-0 lg:py-0 lg:justify-center' to="/order" onClick={closeSidebar}>
-                <BsTruck size={21} />
-                My Orders
-              </Link>
-            </li>
-          </ul>
-        </nav>
 
+              <button type='button' onClick={toggleTheme} className='cursor-pointer right-icon'>
+                {isDarkMode ? <FiSun size={25} /> : <IoMoonOutline size={25} />}
+              </button>
 
-        {/* User & Cart */}
-        <div className='flex items-center gap-3 md:gap-4'>
-          <div className={`right-icon border ${isDarkMode ? 'border-[#6e6e6e]' : 'border-[#ccc]'} py-2 px-4 rounded-4xl flex justify-center items-center`}>
-            <input type="text" name="search" id="search" className='focus:outline-none' placeholder='Search...' />
-            <button type="button" className='cursor-pointer'>
-              <FaSearch size={20} />
-            </button>
-          </div>
-
-          <Link to="/cart" className='relative right-icon'>
-            <FiShoppingCart size={25} />
-            <span className='absolute top-[-7px] right-[-7px] aspect-square justify-center items-center bg-red-600 text-white text-xs rounded-full h-[20px] flex'>
-              99
-            </span>
-          </Link>
-
-          <button type='button' onClick={toggleTheme} className='cursor-pointer right-icon'>
-            {isDarkMode ? <FiSun size={25} /> : <IoMoonOutline size={25} />}
-          </button>
-
-          <button type="button" className='right-icon'>
-            <FaUserCircle size={25} />
-          </button>
-        </div>
-      </header>
-
+              <button type="button" className='right-icon'>
+                <FaUserCircle size={25} />
+              </button>
+            </div>
+          </header>
+        </center>
+      </div>
       {/* Overlay (visible when sidebar is open) */}
       {isSidebarOpen && (
         <div
