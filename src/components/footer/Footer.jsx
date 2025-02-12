@@ -7,6 +7,8 @@ const Footer = () => {
   const { isDarkMode, toggleTheme } = useTheme();
   return (
     <footer className={`${isDarkMode ? 'bg-[#3e3e3e]' : 'bg-gray-100'} text-center`}>
+      <center>
+        <div className='max-w-[1440px]'>
       {/* Footer Content */}
       <div className='flex justify-center flex-col lg:flex-row gap-6 py-6'>
         <div className='flex-1 px-4'>
@@ -58,7 +60,8 @@ const Footer = () => {
       <p className={`text-sm border-t py-4 ${isDarkMode ? 'dark:border-gray-500 dark:text-gray-300' : 'border-[#ccc] text-gray-700'} text-center`}>
         &copy; {new Date().getFullYear()} <Link to='/' className='text-red-400 font-medium'>ShopFire</Link>. All rights reserved.
       </p>
-
+      </div>
+      </center>
     </footer>
   )
 }
