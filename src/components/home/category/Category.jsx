@@ -17,7 +17,8 @@ const Category = () => {
   const { isDarkMode } = useTheme();
 
   return (
-    <div className={`overflow-hidden relative py-16 ${isDarkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
+    <div className={`${isDarkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
+      <section className={`overflow-hidden max-w-[1440px] relative py-16 ${isDarkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
       {/* Heading Section */}
       <div className="max-w-7xl mx-auto px-4 mb-12">
         <h2 className={`text-5xl font-extrabold text-center pb-4 bg-gradient-to-r ${isDarkMode ? 'from-blue-400 to-indigo-500' : 'from-blue-600 to-indigo-700'} bg-clip-text text-transparent`}>
@@ -56,6 +57,7 @@ const Category = () => {
           </div>
         ))}
       </div>
+      </section>
     </div>
   );
 };

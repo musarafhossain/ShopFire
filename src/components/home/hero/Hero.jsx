@@ -78,7 +78,7 @@ const Hero = () => {
   return (
     <div 
       ref={heroRef}
-      className={`min-h-screen transition-colors duration-300 ${
+      className={`min-h-fit transition-colors duration-300 ${
         isDarkMode 
           ? 'bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900' 
           : 'bg-gradient-to-br from-blue-50 via-blue-100 to-gray-50'
