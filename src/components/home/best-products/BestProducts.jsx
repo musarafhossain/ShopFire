@@ -20,7 +20,7 @@ const BestProducts = () => {
             originalPrice: 500.99,
             image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
             category: 'Electronics',
-            rating: 4.8
+            rating: 3.2
         },
         {
             id: 2,
@@ -80,7 +80,7 @@ const BestProducts = () => {
 
     return (
         <div className={`py-12 md:py-16 px-4 sm:px-6 lg:px-8 ${isDarkMode ? 'bg-gray-800' : 'bg-gray-50'}`}>
-            <section className="max-w-[1440px] mx-auto">
+            <section className="max-w-[1440px] mx-auto overflow-hidden">
                 {/* Centered Heading */}
                 <Heading heading='Best Selling Products' subheading='Discover our most loved items' />
 

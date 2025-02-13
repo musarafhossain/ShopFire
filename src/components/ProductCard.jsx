@@ -3,9 +3,9 @@ import { CiStar } from "react-icons/ci";
 import { FiHeart, FiShoppingCart } from 'react-icons/fi';
 import { useTheme } from '../context/ThemeContext';
 
-const ProductCard = ({product}) => {
+const ProductCard = ({ product }) => {
     const { isDarkMode } = useTheme();
-        const isFavorite = true;
+    const isFavorite = true;
     return (
         <div className={`rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 group
         ${isDarkMode ? 'bg-gray-700 hover:bg-gray-600' : 'bg-white hover:bg-gray-50'}
@@ -19,15 +19,6 @@ const ProductCard = ({product}) => {
                         className="w-full h-48 sm:h-56 md:h-64 object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                     <div className={`absolute inset-0 bg-gradient-to-t ${isDarkMode ? 'from-gray-800/60' : 'from-black/30'} to-transparent`} />
-
-                    {/* Product Name */}
-                    <div className={`absolute bottom-4 left-4 right-4 backdrop-blur-sm p-3 rounded-lg 
-                    ${isDarkMode ? 'bg-gray-700/60' : 'bg-white/20'}`}>
-                        <h2 className={`text-lg font-bold truncate ${isDarkMode ? 'text-gray-100' : 'text-gray-800'}`}>
-                            {product.name}
-                        </h2>
-                    </div>
-
                     {/* Favorite Button */}
                     <button className={`absolute cursor-pointer top-3 right-3 p-2 rounded-full shadow-md transition-colors
                      ${isDarkMode ? 'bg-gray-600/80 hover:bg-gray-500' : 'bg-white/80 hover:bg-white'}`}>
@@ -38,6 +29,9 @@ const ProductCard = ({product}) => {
 
             {/* Product Info */}
             <div className="p-4 flex flex-col gap-2">
+                <h2 className={`text-xl font-thin text-left truncate ${isDarkMode ? 'text-gray-100' : 'text-gray-800'}`}>
+                    {product.name}
+                </h2>
                 <div className="flex flex-col">
                     <div className="flex items-center justify-between gap-2">
                         <span className={`text-lg font-semibold ${isDarkMode ? 'text-gray-100' : 'text-gray-800'}`}>
