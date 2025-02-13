@@ -41,9 +41,9 @@ const Navbar = () => {
       onUpdate: (self) => {
         const direction = self.direction;
         if (direction === 1) {
-          gsap.to(navbarRef.current, { y: "-100%", duration: 0.5, ease: "power4.inOut" });
+          gsap.to(navbarRef.current, { y: "-100%" });
         } else {
-          gsap.to(navbarRef.current, { y: "0%", duration: 0.5, ease: "power4.inOut" });
+          gsap.to(navbarRef.current, { y: "0%" });
         }
         lastScrollY = self.scroll();
       },
