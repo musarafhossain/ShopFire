@@ -56,7 +56,7 @@ const ProductCard = ({ product }) => {
                     {/* Favorite Button */}
                     <button className={`absolute cursor-pointer top-3 right-3 p-2 rounded-full shadow-md transition-colors
                      ${isDarkMode ? 'bg-gray-600/80 hover:bg-gray-500' : 'bg-white/80 hover:bg-white'}`}>
-                        <FiHeart className={`w-5 h-5 ${isFavorite ? 'text-red-500' : isDarkMode ? 'text-gray-300' : 'text-gray-600'}`} />
+                        <FiHeart className={`w-5 h-5 ${isFavorite ? 'text-white' : isDarkMode ? 'text-gray-300' : 'text-gray-600'}`} />
                     </button>
                 </div>
             </div>
