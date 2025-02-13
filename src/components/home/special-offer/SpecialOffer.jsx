@@ -20,7 +20,7 @@ const SpecialOffer = () => {
             ? 'bg-gradient-to-r from-purple-900/80 to-yellow-900/80'
             : 'bg-gradient-to-r from-blue-400/20 to-orange-400/20'
             }`}>
-                <div class="ribbon">Special <br />Offer</div> 
+                {/* <div class="ribbon">Special <br />Offer</div>  */}
             <section className={`relative overflow-hidden max-w-[1440px] flex justify-center items-center p-8 transition-all duration-300 `}>
                 {/* Left Lottie - Hidden on mobile */}
                 <div className="hidden md:block w-1/4 max-w-[300px]">
