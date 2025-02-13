@@ -98,7 +98,7 @@ const BestProducts = () => {
                         breakpoints={{
                             320: {
                                 slidesPerView: 1,
-                                spaceBetween: 32,
+                                spaceBetween: 16,
                             },
                             640: {
                                 slidesPerView: 2,
@@ -130,7 +130,7 @@ const BestProducts = () => {
 
                 {/* View All Button */}
                 <div className="mt-8 md:mt-12 flex justify-center items-center text-center">
-                    <button className={`px-6 flex justify-center items-center gap-1 py-2 md:px-8 md:py-3 rounded-xl cursor-pointer text-sm md:text-lg font-medium transition-all
+                    <button className={`px-6 flex justify-center items-center gap-1 py-3 md:px-8 rounded-xl cursor-pointer text-sm md:text-lg font-medium transition-all
                                     ${isDarkMode
                             ? 'bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600'
                             : 'bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700'}
@@ -162,6 +162,14 @@ const BestProducts = () => {
                     height: 50px;
                     border-radius: 50%;
                     transition: all 0.3s ease;
+                }
+
+                .swiper-button-prev{
+                    left: -2%;
+                }
+
+                .swiper-button-next{
+                    right: -2%;
                 }
                 
                 .swiper-button-prev:hover,
