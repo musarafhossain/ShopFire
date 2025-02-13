@@ -95,10 +95,39 @@
 }
 
 @keyframes shine {
-    0% { background-position: -200% 0; }
-    100% { background-position: 200% 0; }
-  }
-  .animate-shine {
+    0% {
+        background-position: -200% 0;
+    }
+
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+.animate-shine {
     background-size: 200% auto;
     animation: shine 3s linear infinite;
-  }
+}
+
+/* HTML: */
+.ribbon {
+    font-size: 28px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.ribbon {
+    --f: .5em;
+    /* control the folded part*/
+    --r: .8em;
+    /* control the ribbon shape */
+
+    position: absolute;
+    right: 20px;
+    top: calc(-1*var(--f));
+    padding: .2em;
+    background: #BF4D28;
+    border-left: var(--f) solid #0005;
+    border-bottom: var(--r) solid #0000;
+    clip-path: polygon(var(--f) 0, 100% 0, 100% 100%, calc(50% + var(--f)/2) calc(100% - var(--r)), var(--f) 100%, var(--f) var(--f), 0 var(--f));
+}

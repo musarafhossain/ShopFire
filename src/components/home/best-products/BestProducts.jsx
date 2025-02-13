@@ -1,5 +1,13 @@
 import React from 'react';
-import { useTheme } from '../../../context/ThemeContext'; // Update with your theme context path
+import { useTheme } from '../../../context/ThemeContext';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, FreeMode } from 'swiper/modules';
+import ProductCard from '../../ProductCard';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/free-mode';
+import Heading from '../../Heading';
 
 const BestProducts = () => {
     const { isDarkMode } = useTheme();
@@ -9,6 +17,7 @@ const BestProducts = () => {
             id: 1,
             name: 'Wireless Headphones',
             price: 299.99,
+            originalPrice: 500.99,
             image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
             category: 'Electronics',
             rating: 4.8
@@ -17,6 +26,7 @@ const BestProducts = () => {
             id: 2,
             name: 'Smart Watch Pro',
             price: 199.99,
+            originalPrice: 300.99,
             image: 'https://images.unsplash.com/photo-1546868871-7041f2a55e12?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
             category: 'Wearables',
             rating: 4.6
@@ -25,6 +35,7 @@ const BestProducts = () => {
             id: 3,
             name: 'Modern Sofa',
             price: 899.99,
+            originalPrice: 1099.99,
             image: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
             category: 'Furniture',
             rating: 4.9
@@ -33,6 +44,34 @@ const BestProducts = () => {
             id: 4,
             name: 'Designer Sunglasses',
             price: 159.99,
+            originalPrice: 200.99,
+            image: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
+            category: 'Fashion',
+            rating: 4.7
+        },
+        {
+            id: 5,
+            name: 'Designer Sunglasses',
+            price: 159.99,
+            originalPrice: 200.99,
+            image: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
+            category: 'Fashion',
+            rating: 4.7
+        },
+        {
+            id: 6,
+            name: 'Designer Sunglasses',
+            price: 159.99,
+            originalPrice: 200.99,
+            image: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
+            category: 'Fashion',
+            rating: 4.7
+        },
+        {
+            id: 7,
+            name: 'Designer Sunglasses',
+            price: 159.99,
+            originalPrice: 200.99,
             image: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
             category: 'Fashion',
             rating: 4.7
@@ -40,90 +79,112 @@ const BestProducts = () => {
     ];
 
     return (
-        <div className={`py-16 px-4 sm:px-6 lg:px-8 ${isDarkMode ? 'bg-gray-700' : 'bg-gray-10'}`}>
+        <div className={`py-12 md:py-16 px-4 sm:px-6 lg:px-8 ${isDarkMode ? 'bg-gray-800' : 'bg-gray-50'}`}>
             <section className="max-w-[1440px] mx-auto">
                 {/* Centered Heading */}
-                <div className="text-center mb-8 md:mb-16">
-                    <h2 className={`text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r 
-            ${isDarkMode ? 'from-blue-400 to-purple-400' : 'from-blue-600 to-purple-600'} 
-            bg-clip-text text-transparent mb-2 md:mb-4`}>
-                        Best Selling Products
-                    </h2>
-                    <p className={`text-base md:text-lg ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                        Discover our most loved items
-                    </p>
-                </div>
+                <Heading heading='Best Selling Products' subheading='Discover our most loved items' />
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
-                    {products.map((product) => (
-                        <div
-                            key={product.id}
-                            className={`relative rounded-xl md:rounded-2xl overflow-hidden transition-all duration-300 hover:scale-[1.02] group
-                ${isDarkMode ? 'bg-gray-800 shadow-md' : 'bg-white shadow-sm'} md:shadow-lg`}
-                        >
-                            <div className="relative aspect-square">
-                                <img
-                                    src={product.image}
-                                    alt={product.name}
-                                    className="w-full h-full object-cover object-center"
-                                />
-                                {/* Product Badge */}
-                                <div className="absolute top-2 right-2 md:top-4 md:right-4 flex items-center gap-1 px-2 py-0.5 md:px-3 md:py-1 
-                  bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-full text-xs md:text-sm">
-                                    ⭐ {product.rating}
-                                </div>
-                            </div>
+                <div className="relative px-8">
+                    <Swiper
+                        modules={[Navigation, Pagination, FreeMode]}
+                        navigation={{
+                            nextEl: '.swiper-button-next',
+                            prevEl: '.swiper-button-prev',
+                        }}
+                        pagination={{
+                            clickable: true,
+                            dynamicBullets: true
+                        }}
+                        breakpoints={{
+                            320: {
+                                slidesPerView: 1,
+                                spaceBetween: 32,
+                            },
+                            640: {
+                                slidesPerView: 2,
+                                spaceBetween: 32
+                            },
+                            1024: {
+                                slidesPerView: 3,
+                                spaceBetween: 32
+                            },
+                            1280: {
+                                slidesPerView: 4,
+                                spaceBetween: 32
+                            }
+                        }}
+                        centeredSlides={false}
+                        className="!overflow-visible"
+                    >
+                        {products.map((product) => (
+                            <SwiperSlide key={product.id}>
+                                <ProductCard product={product} />
+                            </SwiperSlide>
+                        ))}
 
-                            <div className="p-3 md:p-6">
-                                <span className={`text-xs md:text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
-                                    {product.category}
-                                </span>
-                                <h3 className={`mt-1 md:mt-2 text-base md:text-xl font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
-                                    {product.name}
-                                </h3>
-                                <div className="mt-2 md:mt-4 flex justify-between items-center gap-2">
-                                    <span className={`text-lg md:text-2xl font-bold ${isDarkMode ? 'text-blue-400' : 'text-blue-600'}`}>
-                                        ${product.price}
-                                    </span>
-                                    <button className={`px-2 py-1 md:px-4 md:py-2 rounded-md md:rounded-lg text-xs md:text-base transition-all
-                    ${isDarkMode
-                                            ? 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white'
-                                            : 'bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-400 hover:to-purple-400 text-white'}`}>
-                                        Add to Cart
-                                    </button>
-                                </div>
-                            </div>
-
-                            {/* Hover Overlay */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                        </div>
-                    ))}
+                        {/* Navigation Buttons */}
+                        <div className={`swiper-button-prev ${isDarkMode ? '!text-gray-300' : '!text-gray-700'}`}></div>
+                        <div className={`swiper-button-next ${isDarkMode ? '!text-gray-300' : '!text-gray-700'}`}></div>
+                    </Swiper>
                 </div>
 
                 {/* View All Button */}
-                <div className="mt-8 md:mt-12 text-center">
-                    <button className={`px-6 py-2 md:px-8 md:py-3 rounded-full text-base md:text-lg font-medium transition-all
-            ${isDarkMode
-                            ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:shadow-purple-glow'
-                            : 'bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:shadow-lg'}`}>
+                <div className="mt-8 md:mt-12 flex justify-center items-center text-center">
+                    <button className={`px-6 flex justify-center items-center gap-1 py-2 md:px-8 md:py-3 rounded-xl cursor-pointer text-sm md:text-lg font-medium transition-all
+                                    ${isDarkMode
+                            ? 'bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600'
+                            : 'bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700'}
+                                     text-white hover:shadow-lg`}>
                         View All Products
+                        <svg
+                            className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M17 8l4 4m0 0l-4 4m4-4H3"
+                            />
+                        </svg>
                     </button>
                 </div>
             </section>
 
-            <style jsx>{`
-        .text-transparent {
-          color: transparent;
-        }
-        @keyframes purple-glow {
-          0% { box-shadow: 0 0 20px rgba(168, 85, 247, 0); }
-          50% { box-shadow: 0 0 30px rgba(168, 85, 247, 0.4); }
-          100% { box-shadow: 0 0 20px rgba(168, 85, 247, 0); }
-        }
-        .hover\:shadow-purple-glow:hover {
-          animation: purple-glow 1.5s infinite;
-        }
-      `}</style>
+            <style>{`
+                .swiper-button-prev,
+                .swiper-button-next {
+                    background-color: ${isDarkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)'};
+                    backdrop-filter: blur(8px);
+                    width: 50px;
+                    height: 50px;
+                    border-radius: 50%;
+                    transition: all 0.3s ease;
+                }
+                
+                .swiper-button-prev:hover,
+                .swiper-button-next:hover {
+                    background-color: ${isDarkMode ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.2)'};
+                }
+                
+                .swiper-button-prev::after,
+                .swiper-button-next::after {
+                    font-size: 1.2rem;
+                    font-weight: bold;
+                    color: ${isDarkMode ? '#fff' : '#374151'};
+                }
+                
+                .swiper-pagination-bullet {
+                    background: ${isDarkMode ? '#fff' : '#000'} !important;
+                    opacity: 0;
+                }
+                
+                .swiper-pagination-bullet-active {
+                    opacity: 0;
+                }
+            `}</style>
         </div>
     );
 };
