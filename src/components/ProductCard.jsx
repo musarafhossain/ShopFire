@@ -1,11 +1,45 @@
 import React from 'react'
-import { CiStar } from "react-icons/ci";
+import { BsStar, BsStarFill } from "react-icons/bs";
 import { FiHeart, FiShoppingCart } from 'react-icons/fi';
 import { useTheme } from '../context/ThemeContext';
 
 const ProductCard = ({ product }) => {
     const { isDarkMode } = useTheme();
     const isFavorite = true;
+
+    // Star rating logic
+    const renderStars = (rating) => {
+        return [...Array(5)].map((_, index) => {
+            const fill = rating - index;
+            let fillPercentage = 0;
+
+            if (fill >= 1) {
+                fillPercentage = 100;
+            } else if (fill > 0) {
+                fillPercentage = fill * 100;
+            }
+
+            return (
+                <div key={index} className="relative w-4 h-4 md:w-5 md:h-5">
+                    {/* Outline star */}
+                    <BsStar
+                        className={`absolute top-0 left-0 w-full h-full ${isDarkMode ? 'text-gray-400' : 'text-gray-300'
+                            }`}
+                    />
+
+                    {/* Filled portion */}
+                    <div
+                        className="absolute top-0 left-0 h-full overflow-hidden"
+                        style={{ clipPath: `inset(0 ${100 - fillPercentage}% 0 0)` }}
+                    >
+                        <BsStarFill className="w-full h-full text-yellow-400" />
+                    </div>
+                </div>
+
+            );
+        });
+    };
+
     return (
         <div className={`rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 group
         ${isDarkMode ? 'bg-gray-700 hover:bg-gray-600' : 'bg-white hover:bg-gray-50'}
@@ -45,16 +79,14 @@ const ProductCard = ({ product }) => {
 
                 {/* Rating and Discount */}
                 <div className="flex flex-wrap justify-between items-center gap-2">
-                    <div className="flex items-center gap-1 text-yellow-400">
-                        {[...Array(5)].map((_, i) => (
-                            <CiStar key={i} className="w-4 h-4 md:w-5 md:h-5 fill-current" />
-                        ))}
+                    <div className="flex items-center gap-1">
+                        {renderStars(product.rating)}
                         <span className={`ml-1 text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                            {product.rating}
+                            {product.rating.toFixed(1)}
                         </span>
                     </div>
                     <span className="text-lg font-medium text-red-500">
-                        {100 - parseInt((product.price / product.originalPrice) * 100)}% OFF
+                        {Math.round(100 - (product.price / product.originalPrice) * 100)}% OFF
                     </span>
                 </div>
 
