@@ -6,7 +6,7 @@ const BillingSection = () => {
     return (
         <div className={`md:w-[40%] lg:w-[30%] w-full text-left flex flex-col gap-4`}>
             {/* Payment Details Box */}
-            <div className={`${isDarkMode ? 'border-[#2f2f2f] bg-[#1a1a1a]' : 'border-[#dcdada] bg-white'} border rounded-2xl p-4`}>
+            <div className={`${isDarkMode ? 'border-[#2f2f2f]' : 'border-[#dcdada]'} border rounded-2xl p-4`}>
                 <h1 className={`${isDarkMode ? 'text-white' : 'text-black'} font-bold text-md mx-2`}>Payment Details</h1>
                 <div className='mx-2 my-4 flex flex-col gap-2'>
                     <p className={`flex items-center justify-between border-b pb-1 ${isDarkMode ? 'border-[#444444]' : 'border-[#dbdbdb]'}`}>
