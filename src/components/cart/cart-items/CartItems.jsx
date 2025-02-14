@@ -49,8 +49,12 @@ const CartItems = () => {
                 <span>₹299.00</span>
             </h1>
             <div className='p-5'>
-                {products.map((product) =>
-                    <CartItem key={product.name} product={product} />
+                {products.map((product, index) =>
+                    <CartItem 
+                        key={product.name} 
+                        product={product}
+                        isLast={index === products.length - 1} 
+                    />
                 )}
             </div>
         </div>
