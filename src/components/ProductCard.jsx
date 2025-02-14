@@ -55,8 +55,8 @@ const ProductCard = ({ product }) => {
                     <div className={`absolute inset-0 bg-gradient-to-t ${isDarkMode ? 'from-gray-800/60' : 'from-black/30'} to-transparent`} />
                     {/* Favorite Button */}
                     <button className={`absolute cursor-pointer top-3 right-3 p-2 rounded-full shadow-md transition-colors
-                     ${isDarkMode ? 'bg-gray-600/80 hover:bg-gray-500' : 'bg-white/80 hover:bg-white'}`}>
-                        <FiHeart className={`w-5 h-5 ${isFavorite ? 'text-white' : isDarkMode ? 'text-gray-300' : 'text-gray-600'}`} />
+                     ${isDarkMode ? 'bg-white/80 hover:bg-white' : 'bg-white/80 hover:bg-white'}`}>
+                        <FiHeart className={`w-5 h-5 ${isFavorite ? 'text-red-500' : isDarkMode ? 'text-gray-300' : 'text-gray-600'}`} />
                     </button>
                 </div>
             </div>
