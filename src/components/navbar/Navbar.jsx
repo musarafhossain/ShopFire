@@ -98,7 +98,7 @@ const Navbar = () => {
 
             {/* Navigation Menu - Sidebar for Mobile */}
             <nav
-              className={`absolute lg:block lg:static top-[60px] left-0 w-[250px] font-[Open Sans] lg:w-fit ${isDarkMode ? 'bg-[#363636]' : 'bg-gray-200'} lg:bg-transparent h-[100dvh] lg:h-fit md:transform lg:translate-x-0 transition-transform duration-300 ${isSidebarOpen ? 'transform translate-x-0' : 'transform -translate-x-full'}`}
+              className={`absolute lg:block lg:static top-[60px] left-0 w-[250px] font-[Open Sans] lg:w-fit ${isDarkMode ? 'bg-[#002c44]' : 'bg-gray-200'} lg:bg-transparent h-[100dvh] lg:h-fit md:transform lg:translate-x-0 transition-transform duration-300 ${isSidebarOpen ? 'transform translate-x-0' : 'transform -translate-x-full'}`}
             >
               <ul className='flex lg:gap-6 text-lg flex-col text-nowrap lg:flex-row pt-5 lg:pt-0'>
                 <li className='nav-link'>
