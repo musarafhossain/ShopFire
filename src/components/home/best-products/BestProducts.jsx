@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useTheme } from '../../../context/ThemeContext';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, FreeMode } from 'swiper/modules';
@@ -118,7 +119,9 @@ const BestProducts = () => {
                     >
                         {products.map((product) => (
                             <SwiperSlide key={product.id}>
-                                <ProductCard product={product} />
+                                <Link to="/product" className='cursor-default'>
+                                    <ProductCard product={product} />
+                                </Link>
                             </SwiperSlide>
                         ))}
 
