@@ -7,9 +7,9 @@ import LazyImage from '../../LazyImage';
 const ProductDetails = () => {
   const { isDarkMode } = useTheme();
   return (
-    <div className='md:w-[50%] sm:py-4 px-4 lg:px-2 text-left flex flex-col gap-4'>
+    <div className='md:w-[50%] sm:py-4 mb-4 px-4 lg:px-2 text-left flex flex-col gap-4'>
       <div className={`border ${isDarkMode ? ' border-[#2f2f2f] ' : ' border-[#dcdada] '} rounded-xl p-4 flex flex-col gap-2`}>
-        <h1 className='text-gray-500 text-lg font-semibold'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad incidunt quibusdam expedita sed. Quam esse dolor adipisci, magnam doloremque soluta.</h1>
+        <h1 className='text-gray-500 text-lg font-semibold'>Latest trending stylish high neck</h1>
         <p className='text-3xl'>₹145</p>
         <Rating rating={4.5} />
         <p className='bg-green-500/30 w-fit p-1 rounded-2xl text-sm px-2 flex gap-1 font-semibold'>
