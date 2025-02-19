@@ -37,12 +37,12 @@ const ProductCatalog = () => {
     }, [currentIndex]);
 
     return (
-        <div className='lg:w-[50%] py-4 px-4 lg:px-2'>
+        <div className='md:w-[50%] py-4 px-4 lg:px-2'>
             <div className='flex flex-col-reverse sm:flex-row gap-3'>
                 <div className='w-full sm:w-fit flex gap-2 sm:flex-col items-center relative rounded-lg py-2'>
-                    <button onClick={handlePrev} className="custom-prev hover:scale-105 duration-300 absolute rounded-lg bg-gray-700/30 -translate-x-[40%] sm:static left-0 top-[50%] sm:top-0 -translate-y-[40%] sm:translate-0 p-1 sm:w-full cursor-pointer">
+                    <button onClick={handlePrev} className="custom-prev hover:scale-105 duration-300 absolute rounded-lg bg-gray-700/30 -translate-x-[30%] sm:static left-0 top-[50%] sm:top-0 hidden sm:block -translate-y-[50%] sm:translate-0 p-1 sm:w-full cursor-pointer">
                         <span className='block sm:hidden'>
-                            <FiArrowLeftCircle size={20} />
+                            <FiArrowLeftCircle size={30} />
                         </span>
                         <span className='hidden sm:block'>▲</span>
                     </button>
@@ -58,9 +58,9 @@ const ProductCatalog = () => {
                             />
                         ))}
                     </div>
-                    <button onClick={handleNext} className="custom-next hover:scale-105 duration-300 rounded-lg bg-gray-700/30 absolute right-0 top-[50%] translate-x-[40%] -translate-y-[50%]  sm:static p-1 sm:w-full cursor-pointer sm:translate-0">
+                    <button onClick={handleNext} className="custom-next hover:scale-105 duration-300 rounded-lg bg-gray-700/30 absolute right-0 top-[50%] translate-x-[30%] -translate-y-[50%] hidden sm:block sm:static p-1 sm:w-full cursor-pointer sm:translate-0">
                         <span className='block sm:hidden'>
-                            <FiArrowRightCircle size={20} />
+                            <FiArrowRightCircle size={30} />
                         </span>
                         <span className='hidden sm:block'>▼</span>
                     </button>
@@ -74,11 +74,11 @@ const ProductCatalog = () => {
                 </div>
             </div>
             <div className='flex justify-end items-center mt-5 sm:mt-10 w-full'>
-                <button className={`w-[50%] py-2 sm:py-4 border ${isDarkMode ? 'border-gray-300 text-gray-300' : 'border-indigo-600 text-indigo-600'} text-lg cursor-pointer flex justify-center items-center gap-3 font-semibold transform `}>
+                <button className={`w-[50%] py-3 sm:py-4 border ${isDarkMode ? 'border-gray-300 text-gray-300' : 'border-indigo-600 text-indigo-600'} text-lg cursor-pointer flex justify-center items-center gap-3 font-semibold transform `}>
                     <FiShoppingCart size={20} />
                     <span>Add to Cart</span>
                 </button>
-                <button className={`w-[50%] py-2 sm:py-4 border ${isDarkMode ? 'bg-gray-300 border-gray-300 text-black' : 'bg-indigo-600 border-indigo-600 text-white'} font-semibold text-lg cursor-pointer flex justify-center items-center gap-3 transform`}>
+                <button className={`w-[50%] py-3 sm:py-4 border ${isDarkMode ? 'bg-gray-300 border-gray-300 text-black' : 'bg-indigo-600 border-indigo-600 text-white'} font-semibold text-lg cursor-pointer flex justify-center items-center gap-3 transform`}>
                     <FaAnglesRight size={20} />
                     <span>Buy Now</span>
                 </button>

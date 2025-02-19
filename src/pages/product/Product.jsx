@@ -9,7 +9,7 @@ const Product = () => {
     return (
         <Layout>
             <section className={`${isDarkMode ? 'bg-gray-900' : 'bg-white'}`}>
-                <div className='flex max-w-[1440px] flex-col lg:flex-row'>
+                <div className='flex max-w-[1440px] flex-col md:flex-row'>
                     <ProductImages />
                     {/* <ProductDetails /> */}
                 </div>
