@@ -5,6 +5,7 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
+import './App.css'
 
 //import pages
 import Home from './pages/home/Home';

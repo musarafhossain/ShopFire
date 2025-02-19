@@ -9,9 +9,9 @@ const Product = () => {
     return (
         <Layout>
             <section className={`${isDarkMode ? 'bg-gray-900' : 'bg-white'}`}>
-                <div className='flex max-w-[1440px]'>
+                <div className='flex max-w-[1440px] flex-col lg:flex-row'>
                     <ProductImages />
-                    <ProductDetails />
+                    {/* <ProductDetails /> */}
                 </div>
             </section>
         </Layout>
