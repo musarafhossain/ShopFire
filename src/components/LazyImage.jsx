@@ -33,7 +33,9 @@ const LazyImage = ({ src, alt, className, onClick }) => {
     return (
         <>
             {!isLoaded && !hasError && <LoadingSpinner className={className} />}
-            {hasError && <div className={`${className} border ${isDarkMode ? ' border-[#2f2f2f] ' : ' border-[#dcdada] '} text-center`} onClick={onClick}>Failed to load image</div>}
+            {hasError && <div className={`border ${isDarkMode ? ' border-[#2f2f2f] text-[#676767] ' : ' border-[#dcdada] '} flex justify-center items-center ${className}`} onClick={onClick}>
+                Failed to load image
+            </div>}
             {isLoaded && <img src={imageSrc} alt={alt} className={className} onClick={onClick} />}
         </>
     );

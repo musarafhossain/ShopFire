@@ -40,7 +40,7 @@ const ProductCatalog = () => {
         <div className='md:w-[50%] py-4 px-4 lg:px-2'>
             <div className='flex flex-col-reverse sm:flex-row gap-3'>
                 <div className='w-full sm:w-fit flex gap-2 sm:flex-col items-center relative rounded-lg py-2'>
-                    <button onClick={handlePrev} className="custom-prev hover:scale-105 duration-300 absolute rounded-lg bg-gray-700/30 -translate-x-[30%] sm:static left-0 top-[50%] sm:top-0 hidden sm:block -translate-y-[50%] sm:translate-0 p-1 sm:w-full cursor-pointer">
+                    <button onClick={handlePrev} className={`custom-prev hover:scale-105 duration-300 absolute rounded-lg ${isDarkMode ? ' bg-gray-700/30 ' : ' bg-gray-400/30 '} -translate-x-[30%] sm:static left-0 top-[50%] sm:top-0 hidden sm:block -translate-y-[50%] sm:translate-0 p-1 sm:w-full cursor-pointer`}>
                         <span className='block sm:hidden'>
                             <FiArrowLeftCircle size={30} />
                         </span>
@@ -58,7 +58,7 @@ const ProductCatalog = () => {
                             />
                         ))}
                     </div>
-                    <button onClick={handleNext} className="custom-next hover:scale-105 duration-300 rounded-lg bg-gray-700/30 absolute right-0 top-[50%] translate-x-[30%] -translate-y-[50%] hidden sm:block sm:static p-1 sm:w-full cursor-pointer sm:translate-0">
+                    <button onClick={handleNext} className={`custom-next hover:scale-105 duration-300 rounded-lg ${isDarkMode ? ' bg-gray-700/30 ' : ' bg-gray-400/30 '} absolute right-0 top-[50%] translate-x-[30%] -translate-y-[50%] hidden sm:block sm:static p-1 sm:w-full cursor-pointer sm:translate-0`}>
                         <span className='block sm:hidden'>
                             <FiArrowRightCircle size={30} />
                         </span>
