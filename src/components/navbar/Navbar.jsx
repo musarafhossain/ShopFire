@@ -27,6 +27,14 @@ const Navbar = () => {
   const { isDarkMode, toggleTheme } = useTheme();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
+  useEffect(() => {
+    if (isSidebarOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  }, [isSidebarOpen]);
+
   // Refs for elements to animate
   const logoRef = useRef(null);
   const navbarRef = useRef(null);
@@ -79,7 +87,7 @@ const Navbar = () => {
       <header className={`${isDarkMode ? 'bg-[#002031]' : 'bg-white'} [box-shadow:rgba(60,_64,_67,_0.3)_0px_1px_2px_0px,_rgba(60,_64,_67,_0.15)_0px_1px_3px_1px] z-[999] sticky top-0 left-0`} ref={navbarRef}>
         <center>
           <div
-            className={`flex max-w-[1440px] w-full min-h-[60px] items-center justify-between px-2 md:pr-5 `}  >
+            className={`flex max-w-[1440px] w-full min-h-[60px] gap-2 items-center justify-between px-2 md:pr-5 `}  >
             {/* Logo */}
             <div className='flex justify-center items-center select-none' ref={logoRef}>
               <HiMiniBars3BottomRight
@@ -98,7 +106,7 @@ const Navbar = () => {
 
             {/* Navigation Menu - Sidebar for Mobile */}
             <nav
-              className={`absolute lg:block lg:static top-[60px] left-0 w-[250px] font-[Open Sans] lg:w-fit ${isDarkMode ? 'bg-[#002c44]' : 'bg-gray-200'} lg:bg-transparent h-[100dvh] lg:h-fit md:transform lg:translate-x-0 transition-transform duration-300 ${isSidebarOpen ? 'transform translate-x-0' : 'transform -translate-x-full'}`}
+              className={`absolute lg:block lg:static top-[60px] left-0 w-[250px] overflow-y-auto font-[Open Sans] lg:w-fit ${isDarkMode ? 'bg-[#002c44]' : 'bg-gray-200'} lg:bg-transparent h-[calc(100vh-60px)] lg:h-fit md:transform lg:translate-x-0 transition-transform duration-300 ${isSidebarOpen ? 'transform translate-x-0' : 'transform -translate-x-full'}`}
             >
               <ul className='flex lg:gap-6 text-lg flex-col text-nowrap lg:flex-row pt-5 lg:pt-0'>
                 <li className='nav-link'>
@@ -123,9 +131,9 @@ const Navbar = () => {
             </nav>
 
             {/* User & Cart */}
-            <div className='flex items-center gap-3 md:gap-4'>
-              <div className={`right-icon border ${isDarkMode ? 'border-[#6e6e6e]' : 'border-[#ccc]'} py-2 px-4 rounded-4xl flex justify-center items-center`}>
-                <input type="text" name="search" id="search" className='focus:outline-none' placeholder='Search...' />
+            <div className='flex items-center gap-3 md:gap-4 flex-grow justify-end'>
+              <div className={`right-icon flex-grow sm:flex-grow-0 border ${isDarkMode ? 'border-[#6e6e6e]' : 'border-[#ccc]'} py-2 px-4 rounded-4xl flex justify-center items-center`}>
+                <input type="text" name="search" id="search" className='focus:outline-none w-full' placeholder='Search...' />
                 <button type="button" className='cursor-pointer'>
                   <FaSearch size={20} />
                 </button>
@@ -149,7 +157,6 @@ const Navbar = () => {
           </div>
         </center>
       </header>
-      {/* Overlay (visible when sidebar is open) */}
       {isSidebarOpen && (
         <div
           className="fixed inset-0 bg-black opacity-50 z-[10] lg:hidden"
