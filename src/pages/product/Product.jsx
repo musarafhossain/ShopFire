@@ -11,7 +11,7 @@ const Product = () => {
             <section className={`${isDarkMode ? 'bg-gray-900' : 'bg-white'}`}>
                 <div className='flex max-w-[1440px] flex-col md:flex-row'>
                     <ProductImages />
-                    {/* <ProductDetails /> */}
+                    <ProductDetails />
                 </div>
             </section>
         </Layout>

@@ -73,7 +73,7 @@ const ProductCatalog = () => {
                     />
                 </div>
             </div>
-            <div className='flex justify-end items-center mt-5 sm:mt-10 w-full'>
+            <div className='flex justify-end items-center mt-3 sm:mt-10 w-full'>
                 <button className={`w-[50%] py-3 sm:py-4 border ${isDarkMode ? 'border-gray-300 text-gray-300' : 'border-indigo-600 text-indigo-600'} text-lg cursor-pointer flex justify-center items-center gap-3 font-semibold transform `}>
                     <FiShoppingCart size={20} />
                     <span>Add to Cart</span>
