@@ -58,7 +58,7 @@ const Navbar = () => {
     });
   }, []);
 
-  useGSAP(() => {
+  /* useGSAP(() => {
     gsap.from(logoRef.current, {
       x: -200,
       duration: 1,
@@ -80,7 +80,7 @@ const Navbar = () => {
       ease: "power3.out",
       stagger: 0.3,
     });
-  }, {});
+  }, {}); */
 
   return (
     <>
@@ -131,7 +131,7 @@ const Navbar = () => {
             </nav>
 
             {/* User & Cart */}
-            <div className='flex items-center gap-3 md:gap-4 flex-grow justify-end'>
+            <div className='flex items-center gap-3 md:gap-4 justify-end'>
               <div className={`right-icon flex-grow sm:flex-grow-0 border ${isDarkMode ? 'border-[#6e6e6e]' : 'border-[#ccc]'} py-2 px-4 rounded-4xl flex justify-center items-center`}>
                 <input type="text" name="search" id="search" className='focus:outline-none w-full' placeholder='Search...' />
                 <button type="button" className='cursor-pointer'>
