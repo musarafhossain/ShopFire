@@ -20,9 +20,10 @@ const Dashboard = () => {
         <h1 className={`text-2xl font-bold mb-6 ${isDarkMode ? 'text-gray-200' : 'text-gray-800'}`}>
           Dashboard Overview
         </h1>
-        <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
-          {cardData.map((card) =>
+        <div className="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-3">
+          {cardData.map((card, index) =>
             <StatCard
+              key={index}
               title={card.title}
               value={card.value}
               colorClass={card.colorClass}

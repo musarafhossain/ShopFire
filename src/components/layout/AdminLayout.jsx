@@ -18,7 +18,7 @@ const AdminLayout = ({ children, className }) => {
     const { isDarkMode } = useTheme();
 
     const navItems = [
-        { label: 'Home', icon: <FiHome className="h-5 w-5" />, link: '/' },
+        /*{ label: 'Home', icon: <FiHome className="h-5 w-5" />, link: '/' },*/
         { label: 'Dashboard', icon: <FiBarChart2 className="h-5 w-5" />, link: '/admin/dashboard' },
         { label: 'Users', icon: <FiUsers className="h-5 w-5" />, link: '/admin/users' },
         { label: 'Orders', icon: <SiHackthebox className="h-5 w-5" />, link: '/admin/orders' },

@@ -44,7 +44,7 @@ const StatCard = ({ title, value, status = 0, icon, colorClass }) => {
                             <IoArrowDownOutline className='h-4 w-4 font-thin' />
                         } {status}%
                     </span>
-                    <span>in this past month</span>
+                    <span className='truncate'>in this past month</span>
                 </p>
             </div>
         </div>
