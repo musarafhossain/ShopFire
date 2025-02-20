@@ -1,12 +1,13 @@
 import React from 'react'
 import { useTheme } from '../../../context/ThemeContext';
 import { FiX, FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import { Link } from 'react-router-dom';
 
 const Sidebar = ({ isSidebarOpen, setIsSidebarOpen, isSidebarCollapsed, setIsSidebarCollapsed, navItems }) => {
     const { isDarkMode } = useTheme();
     return (
         <aside
-            className={`fixed top-0 left-0 text-nowrap h-screen transform transition-transform
+            className={`absolute md:static top-0 left-0 text-nowrap h-[100dvh] transform transition-transform
                         ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'}
                         ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} 
                         ${isSidebarCollapsed ? 'w-fit' : 'w-[250px]'} md:translate-x-0 z-50 flex flex-col`}
@@ -40,13 +41,13 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen, isSidebarCollapsed, setIsSid
                     <ul className="space-y-2">
                         {navItems.map((item) => (
                             <li key={item.label}>
-                                <a
-                                    href="#"
+                                <Link
+                                    to={item.link}
                                     className={`flex items-center p-2 gap-2 rounded-lg ${isDarkMode ? ' hover:bg-gray-700 ' : ' hover:bg-gray-200 '}`}
                                 >
                                     {item.icon}
                                     <span className={`${isSidebarCollapsed && 'hidden'}`}>{item.label}</span>
-                                </a>
+                                </Link>
                             </li>
                         ))}
                     </ul>

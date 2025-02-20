@@ -11,15 +11,15 @@ const AdminLayout = ({ children }) => {
     const { isDarkMode } = useTheme();
 
     const navItems = [
-        { label: 'Home', icon: <FiHome className="h-5 w-5" /> },
-        { label: 'Dashboard', icon: <FiBarChart2 className="h-5 w-5" /> },
-        { label: 'Users', icon: <FiUsers className="h-5 w-5" /> },
-        { label: 'Products', icon: <FiShoppingBag className="h-5 w-5" /> },
-        { label: 'Settings', icon: <FiSettings className="h-5 w-5" /> },
+        { label: 'Home', icon: <FiHome className="h-5 w-5" />, link: '/' },
+        { label: 'Dashboard', icon: <FiBarChart2 className="h-5 w-5" />, link: '/admin/dashboard' },
+        { label: 'Users', icon: <FiUsers className="h-5 w-5" />, link: '/admin/users' },
+        { label: 'Products', icon: <FiShoppingBag className="h-5 w-5" />, link: '/admin/products' },
+        { label: 'Settings', icon: <FiSettings className="h-5 w-5" />, link: '/admin/settings' },
     ];
 
     return (
-        <div className={`min-h-screen ${isDarkMode ? 'dark bg-gray-900' : 'bg-gray-100'}`}>
+        <div className={`min-h-[100dvh] flex ${isDarkMode ? 'dark bg-gray-900' : 'bg-gray-100'}`}>
             {/* Mobile Sidebar Backdrop */}
             {isSidebarOpen && (
                 <div
@@ -38,13 +38,13 @@ const AdminLayout = ({ children }) => {
             />
 
             {/* Main Content */}
-            <div className={`transition-all duration-300 ${isSidebarCollapsed ? "md:ml-20" : "md:ml-64"}`}>
+            <div className={`transition-all duration-300 flex-1 ${isSidebarCollapsed ? "" : ""}`}>
                 {/* Header */}
                 <Header setIsSidebarOpen={setIsSidebarOpen} />
 
                 {/* Content Area */}
-                <main className="pt-16 p-4 min-h-screen">
-                    <div className="rounded-lg p-6">
+                <main className="pt-16 min-h-[100dvh]">
+                    <div className="h-[50dvh] flex-1">
                         {children}
                     </div>
                 </main>

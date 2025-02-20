@@ -18,7 +18,7 @@ const Header = ({ setIsSidebarOpen }) => {
         >
             <button
                 onClick={() => setIsSidebarOpen(true)}
-                className="md:hidden p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg"
+                className={`md:hidden p-2 ${ isDarkMode ? ' hover:bg-gray-700 ' : ' hover:bg-gray-200 '} rounded-lg`}
             >
                 <HiMiniBars3BottomRight className="h-6 w-6" />
             </button>
