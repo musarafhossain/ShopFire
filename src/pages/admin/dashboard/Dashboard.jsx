@@ -1,9 +1,11 @@
 import React from 'react'
-import Layout from '../../../components/layout/Layout'
+import AdminLayout from '../../../components/layout/AdminLayout'
 
 const Dashboard = () => {
   return (
-    <Layout>Dashboard</Layout>
+    <AdminLayout>
+      Dashboard
+    </AdminLayout>
   )
 }
 
