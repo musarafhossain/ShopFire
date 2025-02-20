@@ -1,10 +1,9 @@
 //import react libraries
 import React from 'react'
+import ThemeToggleButton from '../../buttons/ThemeToggleButton';
 
 //import icons
 import { HiMiniBars3BottomRight } from "react-icons/hi2";
-import { IoMoonOutline } from "react-icons/io5";
-import { FiSun } from "react-icons/fi";
 
 //import theme context
 import { useTheme } from '../../../context/ThemeContext';
@@ -25,16 +24,7 @@ const Header = ({ setIsSidebarOpen }) => {
 
             <div className="flex-1" />
 
-            <button
-                onClick={toggleTheme}
-                className={`p-2 rounded-lg cursor-pointer`}
-            >
-                {isDarkMode ? (
-                    <FiSun className="h-6 w-6" />
-                ) : (
-                    <IoMoonOutline className="h-6 w-6" />
-                )}
-            </button>
+            <ThemeToggleButton className='p-2 rounded-lg'/>
         </header>
     )
 }

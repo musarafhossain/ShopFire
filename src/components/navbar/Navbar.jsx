@@ -5,8 +5,6 @@ import { Link } from "react-router-dom";
 //import react icons
 import { FaUserCircle, FaSearch } from "react-icons/fa";
 import { HiMiniBars3BottomRight } from "react-icons/hi2";
-import { IoMoonOutline } from "react-icons/io5";
-import { FiSun } from "react-icons/fi";
 import { IoHomeOutline } from "react-icons/io5";
 import { FiShoppingCart } from "react-icons/fi";
 import { FiShoppingBag } from "react-icons/fi";
@@ -14,6 +12,9 @@ import { BsTruck } from "react-icons/bs";
 
 //import context
 import { useTheme } from '../../context/ThemeContext';
+
+import ThemeToggleButton from '../buttons/ThemeToggleButton';
+import Logo from '../Logo';
 
 //import other libraries
 import gsap from 'gsap';
@@ -24,7 +25,7 @@ gsap.registerPlugin(useGSAP);
 gsap.registerPlugin(ScrollTrigger);
 
 const Navbar = () => {
-  const { isDarkMode, toggleTheme } = useTheme();
+  const { isDarkMode } = useTheme();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
@@ -95,13 +96,7 @@ const Navbar = () => {
                 size={25}
                 onClick={toggleSidebar}
               />
-              <Link to='/'>
-                <img
-                  src={`${isDarkMode ? '/logo-invert.png' : '/logo.png'}`}
-                  alt='Logo'
-                  className='w-[170px] hidden sm:block lg:w-[200px] py-1.5 rounded-xl'
-                />
-              </Link>
+              <Logo className='hidden sm:flex'/>
             </div>
 
             {/* Navigation Menu - Sidebar for Mobile */}
@@ -146,9 +141,7 @@ const Navbar = () => {
                 </span>
               </Link>
 
-              <button type='button' onClick={toggleTheme} className='cursor-pointer right-icon'>
-                {isDarkMode ? <FiSun size={25} /> : <IoMoonOutline size={25} />}
-              </button>
+              <ThemeToggleButton className='right-icon'/>
 
               <button type="button" className='right-icon'>
                 <FaUserCircle size={25} />

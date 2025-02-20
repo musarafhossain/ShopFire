@@ -2,6 +2,7 @@ import React from 'react'
 import { FiHeart, FiShoppingCart } from 'react-icons/fi';
 import { useTheme } from '../context/ThemeContext';
 import Rating from './Rating';
+import LazyImage from './LazyImage';
 
 const ProductCard = ({ product }) => {
     const { isDarkMode } = useTheme();
@@ -14,7 +15,7 @@ const ProductCard = ({ product }) => {
             {/* Image Section */}
             <div className={`relative overflow-hidden rounded-b-3xl ${isDarkMode ? 'bg-gray-600' : 'bg-white'}`}>
                 <div className="relative">
-                    <img
+                    <LazyImage
                         src={product.image}
                         alt={product.name}
                         className="w-full h-48 sm:h-56 md:h-64 object-cover transition-transform duration-300 group-hover:scale-105"

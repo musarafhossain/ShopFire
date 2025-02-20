@@ -38,13 +38,13 @@ const AdminLayout = ({ children }) => {
             />
 
             {/* Main Content */}
-            <div className={`transition-all duration-300 flex-1 ${isSidebarCollapsed ? "" : ""}`}>
+            <div className={`transition-all duration-300`}>
                 {/* Header */}
                 <Header setIsSidebarOpen={setIsSidebarOpen} />
 
                 {/* Content Area */}
                 <main className="pt-16 min-h-[100dvh]">
-                    <div className="h-[50dvh] flex-1">
+                    <div className="p-5">
                         {children}
                     </div>
                 </main>

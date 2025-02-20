@@ -2,6 +2,7 @@ import React from 'react'
 import { useTheme } from '../../../context/ThemeContext';
 import { FiX, FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { Link } from 'react-router-dom';
+import Logo from '../../Logo';
 
 const Sidebar = ({ isSidebarOpen, setIsSidebarOpen, isSidebarCollapsed, setIsSidebarCollapsed, navItems }) => {
     const { isDarkMode } = useTheme();
@@ -12,13 +13,9 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen, isSidebarCollapsed, setIsSid
                         ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} 
                         ${isSidebarCollapsed ? 'w-fit' : 'w-[250px]'} md:translate-x-0 z-50 flex flex-col`}
         >
-            <div className={`flex items-center justify-between h-16 ${isSidebarCollapsed && ' pl-4 '} border-b ${isDarkMode ? 'bg-gray-800 border-b border-gray-700' : 'bg-white border-b border-gray-200'}`}>
+            <div className={`flex items-center justify-between h-16 ${isSidebarCollapsed && ' pl-4 '} border-b ${isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
                 {!isSidebarCollapsed &&
-                    <img
-                        src={`${isDarkMode ? '/logo-invert.png' : '/logo.png'}`}
-                        alt="Logo"
-                        className='w-[170px] hidden sm:block lg:w-[200px] py-1.5 rounded-xl'
-                    />
+                    <Logo />
                 }
                 <div className="flex items-center">
                     <button
@@ -36,8 +33,8 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen, isSidebarCollapsed, setIsSid
                 </div>
             </div>
 
-            <div className="flex-1 shadow-[1px_2px_5px_rgba(0,0,0,0.3)] flex flex-col">
-                <nav className="p-4 flex-1 overflow-y-auto">
+            <div className="flex-1 shadow-[1px_2px_5px_rgba(0,0,0,0.3)] flex flex-col overflow-y-auto">
+                <nav className="p-4 flex-1">
                     <ul className="space-y-2">
                         {navItems.map((item) => (
                             <li key={item.label}>
