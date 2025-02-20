@@ -46,7 +46,7 @@ const AdminLayout = ({ children, className }) => {
             />
 
             {/* Main Content */}
-            <div className={`transition-all duration-300 flex-1`}>
+            <div className={` flex-1 ${isSidebarCollapsed ? 'md:ml-16' : 'md:ml-64'}`}>
                 {/* Header */}
                 <Header setIsSidebarOpen={setIsSidebarOpen} />
 

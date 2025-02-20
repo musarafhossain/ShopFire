@@ -8,10 +8,10 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen, isSidebarCollapsed, setIsSid
     const { isDarkMode } = useTheme();
     return (
         <aside
-            className={`absolute md:static top-0 left-0 text-nowrap h-[100dvh] transform transition-transform
+            className={`fixed top-0 left-0 text-nowrap h-[100dvh] transform transition-transform
                         ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'}
                         ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} 
-                        ${isSidebarCollapsed ? 'w-fit' : 'w-[250px]'} md:translate-x-0 z-50 flex flex-col`}
+                        ${isSidebarCollapsed ? 'w-16' : 'w-64'} md:translate-x-0 z-50 flex flex-col`}
         >
             <div className={`flex items-center justify-between h-16 ${isSidebarCollapsed && ' pl-4 '} border-b ${isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
                 {!isSidebarCollapsed &&
