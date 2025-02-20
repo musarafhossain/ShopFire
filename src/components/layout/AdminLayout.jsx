@@ -5,7 +5,7 @@ import Sidebar from '../admin/sidebar/Sidebar';
 import { FiHome, FiBarChart2, FiUsers, FiShoppingBag, FiSettings } from "react-icons/fi";
 
 
-const AdminLayout = ({ children }) => {
+const AdminLayout = ({ children, className }) => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
     const { isDarkMode } = useTheme();
@@ -38,13 +38,13 @@ const AdminLayout = ({ children }) => {
             />
 
             {/* Main Content */}
-            <div className={`transition-all duration-300`}>
+            <div className={`transition-all duration-300 flex-1`}>
                 {/* Header */}
                 <Header setIsSidebarOpen={setIsSidebarOpen} />
 
                 {/* Content Area */}
-                <main className="pt-16 min-h-[100dvh]">
-                    <div className="p-5">
+                <main className="pt-16 min-h-[100dvh] w-full">
+                    <div className={`p-5 ${className}`}>
                         {children}
                     </div>
                 </main>

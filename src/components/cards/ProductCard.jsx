@@ -1,8 +1,8 @@
 import React from 'react'
 import { FiHeart, FiShoppingCart } from 'react-icons/fi';
-import { useTheme } from '../context/ThemeContext';
-import Rating from './Rating';
-import LazyImage from './LazyImage';
+import { useTheme } from '../../context/ThemeContext';
+import Rating from '../Rating';
+import LazyImage from '../LazyImage';
 
 const ProductCard = ({ product }) => {
     const { isDarkMode } = useTheme();
