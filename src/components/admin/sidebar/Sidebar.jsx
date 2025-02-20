@@ -41,6 +41,7 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen, isSidebarCollapsed, setIsSid
                                 <Link
                                     to={item.link}
                                     className={`flex items-center p-2 gap-2 rounded-lg ${isDarkMode ? ' hover:bg-gray-700 ' : ' hover:bg-gray-200 '}`}
+                                    title={item.label}
                                 >
                                     {item.icon}
                                     <span className={`${isSidebarCollapsed && 'hidden'}`}>{item.label}</span>

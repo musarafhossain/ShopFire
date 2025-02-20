@@ -15,7 +15,7 @@ const Dashboard = () => {
   ]
 
   return (
-    <AdminLayout className={`w-full min-h-screen ${isDarkMode ? 'bg-slate-900' : 'bg-gray-100'}`}>
+    <AdminLayout className={`w-full`}>
       <div className="p-2">
         <h1 className={`text-2xl font-bold mb-6 ${isDarkMode ? 'text-gray-200' : 'text-gray-800'}`}>
           Dashboard Overview

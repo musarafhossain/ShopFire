@@ -6,7 +6,7 @@ const StatCard = ({ title, value, status = 0, icon, colorClass }) => {
     const { isDarkMode } = useTheme();
     
     return (
-        <div className={`p-3 rounded-lg shadow-sm border ${
+        <div className={`p-3 rounded-lg shadow-sm border hover:scale-105 duration-300 ${
             isDarkMode 
                 ? 'bg-slate-800 border-slate-700' 
                 : 'bg-white border-gray-100'
