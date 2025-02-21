@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { useTheme } from '../context/ThemeContext'
-import LazyImage from './LazyImage'
+import { useTheme } from '@/context/ThemeContext'
+import LazyImage from '@/components/LazyImage'
 
 const Logo = ({ className }) => {
     const { isDarkMode } = useTheme();

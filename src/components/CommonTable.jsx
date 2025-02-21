@@ -1,9 +1,12 @@
-import { useTheme } from '../context/ThemeContext';
-import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-import { ThemeProvider, createTheme } from '@mui/material';
+import { useTheme } from '@/context/ThemeContext';
+import { DataGrid, GridToolbarContainer, GridToolbarQuickFilter } from '@mui/x-data-grid';
+import { ThemeProvider, createTheme, Button } from '@mui/material';
+import { Delete } from '@mui/icons-material';
+import { useState } from 'react';
 
-const CommonTable = ({ data, customColumns }) => {
+const CommonTable = ({ data, customColumns, onDeleteSelected }) => {
   const { isDarkMode } = useTheme();
+  const [selectedRows, setSelectedRows] = useState([]);
 
   const theme = createTheme({
     palette: {
@@ -35,17 +38,46 @@ const CommonTable = ({ data, customColumns }) => {
     },
   });
 
+  const CustomToolbar = () => (
+    <GridToolbarContainer className={`flex justify-between items-center gap-2 ${isDarkMode ? 'bg-[#1e2939]' : 'bg-[#ffffff]'}`}>
+      <GridToolbarQuickFilter />
+      {selectedRows.length > 0 && (
+        <Button
+          variant="contained"
+          startIcon={<Delete />}
+          onClick={() => onDeleteSelected(selectedRows)}
+          sx={{
+            backgroundColor: 'transparent',
+            color: '#d32f2f',
+            '&:hover': {
+              boxShadow: 'none',
+            },
+            boxShadow: 'none',
+            textTransform: 'none',
+          }}
+        >
+          Delete ({selectedRows.length})
+        </Button>
+      )}
+    </GridToolbarContainer>
+  );
+
   return (
     <ThemeProvider theme={theme}>
-      <div style={{ height: '100%', width: '100%' }}>
+      <div style={{ width: '100%' }} className='h-[calc(100dvh-165px)]'>
         <DataGrid
           rows={data}
           columns={customColumns}
-          pageSize={10}
-          rowsPerPageOptions={[10, 25, 50]}
+          pageSizeOptions={[10, 25, 50, 75, 100]} 
+          initialState={{
+            pagination: {
+              paginationModel: { page: 0, pageSize: 10 }, 
+            },
+          }}
           checkboxSelection={true}
           disableRowSelectionOnClick={true}
-          components={{ Toolbar: GridToolbar }}
+          onRowSelectionModelChange={(newSelection) => setSelectedRows(newSelection)}
+          slots={{ toolbar: () => <CustomToolbar /> }}
           sx={{
             '& .MuiDataGrid-toolbarContainer': {
               flexDirection: 'row-reverse',
@@ -56,10 +88,26 @@ const CommonTable = ({ data, customColumns }) => {
             '& .MuiDataGrid-columnHeaderTitle': {
               fontWeight: '600',
             },
-            '& .MuiDataGrid-cell': {
+            // Remove focus borders for cells
+            '& .MuiDataGrid-cell:focus': {
+              outline: 'none',
+            },
+            // Remove focus borders for cell children (buttons/checkboxes)
+            '& .MuiDataGrid-cell:focus-within': {
+              outline: 'none',
+              boxShadow: 'none',
+            },
+            // Remove focus ring for checkboxes
+            '& .MuiCheckbox-root.Mui-checked': {
               '&:focus': {
                 outline: 'none',
+                boxShadow: 'none',
               },
+            },
+            // Remove focus ring for buttons
+            '& .MuiButtonBase-root:focus': {
+              outline: 'none',
+              boxShadow: 'none',
             },
           }}
         />
@@ -69,4 +117,3 @@ const CommonTable = ({ data, customColumns }) => {
 };
 
 export default CommonTable;
-

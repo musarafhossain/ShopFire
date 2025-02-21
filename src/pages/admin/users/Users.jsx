@@ -1,40 +1,66 @@
 // pages/admin/Users.jsx
 import React, { useState } from 'react';
-import AdminLayout from '../../../components/layout/AdminLayout';
+import AdminLayout from '@/components/layout/AdminLayout';
 import { Button, IconButton } from '@mui/material';
 import { Add, Edit, Delete } from '@mui/icons-material';
-import CommonTable from '../../../components/CommonTable';
+import CommonTable from '@/components/CommonTable';
 import DeleteModal from '../../../components/modals/DeleteModal';
+import UserModal from '../../../components/modals/UserModal';
 
 const Users = () => {
-  const [users, setUsers] = useState([
-    { id: 1, name: 'John Doe', email: 'john@example.com', role: 'Admin', createdAt: '2023-01-15' },
-    { id: 2, name: 'Jane Smith', email: 'jane@example.com', role: 'User', createdAt: '2023-02-20' },
-    { id: 3, name: 'Mike Johnson', email: 'mike@example.com', role: 'User', createdAt: '2023-03-10' },
-    { id: 4, name: 'Sarah Williams', email: 'sarah@example.com', role: 'Manager', createdAt: '2023-04-05' },
-    { id: 5, name: 'David Brown', email: 'david@example.com', role: 'User', createdAt: '2023-05-15' }
-  ]);
-  const [isOpenDeleteModal, setOpenDeleteModal] = useState(false);
-  const [selectedUser, setSelectedUser] = useState(null);
+  const [users, setUsers] = useState(
+    Array.from({ length: 150 }, (_, i) => {
+      const roles = ['Admin', 'User', 'Manager'];
+      const date = new Date(2023, 0, 1 + i);
+      return {
+        id: i + 1,
+        name: `User ${i + 1}`,
+        email: `user${i + 1}@example.com`,
+        role: roles[i % roles.length],
+        createdAt: date.toISOString().split('T')[0],
+      };
+    })
+  ); // Users State
+  const [isOpenDeleteModal, setOpenDeleteModal] = useState(false);  // Delete Modal State
+  const [isOpenUserModal, setOpenUserModal] = useState(false);      // User Modal State
+  const [selectedUser, setSelectedUser] = useState(null);           // Selected User State
 
-  const openDeleteModal = () => {
-    setOpenDeleteModal(true);
-  }
-
+  //------------------------ Delete Modal Functions ------------------------------
+  const openDeleteModal = () => setOpenDeleteModal(true);
   const closeDeleteModal = () => {
     setOpenDeleteModal(false);
+    setSelectedUser(null);
   }
-
   const handleDeleteUser = () => {
     const updatedUsers = users.filter(user => user.id !== selectedUser.id);
     setUsers(updatedUsers);
     closeDeleteModal();
   };
-
-  const handleCancleDeleteUser = () => {
-    closeDeleteModal()
+  const handleDeleteSelected = (selectedIds) => {
+    setUsers(users.filter(user => !selectedIds.includes(user.id)));
   };
 
+  //---------------------- Add/Update Modal Functions ----------------------------
+  const openUserModal = () => setOpenUserModal(true);
+  const closeUserModal = () => {
+    setOpenUserModal(false);
+    setSelectedUser(null);
+  }
+  const handleSaveUser = (user) => {
+    if (selectedUser) {
+      // Editing an existing user
+      const updatedUsers = users.map((u) => (u.id === user.id ? user : u));
+      setUsers(updatedUsers);
+    } else {
+      // Adding a new user
+      const newId = users.length ? Math.max(...users.map((u) => u.id)) + 1 : 1;
+      const newUser = { ...user, id: newId, createdAt: new Date().toISOString().split('T')[0] };
+      setUsers([...users, newUser]);
+    }
+    closeUserModal();
+  };
+
+  //---------------------------- Table Columns -----------------------------------
   const userColumns = [
     { field: 'id', headerName: 'UserID', minWidth: 120 },
     { field: 'name', headerName: 'Name', flex: 1, minWidth: 150 },
@@ -48,14 +74,20 @@ const Users = () => {
       outline: 'none',
       renderCell: (params) => (
         <div className="flex gap-2 items-center h-full">
-          <IconButton color="primary" onClick={() => console.log('Edit', params.row.id)}>
+          <IconButton
+            color="primary"
+            onClick={() => {
+              setSelectedUser(params.row);
+              openUserModal();
+            }}
+          >
             <Edit fontSize="small" />
           </IconButton>
           <IconButton
             color="error"
             onClick={() => {
               setSelectedUser(params.row);
-              setOpenDeleteModal(true);
+              openDeleteModal();
             }}
           >
             <Delete fontSize="small" />
@@ -65,26 +97,38 @@ const Users = () => {
     },
   ];
 
+  //----------------------------------- UI ---------------------------------------
   return (
     <>
       <AdminLayout className='flex flex-col gap-5 w-full'>
         <div className="flex justify-between items-center">
           <h1 className="text-xl font-semibold">User Management</h1>
-          <Button variant="contained" startIcon={<Add />}>
+          <Button variant="contained" startIcon={<Add />} onClick={openUserModal}>
             Add User
           </Button>
         </div>
-        <CommonTable data={users} customColumns={userColumns} />
+        <CommonTable 
+          data={users} 
+          customColumns={userColumns} 
+          onDeleteSelected={handleDeleteSelected}
+        />
       </AdminLayout>
 
       <DeleteModal
         title='Confirm Delete'
         message={`Are you sure you want to delete user ${selectedUser?.name}?`}
         handleDelete={handleDeleteUser}
-        handleCancleDelete={handleCancleDeleteUser}
         isOpenDeleteModal={isOpenDeleteModal}
-        openDeleteModal={openDeleteModal}
-        closeDeleteModal={closeDeleteModal}
+        openModal={openDeleteModal}
+        closeModal={closeDeleteModal}
+      />
+
+      <UserModal
+        isOpen={isOpenUserModal}
+        closeModal={closeUserModal}
+        openModal={openUserModal}
+        editingUser={selectedUser}
+        handleSaveUser={handleSaveUser}
       />
     </>
   );

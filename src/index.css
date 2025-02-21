@@ -1,1 +1,29 @@
 @import "tailwindcss";
+
+/* Light Mode Scrollbar */
+::-webkit-scrollbar {
+    width: 5px;  /* Reduced width */
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #e0e0e0;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* for hide notification scrollbar  */
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}

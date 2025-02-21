@@ -20,7 +20,7 @@ const ModalLayout = ({ children, isOpenModal, openModal, closeModal }) => {
             closeAfterTransition
             style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
         >
-            <Grow in={isOpenModal} timeout={300}>
+            <Grow in={isOpenModal}>
                 <Box sx={{
                     width: 400,
                     maxWidth: '95%',
