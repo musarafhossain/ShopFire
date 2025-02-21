@@ -5,22 +5,26 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
-import './App.css'
+import '@/App.css'
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/free-mode";
 
 //import pages
-import Home from './pages/home/Home';
-import AllProducts from './pages/allProducts/AllProducts';
-import Cart from './pages/cart/Cart';
-import Order from './pages/order/Order';
-import Product from './pages/product/Product';
-import NoPage from './pages/nopage/NoPage';
+import Home from '@/pages/home/Home';
+import AllProducts from '@/pages/allProducts/AllProducts';
+import Cart from '@/pages/cart/Cart';
+import Order from '@/pages/order/Order';
+import Product from '@/pages/product/Product';
+import NoPage from '@/pages/nopage/NoPage';
 
 //Admin Section
-import Dashboard from './pages/admin/dashboard/Dashboard';
-import Users from './pages/admin/users/Users';
-import Orders from './pages/admin/orders/Orders';
-import Products from './pages/admin/products/Products';
-import Settings from './pages/admin/settings/Settings';
+import Dashboard from '@/pages/admin/dashboard/Dashboard';
+import Users from '@/pages/admin/users/Users';
+import Orders from '@/pages/admin/orders/Orders';
+import Products from '@/pages/admin/products/Products';
+import Settings from '@/pages/admin/settings/Settings';
 
 
 const App = () => {
