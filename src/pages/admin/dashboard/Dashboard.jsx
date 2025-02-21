@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import AdminLayout from '../../../components/layout/AdminLayout';
 import StatCard from '../../../components/cards/StatCard';
 import { FaDollarSign, FaClipboardList, FaChartLine, FaUsers } from 'react-icons/fa';
@@ -6,6 +6,10 @@ import { useTheme } from '../../../context/ThemeContext';
 
 const Dashboard = () => {
   const { isDarkMode } = useTheme();
+
+  useEffect(() => {
+    document.title = 'Dashboard | Admin Panel';
+  }, []);
 
   const cardData = [
     { title: 'Total Sales', value: "$54,230", colorClass: "text-purple-600", icon: <FaDollarSign className="w-6 h-6" />, status: 37 },

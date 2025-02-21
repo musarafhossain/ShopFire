@@ -1,5 +1,5 @@
 // pages/admin/Users.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AdminLayout from '@/components/layout/AdminLayout';
 import { Button, IconButton } from '@mui/material';
 import { Add, Edit, Delete } from '@mui/icons-material';
@@ -97,6 +97,11 @@ const Users = () => {
     },
   ];
 
+  //----------------------------- Title Update -----------------------------------
+  useEffect(() => {
+    document.title = 'Users | Admin Panel';
+  }, []);
+
   //----------------------------------- UI ---------------------------------------
   return (
     <>
@@ -111,6 +116,7 @@ const Users = () => {
           data={users} 
           customColumns={userColumns} 
           onDeleteSelected={handleDeleteSelected}
+          emptyMessage="No users found"
         />
       </AdminLayout>
 

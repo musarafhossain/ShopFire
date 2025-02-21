@@ -1,13 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AdminLayout from '../../../components/layout/AdminLayout';
 import { Button, Chip } from '@mui/material';
 import CommonTable from '../../../components/CommonTable';
 
 const Orders = () => {
-  const [orders] = useState([
-    { id: 1, customer: 'John Doe', total: 149.99, status: 'Pending', date: '2023-07-15' },
-    { id: 2, customer: 'Jane Smith', total: 299.99, status: 'Completed', date: '2023-07-14' },
-  ]);
+  const [orders] = useState(
+    Array.from({ length: 50 }, (_, idx) => ({
+      id: idx + 1,
+      customer: `Customer ${idx + 1}`,
+      total: parseFloat((Math.random() * 500).toFixed(2)),
+      status: Math.random() > 0.5 ? 'Pending' : 'Completed',
+      date: new Date(Date.now() - idx * 86400000).toISOString().split('T')[0],
+    }))
+  );
 
   const orderColumns = [
     { field: 'id', headerName: 'OrderID', width: 150 },
@@ -52,6 +57,11 @@ const Orders = () => {
       ),
     },
   ];
+
+  //----------------------------- Title Update -----------------------------------
+  useEffect(() => {
+    document.title = 'Orders | Admin Panel';
+  }, []);
 
   return (
     <AdminLayout className='flex flex-col gap-5 w-full'>

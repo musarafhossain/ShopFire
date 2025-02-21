@@ -4,7 +4,7 @@ import { ThemeProvider, createTheme, Button } from '@mui/material';
 import { Delete } from '@mui/icons-material';
 import { useState } from 'react';
 
-const CommonTable = ({ data, customColumns, onDeleteSelected }) => {
+const CommonTable = ({ data, customColumns, onDeleteSelected, emptyMessage = 'No rows' }) => {
   const { isDarkMode } = useTheme();
   const [selectedRows, setSelectedRows] = useState([]);
 
@@ -68,16 +68,17 @@ const CommonTable = ({ data, customColumns, onDeleteSelected }) => {
         <DataGrid
           rows={data}
           columns={customColumns}
-          pageSizeOptions={[10, 25, 50, 75, 100]} 
+          pageSizeOptions={[10, 25, 50, 75, 100]}
           initialState={{
             pagination: {
-              paginationModel: { page: 0, pageSize: 10 }, 
+              paginationModel: { page: 0, pageSize: 10 },
             },
           }}
           checkboxSelection={true}
           disableRowSelectionOnClick={true}
           onRowSelectionModelChange={(newSelection) => setSelectedRows(newSelection)}
           slots={{ toolbar: () => <CustomToolbar /> }}
+          localeText={{ noRowsLabel: emptyMessage }}
           sx={{
             '& .MuiDataGrid-toolbarContainer': {
               flexDirection: 'row-reverse',
@@ -87,6 +88,10 @@ const CommonTable = ({ data, customColumns, onDeleteSelected }) => {
             },
             '& .MuiDataGrid-columnHeaderTitle': {
               fontWeight: '600',
+            },
+            // Remove focus borders for headers
+            '& .MuiDataGrid-columnHeader:focus': {
+              outline: 'none',
             },
             // Remove focus borders for cells
             '& .MuiDataGrid-cell:focus': {

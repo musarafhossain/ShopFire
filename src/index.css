@@ -1,8 +1,13 @@
 @import "tailwindcss";
-
 /* Light Mode Scrollbar */
+/* Vertical scrollbar */
 ::-webkit-scrollbar {
-    width: 5px;  /* Reduced width */
+  width: 5px;  /* Reduced width */
+}
+
+/* Horizontal scrollbar */
+::-webkit-scrollbar:horizontal {
+  height: 5px;  /* Reduced height */
 }
 
 /* Track */
@@ -22,8 +27,6 @@
 
 /* for hide notification scrollbar  */
 .hide-scrollbar {
-  -ms-overflow-style: none;
-  /* IE and Edge */
-  scrollbar-width: none;
-  /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
