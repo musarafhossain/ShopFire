@@ -27,7 +27,7 @@ const AdminLayout = ({ children, className }) => {
     ];
 
     return (
-        <div className={`min-h-[100dvh] flex ${isDarkMode ? 'dark bg-gray-900' : 'bg-gray-100'}`}>
+        <div className={`min-h-[100dvh] overflow-x-auto flex ${isDarkMode ? 'dark bg-gray-900' : 'bg-gray-100'}`}>
             {/* Mobile Sidebar Backdrop */}
             {isSidebarOpen && (
                 <div
@@ -51,7 +51,7 @@ const AdminLayout = ({ children, className }) => {
                 <Header setIsSidebarOpen={setIsSidebarOpen} />
 
                 {/* Content Area */}
-                <main className="pt-16 min-h-[100dvh] w-full">
+                <main className={`pt-16 min-h-[100dvh] w-full`}>
                     <div className={`p-5 ${className}`}>
                         {children}
                     </div>

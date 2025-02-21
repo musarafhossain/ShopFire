@@ -10,7 +10,7 @@ const Orders = () => {
   ]);
 
   const orderColumns = [
-    { field: 'id', headerName: 'Order ID', width: 150 },
+    { field: 'id', headerName: 'OrderID', width: 150 },
     { field: 'customer', headerName: 'Customer', width: 200 },
     { field: 'total', headerName: 'Total', width: 120, type: 'number' },
     { 
@@ -54,9 +54,8 @@ const Orders = () => {
   ];
 
   return (
-    <AdminLayout
-      header={<h1 className="text-xl font-semibold">Order Management</h1>}
-    >
+    <AdminLayout className='flex flex-col gap-5 w-full'>
+      <h1 className="text-xl font-semibold">Order Management</h1>
       <CommonTable type="orders" data={orders} customColumns={orderColumns} />
     </AdminLayout>
   );

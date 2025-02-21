@@ -3,33 +3,8 @@ import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { darken, lighten } from '@mui/material/styles';
 import { ThemeProvider, createTheme } from '@mui/material';
 
-const CommonTable = ({ data, type, customColumns }) => {
+const CommonTable = ({ data, customColumns }) => {
   const { isDarkMode } = useTheme();
-
-  // Default columns configuration
-  const columnDefinitions = {
-    users: [
-      { field: 'id', headerName: 'USER ID', width: 100 },
-      { field: 'name', headerName: 'Name', width: 200 },
-      { field: 'email', headerName: 'Email', width: 250 },
-      { field: 'role', headerName: 'Role', width: 150 },
-      { field: 'createdAt', headerName: 'Joined', width: 180 },
-    ],
-    products: [
-      { field: 'id', headerName: 'ID', width: 100 },
-      { field: 'name', headerName: 'Product', width: 250 },
-      { field: 'price', headerName: 'Price', width: 120, type: 'number' },
-      { field: 'stock', headerName: 'Stock', width: 120, type: 'number' },
-      { field: 'category', headerName: 'Category', width: 150 },
-    ],
-    orders: [
-      { field: 'id', headerName: 'Order ID', width: 150 },
-      { field: 'customer', headerName: 'Customer', width: 200 },
-      { field: 'total', headerName: 'Total', width: 120, type: 'number' },
-      { field: 'status', headerName: 'Status', width: 150 },
-      { field: 'date', headerName: 'Date', width: 180 },
-    ],
-  };
 
   const theme = createTheme({
     palette: {
@@ -61,14 +36,12 @@ const CommonTable = ({ data, type, customColumns }) => {
     },
   });
 
-  const columns = customColumns || columnDefinitions[type];
-
   return (
     <ThemeProvider theme={theme}>
       <div style={{ height: 600, width: '100%' }}>
         <DataGrid
           rows={data}
-          columns={columns}
+          columns={customColumns}
           pageSize={10}
           rowsPerPageOptions={[10, 25, 50]}
           checkboxSelection={true}

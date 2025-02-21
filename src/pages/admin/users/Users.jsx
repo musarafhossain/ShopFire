@@ -19,7 +19,7 @@ const Users = () => {
   };
 
   const userColumns = [
-    { field: 'id', headerName: 'User ID', width: 100 },
+    { field: 'id', headerName: 'UserID', width: 100 },
     { field: 'name', headerName: 'Name', width: 200 },
     { field: 'email', headerName: 'Email', width: 250 },
     { field: 'role', headerName: 'Role', width: 150 },
@@ -33,7 +33,7 @@ const Users = () => {
           <IconButton color="primary" onClick={() => console.log('Edit', params.row.id)}>
             <Edit fontSize="small" />
           </IconButton>
-          <IconButton 
+          <IconButton
             color="error"
             onClick={() => {
               setSelectedUser(params.row);
@@ -48,20 +48,17 @@ const Users = () => {
   ];
 
   return (
-    <AdminLayout
-      header={
-        <div className="flex justify-between items-center">
-          <h1 className="text-xl font-semibold">User Management</h1>
-          <Button variant="contained" startIcon={<Add />}>
-            Add User
-          </Button>
-        </div>
-      }
-    >
+    <AdminLayout className='flex flex-col gap-5 w-full'>
+      <div className="flex justify-between items-center">
+        <h1 className="text-xl font-semibold">User Management</h1>
+        <Button variant="contained" startIcon={<Add />}>
+          Add User
+        </Button>
+      </div>
       <CommonTable type="users" data={users} customColumns={userColumns} />
-      
+
       {deleteDialogOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+        <div className="fixed top-0 left-0 inset-0 bg-black/10 bg-opacity-50 flex items-center justify-center p-4">
           <div className="bg-white p-6 rounded-lg w-96">
             <h3 className="text-lg font-medium">Confirm Delete</h3>
             <p className="mt-2 text-gray-600">

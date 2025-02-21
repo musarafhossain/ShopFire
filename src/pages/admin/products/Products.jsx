@@ -12,7 +12,7 @@ const Products = () => {
   ]);
 
   const productColumns = [
-    { field: 'id', headerName: 'Product ID', width: 100 },
+    { field: 'id', headerName: 'ProductID', width: 100 },
     { field: 'name', headerName: 'Product', width: 250 },
     { field: 'price', headerName: 'Price', width: 120, type: 'number' },
     { field: 'stock', headerName: 'Stock', width: 120, type: 'number' },
@@ -35,16 +35,13 @@ const Products = () => {
   ];
 
   return (
-    <AdminLayout
-      header={
-        <div className="flex justify-between items-center">
+    <AdminLayout className='flex flex-col gap-5 w-full'>
+      <div className="flex justify-between items-center">
           <h1 className="text-xl font-semibold">Product Management</h1>
           <Button variant="contained" startIcon={<Add />}>
             Add Product
           </Button>
         </div>
-      }
-    >
       <CommonTable type="products" data={products} customColumns={productColumns} />
     </AdminLayout>
   );
