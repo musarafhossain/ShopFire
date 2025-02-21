@@ -27,7 +27,7 @@ const AdminLayout = ({ children, className }) => {
     ];
 
     return (
-        <div className={`min-h-[100dvh] overflow-x-auto flex ${isDarkMode ? 'dark bg-gray-900' : 'bg-gray-100'}`}>
+        <div className={`min-h-[100dvh] ${isSidebarCollapsed ? 'md:ml-16' : 'md:ml-64'} overflow-x-auto flex ${isDarkMode ? 'dark bg-gray-900' : 'bg-gray-100'}`}>
             {/* Mobile Sidebar Backdrop */}
             {isSidebarOpen && (
                 <div
@@ -46,13 +46,13 @@ const AdminLayout = ({ children, className }) => {
             />
 
             {/* Main Content */}
-            <div className={` flex-1 ${isSidebarCollapsed ? 'md:ml-16' : 'md:ml-64'}`}>
+            <div className={` flex-1 w-full`}>
                 {/* Header */}
                 <Header setIsSidebarOpen={setIsSidebarOpen} />
 
                 {/* Content Area */}
-                <main className={`pt-16 min-h-[100dvh] w-full`}>
-                    <div className={`p-5 ${className}`}>
+                <main className={`pt-16 min-h-[100dvh] `}>
+                    <div className={`p-5 min-h-[calc(100dvh-64px)] w-[100vw] ${className} ${isSidebarCollapsed ? 'md:max-w-[calc(100vw-64px)]' : 'md:max-w-[calc(100vw-256px)]'}`}>
                         {children}
                     </div>
                 </main>

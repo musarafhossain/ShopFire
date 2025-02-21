@@ -3,7 +3,7 @@ import ModalLayout from '../layout/ModalLayout'
 import { Box, Typography, Button } from '@mui/material';
 import { useTheme } from '../../context/ThemeContext';
 
-const DeleteModal = ({ title, message, handleDelete, handleCancleDelete,isOpenDeleteModal, openDeleteModal, closeDeleteModal}) => {
+const DeleteModal = ({ title, message, handleDelete, handleCancleDelete, isOpenDeleteModal, openDeleteModal, closeDeleteModal}) => {
     const { isDarkMode } = useTheme();
     return (
         <ModalLayout isOpenModal={isOpenDeleteModal} openModal={openDeleteModal} closeModal={closeDeleteModal}>

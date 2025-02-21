@@ -21,7 +21,6 @@ const Users = () => {
     setOpenDeleteModal(true);
   }
 
-
   const closeDeleteModal = () => {
     setOpenDeleteModal(false);
   }

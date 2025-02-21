@@ -37,7 +37,7 @@ const CommonTable = ({ data, customColumns }) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <div style={{ height: 600, width: '100%' }}>
+      <div style={{ minHeight: '100%', width: '100%' }}>
         <DataGrid
           rows={data}
           columns={customColumns}
