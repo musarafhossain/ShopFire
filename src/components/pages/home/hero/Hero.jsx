@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
-import { useTheme } from '../../../context/ThemeContext';
+import { useTheme } from '../../../../context/ThemeContext';
 import Lottie from 'lottie-react';
-import animationData from '../../../assets/Lottie/home/Shop_Lottie.json';
+import animationData from '../../../../assets/Lottie/home/Shop_Lottie.json';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 

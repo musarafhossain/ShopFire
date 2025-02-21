@@ -1,8 +1,8 @@
 import React from 'react'
-import { useTheme } from '../../../context/ThemeContext'
-import Rating from '../../Rating';
+import { useTheme } from '../../../../context/ThemeContext'
+import Rating from '../../../Rating';
 import { FiStar, FiThumbsUp, FiThumbsDown, FiClock, FiUser } from 'react-icons/fi';
-import LazyImage from '../../LazyImage';
+import LazyImage from '../../../LazyImage';
 
 const ProductDetails = () => {
   const { isDarkMode } = useTheme();

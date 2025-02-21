@@ -1,8 +1,8 @@
 import React from 'react'
-import { useTheme } from '../../../context/ThemeContext';
+import { useTheme } from '../../../../context/ThemeContext';
 import { FiX, FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { Link } from 'react-router-dom';
-import Logo from '../../Logo';
+import Logo from '../../../Logo';
 
 const Sidebar = ({ isSidebarOpen, setIsSidebarOpen, isSidebarCollapsed, setIsSidebarCollapsed, navItems }) => {
     const { isDarkMode } = useTheme();

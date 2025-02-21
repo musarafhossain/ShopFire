@@ -1,7 +1,7 @@
 import React from 'react'
 import Layout from '../../components/layout/Layout'
-import ProductImages from '../../components/product/product-catalog/ProductCatalog'
-import ProductDetails from '../../components/product/product-details/ProductDetails'
+import ProductImages from '../../components/pages/product/product-catalog/ProductCatalog'
+import ProductDetails from '../../components/pages/product/product-details/ProductDetails'
 import { useTheme } from '../../context/ThemeContext'
 
 const Product = () => {

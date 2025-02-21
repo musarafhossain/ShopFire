@@ -5,8 +5,8 @@ import { useState } from 'react';
 import { useTheme } from '../../context/ThemeContext';
 
 //import components
-import Header from '../admin/header/Header';
-import Sidebar from '../admin/sidebar/Sidebar';
+import Header from '../pages/admin/header/Header';
+import Sidebar from '../pages/admin/sidebar/Sidebar';
 
 //import icons
 import { FiHome, FiBarChart2, FiUsers, FiShoppingBag, FiSettings } from "react-icons/fi";

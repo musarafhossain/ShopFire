@@ -1,7 +1,7 @@
 import React from 'react';
-import { useTheme } from '../../../context/ThemeContext';
-import LazyImage from '../../LazyImage'
-import AddToCart from '../../buttons/AddToCart';
+import { useTheme } from '../../../../context/ThemeContext';
+import LazyImage from '../../../LazyImage'
+import AddToCart from '../../../buttons/AddToCart';
 
 const CartItem = ({ product, isLast }) => {
   const { isDarkMode } = useTheme();

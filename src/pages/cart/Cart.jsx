@@ -1,7 +1,7 @@
 import React from 'react'
 import Layout from '../../components/layout/Layout'
-import CartItems from '../../components/cart/cart-items/CartItems'
-import BillingSection from '../../components/cart/billing-section/BillingSection'
+import CartItems from '../../components/pages/cart/cart-items/CartItems'
+import BillingSection from '../../components/pages/cart/billing-section/BillingSection'
 import { useTheme } from '../../context/ThemeContext'
 
 const Cart = () => {

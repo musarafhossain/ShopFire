@@ -1,7 +1,7 @@
 import React from 'react';
-import { useTheme } from '../../../context/ThemeContext'; // Update with your theme context path
+import { useTheme } from '../../../../context/ThemeContext'; // Update with your theme context path
 import './Category.css'
-import Heading from '../../Heading';
+import Heading from '../../../Heading';
 
 const categories = [
   { name: 'Electronics', image: 'https://cdn-icons-png.flaticon.com/512/324/324445.png' },

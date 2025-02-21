@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { FiGift, FiTag, FiCopy, FiCheck } from 'react-icons/fi';
-import { useTheme } from '../../../context/ThemeContext';
+import { useTheme } from '../../../../context/ThemeContext';
 import './SpecialOffer.css';
-import OfferLottie from '../../../assets/Lottie/home/Offer_Lottie.json'
+import OfferLottie from '../../../../assets/Lottie/home/Offer_Lottie.json'
 import Lottie from 'lottie-react';
 
 const SpecialOffer = () => {

@@ -1,14 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useTheme } from '../../../context/ThemeContext';
+import { useTheme } from '../../../../context/ThemeContext';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, FreeMode } from 'swiper/modules';
-import ProductCard from '../../cards/ProductCard';
+import ProductCard from '../../../cards/ProductCard';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/free-mode';
-import Heading from '../../Heading';
+import Heading from '../../../Heading';
 
 const BestProducts = () => {
     const { isDarkMode } = useTheme();

@@ -1,8 +1,8 @@
 import React from 'react'
-import LazyImage from '../../LazyImage'
+import LazyImage from '../../../LazyImage'
 import { FaAnglesRight } from "react-icons/fa6";
 import { FiArrowRightCircle, FiArrowLeftCircle } from "react-icons/fi";
-import { useTheme } from '../../../context/ThemeContext';
+import { useTheme } from '../../../../context/ThemeContext';
 import { FiShoppingCart } from 'react-icons/fi';
 
 const ProductCatalog = () => {
