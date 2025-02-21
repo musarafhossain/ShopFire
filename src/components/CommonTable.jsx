@@ -64,7 +64,7 @@ const CommonTable = ({ data, customColumns, onDeleteSelected }) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <div style={{ width: '100%' }} className='h-[calc(100dvh-165px)]'>
+      <div style={{ width: '100%' }} className='h-fit'>
         <DataGrid
           rows={data}
           columns={customColumns}
