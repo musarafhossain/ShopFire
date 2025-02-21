@@ -1,6 +1,7 @@
 //import react libraries
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from "react-router-dom";
+import { useSelector } from 'react-redux';
 
 //import react icons
 import { FaUserCircle, FaSearch } from "react-icons/fa";
@@ -27,6 +28,7 @@ gsap.registerPlugin(ScrollTrigger);
 const Navbar = () => {
   const { isDarkMode } = useTheme();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const totalQuantity = useSelector(state => state.cart.totalQuantity);
 
   useEffect(() => {
     if (isSidebarOpen) {
@@ -136,9 +138,11 @@ const Navbar = () => {
 
               <Link to="/cart" className='relative right-icon'>
                 <FiShoppingCart size={25} />
-                <span className='absolute top-[-7px] right-[-7px] aspect-square justify-center items-center bg-red-600 text-white text-xs rounded-full h-[20px] flex'>
-                  99
-                </span>
+                {totalQuantity > 0 && (
+                  <span className='absolute top-[-7px] right-[-7px] aspect-square justify-center items-center bg-red-600 text-white text-xs rounded-full h-[20px] flex'>
+                    {totalQuantity}
+                  </span>
+                )}
               </Link>
 
               <ThemeToggleButton className='right-icon'/>

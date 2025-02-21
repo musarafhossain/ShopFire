@@ -1,32 +1,41 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from '../../context/ThemeContext';
 import { FaPlus, FaMinus } from "react-icons/fa6";
+import { increaseQuantity, decreaseQuantity, removeFromCart } from '@/redux/cartSlice';
 
-const AddToCart = ({ className }) => {
+const AddToCart = ({ product }) => {
     const { isDarkMode } = useTheme();
-    const [quantity, setQuantity] = useState(1);
+    const dispatch = useDispatch();
+    const cartItem = useSelector(state => state.cart.items.find(item => item.id === product.id));
 
-    const incrementQuantity = () => {
-        setQuantity(prevQuantity => prevQuantity + 1);
-    };
-
-    const decrementQuantity = () => {
-        if (quantity > 1) {
-            setQuantity(prevQuantity => prevQuantity - 1);
-        }
-    };
+    if (!cartItem) return null;
 
     return (
-        <div className={`flex items-center space-x-4 ${className}`}>
+        <div className="flex items-center space-x-4">
             <button
-                onClick={decrementQuantity}
+                onClick={(e) => {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    if (cartItem.quantity > 1) {
+                        dispatch(decreaseQuantity(product.id));
+                    } else {
+                        dispatch(removeFromCart(product.id));
+                    }
+                }}
                 className={`w-8 h-8 text-2xl flex justify-center items-center ${isDarkMode ? 'text-gray-200 bg-gray-700' : 'bg-gray-200 text-gray-700'} rounded-full cursor-pointer hover:bg-gray-300`}
             >
                 <FaMinus size={15} />
             </button>
-            <span className="text-lg font-medium">{quantity}</span>
+
+            <span className="text-lg font-medium">{cartItem.quantity}</span>
+
             <button
-                onClick={incrementQuantity}
+                onClick={(e) => {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    dispatch(increaseQuantity(product.id))
+                }}
                 className={`w-8 h-8 text-2xl flex justify-center items-center ${isDarkMode ? 'text-gray-200 bg-gray-700' : 'bg-gray-200 text-gray-700'} rounded-full cursor-pointer hover:bg-gray-300`}
             >
                 <FaPlus size={15} />

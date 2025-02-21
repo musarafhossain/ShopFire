@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import { useTheme } from '../../../../context/ThemeContext';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -13,71 +13,15 @@ import Heading from '../../../Heading';
 const BestProducts = () => {
     const { isDarkMode } = useTheme();
 
-    const products = [
-        {
-            id: 1,
-            name: 'Wireless Headphones',
-            price: 299.99,
-            originalPrice: 500.99,
-            image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
-            category: 'Electronics',
-            rating: 3.2
-        },
-        {
-            id: 2,
-            name: 'Smart Watch Pro',
-            price: 199.99,
-            originalPrice: 300.99,
-            image: 'https://images.unsplash.com/photo-1546868871-7041f2a55e12?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
-            category: 'Wearables',
-            rating: 4.6
-        },
-        {
-            id: 3,
-            name: 'Modern Sofa',
-            price: 899.99,
-            originalPrice: 1099.99,
-            image: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
-            category: 'Furniture',
-            rating: 4.9
-        },
-        {
-            id: 4,
-            name: 'Designer Sunglasses',
-            price: 159.99,
-            originalPrice: 200.99,
-            image: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
-            category: 'Fashion',
-            rating: 4.7
-        },
-        {
-            id: 5,
-            name: 'Designer Sunglasses',
-            price: 159.99,
-            originalPrice: 200.99,
-            image: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
-            category: 'Fashion',
-            rating: 4.7
-        },
-        {
-            id: 6,
-            name: 'Designer Sunglasses',
-            price: 159.99,
-            originalPrice: 200.99,
-            image: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
-            category: 'Fashion',
-            rating: 4.7
-        },
-        {
-            id: 7,
-            name: 'Designer Sunglasses',
-            price: 159.99,
-            originalPrice: 200.99,
-            image: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
-            category: 'Fashion',
-            rating: 4.7
-        },
-    ];
+    const [products, setProducts] = useState([]);
+
+    useEffect(() => {
+        // Fetch data from local JSON file
+        fetch("/data/products.json")
+          .then((response) => response.json())
+          .then((data) => setProducts(data))
+          .catch((error) => console.error("Error loading products:", error));
+      }, []);
 
     return (
         <div className={`py-12 md:py-16 px-4 sm:px-6 lg:px-8 ${isDarkMode ? 'bg-gray-800' : 'bg-gray-50'}`}>

@@ -1,0 +1,128 @@
+[
+    {
+        "id": 1,
+        "name": "Wireless Headphones",
+        "price": 299.99,
+        "originalPrice": 500.99,
+        "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        "category": "Electronics",
+        "rating": 3.2
+    },
+    {
+        "id": 2,
+        "name": "Smart Watch Pro",
+        "price": 199.99,
+        "originalPrice": 300.99,
+        "image": "https://images.unsplash.com/photo-1546868871-7041f2a55e12?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        "category": "Wearables",
+        "rating": 4.6
+    },
+    {
+        "id": 3,
+        "name": "Modern Sofa",
+        "price": 899.99,
+        "originalPrice": 1099.99,
+        "image": "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        "category": "Furniture",
+        "rating": 4.9
+    },
+    {
+        "id": 4,
+        "name": "Designer Sunglasses",
+        "price": 159.99,
+        "originalPrice": 200.99,
+        "image": "https://images.unsplash.com/photo-1572635196237-14b3f281503f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        "category": "Fashion",
+        "rating": 4.7
+    },
+    {
+        "id": 5,
+        "name": "Gaming Laptop",
+        "price": 1299.99,
+        "originalPrice": 1499.99,
+        "image": "https://images.unsplash.com/photo-1587202372775-1c6cb5c9df66?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        "category": "Electronics",
+        "rating": 4.8
+    },
+    {
+        "id": 6,
+        "name": "Espresso Machine",
+        "price": 349.99,
+        "originalPrice": 450.99,
+        "image": "https://images.unsplash.com/photo-1569012872291-cae1f9563b31?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        "category": "Home Appliances",
+        "rating": 4.5
+    },
+    {
+        "id": 7,
+        "name": "Electric Guitar",
+        "price": 699.99,
+        "originalPrice": 850.99,
+        "image": "https://images.unsplash.com/photo-1518361159025-1b73fd7273ff?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        "category": "Musical Instruments",
+        "rating": 4.4
+    },
+    {
+        "id": 8,
+        "name": "Mountain Bike",
+        "price": 999.99,
+        "originalPrice": 1199.99,
+        "image": "https://images.unsplash.com/photo-1565375338693-5413ee9e908a?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        "category": "Sports",
+        "rating": 4.7
+    },
+    {
+        "id": 9,
+        "name": "Digital Camera",
+        "price": 499.99,
+        "originalPrice": 650.99,
+        "image": "https://images.unsplash.com/photo-1501532183125-5e47f3b2b7c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        "category": "Photography",
+        "rating": 4.6
+    },
+    {
+        "id": 10,
+        "name": "Bluetooth Speaker",
+        "price": 89.99,
+        "originalPrice": 129.99,
+        "image": "https://images.unsplash.com/photo-1611078488240-6cc4cc3d19e8?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        "category": "Electronics",
+        "rating": 4.3
+    },
+    {
+        "id": 11,
+        "name": "Air Purifier",
+        "price": 249.99,
+        "originalPrice": 350.99,
+        "image": "https://images.unsplash.com/photo-1593642634311-48f5414c3ad9?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        "category": "Home Appliances",
+        "rating": 4.6
+    },
+    {
+        "id": 12,
+        "name": "Fitness Tracker",
+        "price": 59.99,
+        "originalPrice": 99.99,
+        "image": "https://images.unsplash.com/photo-1598966732835-ee26dd092b62?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        "category": "Wearables",
+        "rating": 4.2
+    },
+    {
+        "id": 13,
+        "name": "Travel Backpack",
+        "price": 79.99,
+        "originalPrice": 120.99,
+        "image": "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        "category": "Accessories",
+        "rating": 4.4
+    },
+    {
+        "id": 14,
+        "name": "LED Desk Lamp",
+        "price": 39.99,
+        "originalPrice": 59.99,
+        "image": "https://images.unsplash.com/photo-1581091870620-bf3a01bd70ce?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        "category": "Office Supplies",
+        "rating": 4.1
+    }
+]
