@@ -1,6 +1,5 @@
 import { useTheme } from '../context/ThemeContext';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-import { darken, lighten } from '@mui/material/styles';
 import { ThemeProvider, createTheme } from '@mui/material';
 
 const CommonTable = ({ data, customColumns }) => {
@@ -27,9 +26,9 @@ const CommonTable = ({ data, customColumns }) => {
             borderBottomColor: isDarkMode ? '#404040' : '#e0e0e0',
           },
           columnHeader: {
-            backgroundColor: isDarkMode 
-              ? darken('#1a1a1a', 0.2) 
-              : lighten('#f5f5f5', 0.5),
+            backgroundColor: isDarkMode
+              ? '#1e2939'
+              : '#ffffff',
           },
         },
       },
@@ -45,7 +44,7 @@ const CommonTable = ({ data, customColumns }) => {
           pageSize={10}
           rowsPerPageOptions={[10, 25, 50]}
           checkboxSelection={true}
-          disableSelectionOnClick
+          disableRowSelectionOnClick={true}
           components={{ Toolbar: GridToolbar }}
           sx={{
             '& .MuiDataGrid-toolbarContainer': {
