@@ -23,7 +23,7 @@ const AddToCart = ({ product }) => {
                         dispatch(removeFromCart(product.id));
                     }
                 }}
-                className={`w-8 h-8 text-2xl flex justify-center items-center ${isDarkMode ? 'text-gray-200 bg-gray-700' : 'bg-gray-200 text-gray-700'} rounded-full cursor-pointer hover:bg-gray-300`}
+                className={`w-8 h-8 text-2xl flex justify-center items-center ${isDarkMode ? 'text-gray-200 bg-gray-700 hover:bg-gray-500' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'} rounded-full cursor-pointer `}
             >
                 <FaMinus size={15} />
             </button>
@@ -36,7 +36,7 @@ const AddToCart = ({ product }) => {
                     e.preventDefault();
                     dispatch(increaseQuantity(product.id))
                 }}
-                className={`w-8 h-8 text-2xl flex justify-center items-center ${isDarkMode ? 'text-gray-200 bg-gray-700' : 'bg-gray-200 text-gray-700'} rounded-full cursor-pointer hover:bg-gray-300`}
+                className={`w-8 h-8 text-2xl flex justify-center items-center ${isDarkMode ? 'text-gray-200 bg-gray-700 hover:bg-gray-500' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'} rounded-full cursor-pointer `}
             >
                 <FaPlus size={15} />
             </button>

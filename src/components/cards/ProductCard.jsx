@@ -51,7 +51,7 @@ const ProductCard = ({ product }) => {
                             Rs. {product.price}
                         </span>
                         <span className={`text-sm line-through ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
-                            Rs. {product.originalPrice}
+                            Rs. {product.mrp}
                         </span>
                     </div>
                 </div>
@@ -60,7 +60,7 @@ const ProductCard = ({ product }) => {
                 <div className="flex flex-wrap justify-between items-center gap-2">
                     <Rating rating={product.rating} />
                     <span className="text-lg font-medium text-red-500">
-                        {Math.round(100 - (product.price / product.originalPrice) * 100)}% OFF
+                        {Math.round(100 - (product.price / product.mrp) * 100)}% OFF
                     </span>
                 </div>
 
