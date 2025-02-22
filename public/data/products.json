@@ -133,7 +133,7 @@
         "id": 14,
         "name": "LED Desk Lamp",
         "price": 39.99,
-        "originalPrice": 59.99,
+        "mrp": 59.99,
         "image": "https://images.unsplash.com/photo-1581091870620-bf3a01bd70ce?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
         "category": "Office Supplies",
         "rating": 4.1,
