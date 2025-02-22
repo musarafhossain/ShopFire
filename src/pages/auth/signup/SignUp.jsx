@@ -114,8 +114,10 @@ const Signup = () => {
                         isDarkMode ? "bg-gray-800 border-gray-700" : "bg-white border-gray-200"
                     }`}
                     style={{
-                        background: `linear-gradient(to top right, ${
-                            isDarkMode ? "#1F2937 50%, #002031 50%" : "#eee 50%, #bdc0c0 50%"
+                        background: `linear-gradient(to right bottom, ${
+                            isDarkMode
+                                ? "rgba(31, 41, 55, 1) 50%, rgba(0, 32, 49, 0.1) 50%"
+                                : "rgba(238, 238, 238, 1) 50%, rgba(189, 192, 192, 0.1) 50%"
                         })`,
                     }}
                 >
@@ -193,7 +195,7 @@ const Signup = () => {
                             disabled={loading}
                         >
                             {loading ? (
-                                <LoadingSpinner/>
+                                <LoadingSpinner />
                             ) : (
                                 "Sign Up"
                             )}
