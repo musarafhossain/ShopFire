@@ -17,6 +17,7 @@ import AllProducts from '@/pages/allProducts/AllProducts';
 import Cart from '@/pages/cart/Cart';
 import Order from '@/pages/order/Order';
 import Product from '@/pages/product/Product';
+import Profile from '@/pages/profile/Profile';
 import NoPage from '@/pages/nopage/NoPage';
 
 // Auth Section
@@ -47,6 +48,7 @@ const App = () => {
         <Route path='/cart' element={<Cart />} />
         <Route path='/order' element={<Order />} />
         <Route path='/product' element={<Product />} />
+        <Route path='/profile' element={<Profile />} />
         
         {/*Admin Routes*/}
         <Route path='/admin/dashboard' element={<Dashboard />} />

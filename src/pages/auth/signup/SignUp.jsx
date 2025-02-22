@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
 import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
 import Logo from "@/components/Logo";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { useTheme } from "@/context/ThemeContext";
 import { useLoading } from "@/context/LoadingContext";
 import { createUserWithEmailAndPassword } from "firebase/auth";
