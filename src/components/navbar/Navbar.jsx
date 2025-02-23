@@ -51,7 +51,7 @@ const Navbar = () => {
   const closeSidebar = () => setIsSidebarOpen(false);
 
   useEffect(() => {
-    let lastScrollY = window.scrollY;
+    //let lastScrollY = window.scrollY;
     ScrollTrigger.create({
       onUpdate: (self) => {
         const direction = self.direction;
@@ -60,36 +60,11 @@ const Navbar = () => {
         } else {
           gsap.to(navbarRef.current, { y: "0%" });
         }
-        lastScrollY = self.scroll();
+        //lastScrollY = self.scroll();
       },
     });
   }, []);
 
-  /* useGSAP(() => {
-    gsap.from(logoRef.current, {
-      x: -200,
-      duration: 1,
-      ease: "power3.out",
-      opacity: 0,
-    });
-
-    gsap.from('.right-icon', {
-      x: 200,
-      duration: 1,
-      ease: "power3.out",
-      stagger: 0.3,
-      opacity: 0,
-    });
-
-    gsap.from('.nav-link', {
-      y: -50,
-      duration: 1,
-      ease: "power3.out",
-      stagger: 0.3,
-    });
-  }, {}); */
-
-  // State for user menu dropdown
   // Dropdown State
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const dropdownTimeout = useRef(null);
@@ -102,7 +77,7 @@ const Navbar = () => {
   const handleMouseLeave = () => {
     dropdownTimeout.current = setTimeout(() => {
       setIsUserMenuOpen(false);
-    }, 200); // Small delay to allow smooth transition
+    }, 200);
   };
 
   return (

@@ -64,7 +64,7 @@ const Signup = () => {
                 addresses: [],
                 wishlist: [],
                 coupons: [],
-                phone: "",
+                phoneNumber: "",
                 city: "",
                 country: "",
                 zipCode: "",
