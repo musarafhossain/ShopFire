@@ -2,6 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { useSelector } from 'react-redux';
+import { useAuth } from "@/auth/AuthContext";
 
 //import react icons
 import { HiMiniBars3BottomRight } from "react-icons/hi2";
@@ -31,6 +32,7 @@ const Navbar = () => {
   const { isDarkMode } = useTheme();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const totalQuantity = useSelector(state => state.cart.totalQuantity);
+  const { user, logout } = useAuth();
 
   useEffect(() => {
     if (isSidebarOpen) {
@@ -88,12 +90,25 @@ const Navbar = () => {
   }, {}); */
 
   // State for user menu dropdown
+  // Dropdown State
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const dropdownTimeout = useRef(null);
+
+  const handleMouseEnter = () => {
+    if (dropdownTimeout.current) clearTimeout(dropdownTimeout.current);
+    setIsUserMenuOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    dropdownTimeout.current = setTimeout(() => {
+      setIsUserMenuOpen(false);
+    }, 200); // Small delay to allow smooth transition
+  };
 
   return (
     <>
       <header
-        className={`${isDarkMode ? 'bg-[#002031]' : 'bg-white'} [box-shadow:rgba(60,_64,_67,_0.3)_0px_1px_2px_0px,_rgba(60,_64,_67,_0.15)_0px_1px_3px_1px] z-[999] sticky top-0 left-0`}
+        className={`${isDarkMode ? 'bg-[#002031]' : 'bg-white'} [box-shadow:rgba(60,_64,_67,_0.3)_0px_1px_2px_0px,_rgba(60,_64,_67,_0.15)_0px_1px_3px_1px] z-[999] sticky top-0 py-1 left-0`}
         ref={navbarRef}
       >
         <center>
@@ -112,7 +127,7 @@ const Navbar = () => {
 
             {/* Navigation Menu - Sidebar for Mobile */}
             <nav
-              className={`absolute lg:block lg:static top-[60px] left-0 w-[250px] overflow-y-auto font-[Open Sans] lg:w-fit ${isDarkMode ? 'bg-[#002c44]' : 'bg-gray-200'
+              className={`absolute lg:block lg:static top-[69px] left-0 w-[250px] overflow-y-auto font-[Open Sans] lg:w-fit ${isDarkMode ? 'bg-[#002c44]' : 'bg-gray-200'
                 } lg:bg-transparent h-[calc(100vh-60px)] lg:h-fit md:transform lg:translate-x-0 transition-transform duration-300 ${isSidebarOpen ? 'transform translate-x-0' : 'transform -translate-x-full'
                 }`}
             >
@@ -180,25 +195,27 @@ const Navbar = () => {
 
               {/* User Icon with Dropdown on Hover */}
               <div
-                className="relative flex items-center justify-center"
-                onMouseEnter={() => setIsUserMenuOpen(true)}
-                onMouseLeave={() => setIsUserMenuOpen(false)}
+                className="relative flex items-center"
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
               >
                 <button
                   type="button"
-                  className="right-icon cursor-pointer flex items-center justify-center h-full"
+                  className="right-icon cursor-pointer flex items-center justify-center"
                 >
                   <FaUserCircle size={25} />
                 </button>
                 {isUserMenuOpen && (
                   <div
-                    className={`absolute right-0 -top-5 mt-2 p-2 flex flex-col gap-2 w-48 shadow-md rounded border ${isDarkMode ? 'bg-[#002031] text-white border-gray-600' : 'bg-white text-black border-gray-200'}`}
+                    className={`absolute right-0 top-8 mt-2 p-2 flex flex-col gap-2 w-48 shadow-md rounded border ${isDarkMode ? 'bg-[#002031] text-white border-gray-600' : 'bg-white text-black border-gray-200'
+                      }`}
                   >
-                    {true ? (
+                    {user ? (
                       <>
                         <Link to="/profile">
                           <button
-                            className={`cursor-pointer w-full rounded-md flex px-4 py-2 border gap-2 items-center text-left transition-transform transform hover:scale-105 ${isDarkMode ? 'border-[#2f2f2f] hover:bg-gray-700' : 'hover:bg-gray-100 border-[#dcdada]'}`}
+                            className={`cursor-pointer w-full rounded-md flex px-4 py-2 border gap-2 items-center text-left transition-transform transform hover:scale-105 ${isDarkMode ? 'border-[#2f2f2f] hover:bg-gray-700' : 'hover:bg-gray-100 border-[#dcdada]'
+                              }`}
                           >
                             <img src="/mypic.jpg" alt="User avatar" className="w-10 h-10 rounded-full" />
                             <span className="truncate text-md leading-[1]">Musaraf Hossain</span>
@@ -207,7 +224,8 @@ const Navbar = () => {
 
                         {/* My Wishlist Button */}
                         <button
-                          className={`w-full cursor-pointer rounded-md flex px-4 py-2 border gap-2 items-center text-left transition-transform transform hover:scale-105 ${isDarkMode ? 'border-[#2f2f2f] hover:bg-gray-700' : 'hover:bg-gray-100 border-[#dcdada]'} text-green-500`}
+                          className={`w-full cursor-pointer rounded-md flex px-4 py-2 border gap-2 items-center text-left transition-transform transform hover:scale-105 ${isDarkMode ? 'border-[#2f2f2f] hover:bg-gray-700' : 'hover:bg-gray-100 border-[#dcdada]'
+                            } text-green-500`}
                         >
                           <FaHeart size={18} className="transition-colors text-green-500" />
                           My Wishlist (10)
@@ -215,7 +233,9 @@ const Navbar = () => {
 
                         {/* Logout Button */}
                         <button
-                          className={`w-full cursor-pointer rounded-md flex px-4 py-2 border gap-2 items-center text-left transition-transform transform hover:scale-105 ${isDarkMode ? 'border-[#2f2f2f] hover:bg-gray-700' : 'hover:bg-gray-100 border-[#dcdada]'} text-red-500`}
+                          className={`w-full cursor-pointer rounded-md flex px-4 py-2 border gap-2 items-center text-left transition-transform transform hover:scale-105 ${isDarkMode ? 'border-[#2f2f2f] hover:bg-gray-700' : 'hover:bg-gray-100 border-[#dcdada]'
+                            } text-red-500`}
+                          onClick={logout}
                         >
                           <HiMiniPower size={18} className="transition-colors text-red-500" />
                           Logout
@@ -223,19 +243,28 @@ const Navbar = () => {
                       </>
                     ) : (
                       <>
+                        {/* <button
+                          className={`cursor-pointer w-full rounded-md flex px-4 py-2 border gap-2 items-center text-left transition-transform transform hover:scale-105 ${isDarkMode ? 'border-[#2f2f2f] hover:bg-gray-700' : 'hover:bg-gray-100 border-[#dcdada]'
+                            }`}
+                        >
+                          <div className='h-9 w-10 rounded-full bg-gray-200'></div>
+                          <span className="truncate text-md leading-[1]">Unknown User</span>
+                        </button> */}
                         {/* Login Button */}
-                        <Link to='/login'>
+                        <Link to="/login">
                           <button
-                            className={`w-full cursor-pointer rounded-md flex px-4 py-2 border gap-2 items-center text-left transition-transform transform hover:scale-105 ${isDarkMode ? 'border-[#2f2f2f] hover:bg-gray-700' : 'hover:bg-gray-100 border-[#dcdada]'} text-red-500`}
+                            className={`w-full cursor-pointer rounded-md flex px-4 py-2 border gap-2 items-center text-left transition-transform transform hover:scale-105 ${isDarkMode ? 'border-[#2f2f2f] hover:bg-gray-700' : 'hover:bg-gray-100 border-[#dcdada]'
+                              } text-red-500`}
                           >
                             <CiLogin size={18} className="transition-colors text-red-500" />
                             Login
                           </button>
                         </Link>
-                        <Link to='/signup'>
+                        <Link to="/signup">
                           {/* Signup Button */}
                           <button
-                            className={`w-full cursor-pointer rounded-md flex px-4 py-2 border gap-2 items-center text-left transition-transform transform hover:scale-105 ${isDarkMode ? 'border-[#2f2f2f] hover:bg-gray-700' : 'hover:bg-gray-100 border-[#dcdada]'} text-green-500`}
+                            className={`w-full cursor-pointer rounded-md flex px-4 py-2 border gap-2 items-center text-left transition-transform transform hover:scale-105 ${isDarkMode ? 'border-[#2f2f2f] hover:bg-gray-700' : 'hover:bg-gray-100 border-[#dcdada]'
+                              } text-green-500`}
                           >
                             <FaUserPlus size={18} className="transition-colors text-green-500" />
                             Signup
@@ -246,6 +275,7 @@ const Navbar = () => {
                   </div>
                 )}
               </div>
+
             </div>
           </div>
         </center>

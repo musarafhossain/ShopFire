@@ -33,25 +33,27 @@ import Orders from '@/pages/admin/orders/Orders';
 import Products from '@/pages/admin/products/Products';
 import Settings from '@/pages/admin/settings/Settings';
 
+import AuthRoutes from './auth/AuthRoutes';
+import PrivateRoute from './auth/PrivateRoute';
 
 const App = () => {
   return (
     <Router>
       <Routes>
         {/*Auth Routes*/}
-        <Route path='/login' element={<Login />} />
-        <Route path='/signup' element={<SignUp />} />
-        <Route path='/forgot-password' element={<ForgotPassword />} />
+        <Route path='/login' element={<AuthRoutes><Login /></AuthRoutes>} />
+        <Route path='/signup' element={<AuthRoutes><SignUp /></AuthRoutes>} />
+        <Route path='/forgot-password' element={<AuthRoutes><ForgotPassword /></AuthRoutes>} />
 
         {/*User Routes*/}
         <Route path='/' element={<Home />} />
         <Route path='/all-products' element={<AllProducts />} />
         <Route path='/cart' element={<Cart />} />
-        <Route path='/order' element={<Order />} />
         <Route path='/product' element={<Product />} />
-        <Route path='/profile' element={<Profile />} />
-        <Route path='/profile/addresses' element={<Addresses />} />
-        
+        <Route path='/order' element={<PrivateRoute><Order /></PrivateRoute>} />
+        <Route path='/profile' element={<PrivateRoute><Profile /></PrivateRoute>} />
+        <Route path='/profile/addresses' element={<PrivateRoute><Addresses /></PrivateRoute>} />
+
         {/*Admin Routes*/}
         <Route path='/admin/dashboard' element={<Dashboard />} />
         <Route path='/admin/users' element={<Users />} />

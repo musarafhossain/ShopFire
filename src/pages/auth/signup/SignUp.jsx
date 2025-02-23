@@ -10,11 +10,12 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, fireDB } from "@/firebase/FirebaseConfig";
 import { Timestamp, addDoc, collection } from "firebase/firestore";
 import LoadingSpinner from "@/components/loader/LoadingSpinner";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
     const { isDarkMode } = useTheme();
     const { loading, setLoading } = useLoading(); 
-
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -77,7 +78,7 @@ const Signup = () => {
                     color: isDarkMode ? "#fff" : "#333",
                 },
             });
-
+            navigate("/");
             setFormData({ name: "", email: "", password: "", confirmPassword: "" });
 
         } catch (error) {
@@ -99,7 +100,6 @@ const Signup = () => {
                     color: isDarkMode ? "#fff" : "#333",
                 },
             });
-
         } finally {
             setLoading(false); // Stop loader
         }

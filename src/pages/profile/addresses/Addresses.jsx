@@ -44,8 +44,9 @@ const Addresses = () => {
             addressType: "home",
         },
     ]);
-    const [addAddess, setAddAddress] = useState(false);
-    const [editAddres, setEditAddress] = useState(null);
+
+    const [addAddress, setAddAddress] = useState(false);
+    const [editAddress, setEditAddress] = useState(null);
 
     const addNewAddress = (address) => {
         setMyAddresses([...myaddresses, address]);
@@ -68,8 +69,9 @@ const Addresses = () => {
     return (
         <ProfileLayout pageTitle="Manage Addresses">
             <h1 className="text-lg font-semibold">Manage Addresses</h1>
+
             <div className="flex flex-col">
-                {addAddess ? (
+                {addAddress ? (
                     <EditAddress
                         className={`border ${isDarkMode ? "border-[#2f2f2f]" : "border-[#dcdada]"} px-3 py-4 text-left`}
                         onClose={() => setAddAddress(false)}
@@ -84,26 +86,31 @@ const Addresses = () => {
                     </button>
                 )}
             </div>
+
             <div className={`border ${isDarkMode ? "border-[#2f2f2f]" : "border-[#dcdada]"}`}>
-                {myaddresses.map((address, index) => (
-                    <div key={index}>
-                        {editAddres === address ? (
-                            <EditAddress
-                                className={`${index === myaddresses.length - 1 ? "" : `border-b ${isDarkMode ? "border-[#2f2f2f] bg-gray-800" : "border-[#dcdada] bg-gray-100"}`} px-3 py-4 text-left  shadow-inner`}
-                                address={address}
-                                onClose={() => setEditAddress(null)}
-                                onSubmit={(updatedAddress) => editExistingAddress(updatedAddress, index)}
-                            />
-                        ) : (
-                            <AddressCard
-                                address={address}
-                                setEditAddress={setEditAddress}
-                                onDelete={() => deleteAddress(index)}
-                                isLast={index === myaddresses.length - 1}
-                            />
-                        )}
-                    </div>
-                ))}
+                {myaddresses.length > 0 ? (
+                    myaddresses.map((address, index) => (
+                        <div key={index}>
+                            {editAddress === address ? (
+                                <EditAddress
+                                    className={`${index === myaddresses.length - 1 ? "" : `border-b ${isDarkMode ? "border-[#2f2f2f] bg-gray-800" : "border-[#dcdada] bg-gray-100"}`} px-3 py-4 text-left shadow-inner`}
+                                    address={address}
+                                    onClose={() => setEditAddress(null)}
+                                    onSubmit={(updatedAddress) => editExistingAddress(updatedAddress, index)}
+                                />
+                            ) : (
+                                <AddressCard
+                                    address={address}
+                                    setEditAddress={setEditAddress}
+                                    onDelete={() => deleteAddress(index)}
+                                    isLast={index === myaddresses.length - 1}
+                                />
+                            )}
+                        </div>
+                    ))
+                ) : (
+                    <p className='py-5 text-center'>No Addresses</p>
+                )}
             </div>
         </ProfileLayout>
     );
