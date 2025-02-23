@@ -89,7 +89,6 @@ const Navbar = () => {
 
   // State for user menu dropdown
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-  const toggleUserMenu = () => setIsUserMenuOpen(!isUserMenuOpen);
 
   return (
     <>
