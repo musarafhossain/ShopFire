@@ -2,11 +2,6 @@ import React, { useEffect, useRef } from 'react';
 import { useTheme } from '../../../../context/ThemeContext';
 import Lottie from 'lottie-react';
 import animationData from '../../../../assets/Lottie/home/Shop_Lottie.json';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-// Register GSAP plugins
-gsap.registerPlugin(ScrollTrigger);
 
 const Hero = () => {
   const { isDarkMode } = useTheme();
@@ -15,65 +10,6 @@ const Hero = () => {
   const textRef = useRef(null);
   const buttonRef = useRef(null);
   const lottieRef = useRef(null);
-
-  useEffect(() => {
-    const tl = gsap.timeline({
-      defaults: { ease: 'power4.out', duration: 1.2 },
-    });
-
-    // Animate text elements
-    tl.fromTo(
-      headingRef.current?.children,
-      { y: 80, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        stagger: 0.1,
-        delay: 0.3,
-      }
-    )
-      .fromTo(
-        textRef.current,
-        { opacity: 0, y: 40 },
-        { opacity: 1, y: 0 },
-        '-=0.8'
-      )
-      .fromTo(
-        buttonRef.current,
-        { opacity: 0, scale: 0.8 },
-        { opacity: 1, scale: 1 },
-        '-=0.5'
-      );
-
-    // Animate Lottie container
-    const lottieTl = gsap.timeline({
-      scrollTrigger: {
-        trigger: lottieRef.current,
-        start: 'top center',
-      },
-    });
-
-    lottieTl.fromTo(
-      lottieRef.current,
-      { x: 100, opacity: 0, scale: 0.9 },
-      { x: 0, opacity: 1, scale: 1, duration: 1.4 }
-    );
-
-    // Hover animation for Lottie container
-    gsap.to(lottieRef.current, {
-      y: -10,
-      duration: 2,
-      repeat: -1,
-      yoyo: true,
-      ease: 'power1.inOut',
-    });
-
-    // Cleanup
-    return () => {
-      tl.kill();
-      lottieTl.kill();
-    };
-  }, []);
 
   return (
     <div
