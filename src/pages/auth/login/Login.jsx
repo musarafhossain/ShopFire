@@ -6,7 +6,7 @@ import Logo from "@/components/Logo";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useLoading } from "@/context/LoadingContext";
-import { auth } from '@/firebase/firebaseConfig';
+import { auth } from '@/firebase/FirebaseConfig';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import LoadingSpinner from "@/components/loader/LoadingSpinner";
 import { useNavigate } from "react-router-dom";
@@ -36,8 +36,6 @@ const Login = () => {
 
         try {
             const result = await signInWithEmailAndPassword(auth, email, password);
-            console.log(result);
-
             toast.success("Login successful!", {
                 position: "top-center",
                 style: {

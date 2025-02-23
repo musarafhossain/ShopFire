@@ -62,6 +62,8 @@ const Signup = () => {
                 role: "user",
                 gender: "Male", 
                 addresses: [],
+                wishlist: [],
+                coupons: [],
                 phone: "",
                 city: "",
                 country: "",
