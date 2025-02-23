@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '@/redux/cartSlice';
 import AddToCart from '@/components/buttons/AddToCart';
 import { Link } from 'react-router-dom';
+import toast from "react-hot-toast";
 
 const ProductCard = ({ product }) => {
     const { isDarkMode } = useTheme();
@@ -87,6 +88,13 @@ const ProductCard = ({ product }) => {
                                 e.stopPropagation();
                                 e.preventDefault(); 
                                 dispatch(addToCart(product));
+                                toast.success(`${product.name} added to cart`, {
+                                    position: "top-center",
+                                    style: {
+                                        background: isDarkMode ? "#4CAF50" : "#E6F4EA",
+                                        color: isDarkMode ? "#fff" : "#333",
+                                    },
+                                });
                             }}
                         >
                             <FiShoppingCart className="w-4 h-4 md:w-5 md:h-5" />

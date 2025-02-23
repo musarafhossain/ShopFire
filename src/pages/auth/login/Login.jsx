@@ -4,7 +4,7 @@ import { FaUser, FaLock } from "react-icons/fa";
 import { useTheme } from "@/context/ThemeContext";
 import Logo from "@/components/Logo";
 import { Link } from "react-router-dom";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 
 const Login = () => {
     const { isDarkMode } = useTheme();
@@ -38,7 +38,6 @@ const Login = () => {
 
     return (
         <Layout>
-            <Toaster position="top-right" reverseOrder={false} />
             <div
                 className={`flex items-center justify-center px-2 h-[80vh] ${isDarkMode ? "bg-gray-900" : "bg-gray-200"}`}
             >
