@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useTheme } from "@/context/ThemeContext";
 import { FaEdit } from "react-icons/fa";
 import ProfileLayout from '@/components/pages/profile/ProfileLayout';
 import toast from "react-hot-toast";
 import { useAuth } from "@/auth/AuthContext";
-import { fireDB } from "@/firebase/FirebaseConfig"; // Import Firestore instance
-import { collection, query, where, getDocs, updateDoc } from "firebase/firestore";
+import { updateDoc } from "firebase/firestore";
 import LoaderButton from "@/components/buttons/LoaderButton";
 import { useLoading } from "@/context/LoadingContext";
+import useUserDoc from "@/hooks/useUserDoc";
 
 const Profile = () => {
+    const { userDoc } = useUserDoc();
     const { loading, setLoading } = useLoading();
     const { isDarkMode } = useTheme();
     const { user } = useAuth();
@@ -25,10 +26,6 @@ const Profile = () => {
         setIsEditing(!isEditing);
     };
 
-    /* useEffect(() => {
-        console.log("User Data:", user);
-    }, [user]); */
-
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
@@ -38,30 +35,19 @@ const Profile = () => {
     const handleSave = async () => {
         setLoading(true);
         try {
-            // 1️⃣ Query Firestore to find the document where `uid` matches
-            const usersRef = collection(fireDB, "users");
-            const q = query(usersRef, where("uid", "==", user.uid));
-            const querySnapshot = await getDocs(q);
-
-            if (!querySnapshot.empty) {
-                const userDocRef = querySnapshot.docs[0].ref; // Get document reference
-
-                // 2️⃣ Update Firestore Document
-                await updateDoc(userDocRef, {
+            if (userDoc) {
+                await updateDoc(userDoc, {
                     name: formData.name,
                     gender: formData.gender,
                     email: formData.email,
                     phoneNumber: formData.phone,
                 });
-
                 toast.success("Profile has been updated!", {
                     style: {
                         background: isDarkMode ? "#4CAF50" : "#E6F4EA",
                         color: isDarkMode ? "#fff" : "#333",
                     },
                 });
-
-                // 3️⃣ Update UI after saving
                 setIsEditing(false);
             } else {
                 toast.error("User not found in Firestore.", {
@@ -181,14 +167,8 @@ const Profile = () => {
                     type='button'
                     text='SAVE'
                     onClick={handleSave}
-                    className='w-[100px]'
+                    className=' bg-blue-600 hover:scale-105 duration-200 cursor-pointer text-white font-semibold px-6 py-2 rounded-md mt-4 w-32'
                 />
-               /*  <button
-                    className="bg-blue-600 hover:scale-105 duration-200 cursor-pointer text-white font-semibold px-6 py-2 rounded-md mt-4 w-32"
-                    onClick={handleSave}
-                >
-                    SAVE
-                </button> */
             )}
         </ProfileLayout>
     );

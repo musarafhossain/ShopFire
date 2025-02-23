@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { useTheme } from "@/context/ThemeContext";
+import LoaderButton from "@/components/buttons/LoaderButton";
+import toast from "react-hot-toast";
 
 const EditAddress = ({ className, onClose, address = null, onSubmit }) => {
     const { isDarkMode } = useTheme();
@@ -26,12 +28,22 @@ const EditAddress = ({ className, onClose, address = null, onSubmit }) => {
     // Handle form submission
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (address) {
-            onSubmit(formData);
-        } else {
-            onSubmit(formData);
+
+        const { fullName, phone, pincode, locality, address, city, state, addressType } = formData;
+
+        if (!fullName || !phone || !pincode || !locality || !address || !city || !state || !addressType) {
+            toast.error("All fields are required.", {
+                style: {
+                    background: isDarkMode ? "#333" : "#fff",
+                    color: isDarkMode ? "#fff" : "#333",
+                },
+            });
+            return;
         }
+
+        onSubmit(formData);
     };
+
 
     return (
         <div className={className}>
@@ -51,9 +63,8 @@ const EditAddress = ({ className, onClose, address = null, onSubmit }) => {
                             id="fullName"
                             value={formData.fullName}
                             onChange={handleChange}
-                            className={`border p-3 focus:outline-none rounded-md w-full ${
-                                isDarkMode ? "border-[#2f2f2f]" : "border-[#dcdada]"
-                            }`}
+                            className={`border p-3 focus:outline-none rounded-md w-full ${isDarkMode ? "border-[#2f2f2f]" : "border-[#dcdada]"
+                                }`}
                         />
                     </div>
                     <div className="flex flex-col gap-2 w-full">
@@ -66,9 +77,8 @@ const EditAddress = ({ className, onClose, address = null, onSubmit }) => {
                             id="phone"
                             value={formData.phone}
                             onChange={handleChange}
-                            className={`border p-3 focus:outline-none rounded-md w-full ${
-                                isDarkMode ? "border-[#2f2f2f]" : "border-[#dcdada]"
-                            }`}
+                            className={`border p-3 focus:outline-none rounded-md w-full ${isDarkMode ? "border-[#2f2f2f]" : "border-[#dcdada]"
+                                }`}
                         />
                     </div>
                 </div>
@@ -85,9 +95,8 @@ const EditAddress = ({ className, onClose, address = null, onSubmit }) => {
                             id="pincode"
                             value={formData.pincode}
                             onChange={handleChange}
-                            className={`border p-3 focus:outline-none rounded-md w-full ${
-                                isDarkMode ? "border-[#2f2f2f]" : "border-[#dcdada]"
-                            }`}
+                            className={`border p-3 focus:outline-none rounded-md w-full ${isDarkMode ? "border-[#2f2f2f]" : "border-[#dcdada]"
+                                }`}
                         />
                     </div>
                     <div className="flex flex-col gap-2 w-full">
@@ -100,9 +109,8 @@ const EditAddress = ({ className, onClose, address = null, onSubmit }) => {
                             id="locality"
                             value={formData.locality}
                             onChange={handleChange}
-                            className={`border p-3 focus:outline-none rounded-md w-full ${
-                                isDarkMode ? "border-[#2f2f2f]" : "border-[#dcdada]"
-                            }`}
+                            className={`border p-3 focus:outline-none rounded-md w-full ${isDarkMode ? "border-[#2f2f2f]" : "border-[#dcdada]"
+                                }`}
                         />
                     </div>
                 </div>
@@ -117,9 +125,8 @@ const EditAddress = ({ className, onClose, address = null, onSubmit }) => {
                         id="address"
                         value={formData.address}
                         onChange={handleChange}
-                        className={`border p-3 focus:outline-none rounded-md w-full resize-none h-20 ${
-                            isDarkMode ? "border-[#2f2f2f]" : "border-[#dcdada]"
-                        }`}
+                        className={`border p-3 focus:outline-none rounded-md w-full resize-none h-20 ${isDarkMode ? "border-[#2f2f2f]" : "border-[#dcdada]"
+                            }`}
                     />
                 </div>
 
@@ -135,9 +142,8 @@ const EditAddress = ({ className, onClose, address = null, onSubmit }) => {
                             id="city"
                             value={formData.city}
                             onChange={handleChange}
-                            className={`border p-3 focus:outline-none rounded-md w-full ${
-                                isDarkMode ? "border-[#2f2f2f]" : "border-[#dcdada]"
-                            }`}
+                            className={`border p-3 focus:outline-none rounded-md w-full ${isDarkMode ? "border-[#2f2f2f]" : "border-[#dcdada]"
+                                }`}
                         />
                     </div>
                     <div className="flex flex-col gap-2 w-full">
@@ -150,9 +156,8 @@ const EditAddress = ({ className, onClose, address = null, onSubmit }) => {
                             id="state"
                             value={formData.state}
                             onChange={handleChange}
-                            className={`border p-3 focus:outline-none rounded-md w-full ${
-                                isDarkMode ? "border-[#2f2f2f]" : "border-[#dcdada]"
-                            }`}
+                            className={`border p-3 focus:outline-none rounded-md w-full ${isDarkMode ? "border-[#2f2f2f]" : "border-[#dcdada]"
+                                }`}
                         />
                     </div>
                 </div>
@@ -169,9 +174,8 @@ const EditAddress = ({ className, onClose, address = null, onSubmit }) => {
                             id="landmark"
                             value={formData.landmark}
                             onChange={handleChange}
-                            className={`border p-3 focus:outline-none rounded-md w-full ${
-                                isDarkMode ? "border-[#2f2f2f]" : "border-[#dcdada]"
-                            }`}
+                            className={`border p-3 focus:outline-none rounded-md w-full ${isDarkMode ? "border-[#2f2f2f]" : "border-[#dcdada]"
+                                }`}
                         />
                     </div>
                     <div className="flex flex-col gap-2 w-full">
@@ -184,9 +188,8 @@ const EditAddress = ({ className, onClose, address = null, onSubmit }) => {
                             id="alternatePhone"
                             value={formData.alternatePhone}
                             onChange={handleChange}
-                            className={`border p-3 focus:outline-none rounded-md w-full ${
-                                isDarkMode ? "border-[#2f2f2f]" : "border-[#dcdada]"
-                            }`}
+                            className={`border p-3 focus:outline-none rounded-md w-full ${isDarkMode ? "border-[#2f2f2f]" : "border-[#dcdada]"
+                                }`}
                         />
                     </div>
                 </div>
@@ -222,12 +225,11 @@ const EditAddress = ({ className, onClose, address = null, onSubmit }) => {
 
                 {/* Buttons */}
                 <div className="flex gap-4 mt-4">
-                    <button
+                    <LoaderButton
                         type="submit"
-                        className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-indigo-400 cursor-pointer duration-300"
-                    >
-                        {address ? "Update Address" : "Add Address"}
-                    </button>
+                        text={address ? "Update Address" : "Add Address"}
+                        className='font-semibold rounded min-w-32'
+                    />
                     <button
                         type="button"
                         onClick={onClose}

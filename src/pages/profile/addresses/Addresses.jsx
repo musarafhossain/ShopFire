@@ -2,34 +2,135 @@ import React, { useState } from 'react'
 import ProfileLayout from '@/components/pages/profile/ProfileLayout'
 import { useTheme } from "@/context/ThemeContext";
 import EditAddress from '@/components/pages/profile/addresses/EditAddress';
-import AddressCard from './AddressCard';
-import LoaderButton from "@/components/buttons/LoaderButton";
+import AddressCard from '@/components/pages/profile/addresses/AddressCard';
 import { useLoading } from "@/context/LoadingContext";
+import { updateDoc } from "firebase/firestore";
+import useUserDoc from "@/hooks/useUserDoc";
+import { useAuth } from "@/auth/AuthContext";
+import toast from "react-hot-toast";
 
 const Addresses = () => {
     const { loading, setLoading } = useLoading();
+    const { userDoc } = useUserDoc();
+    const { user } = useAuth();
     const { isDarkMode } = useTheme();
-    const [myaddresses, setMyAddresses] = useState([]);
+
+    const [myaddresses, setMyAddresses] = useState(user.addresses);
 
     const [addAddress, setAddAddress] = useState(false);
     const [editAddress, setEditAddress] = useState(null);
 
-    const addNewAddress = (address) => {
-        setMyAddresses([...myaddresses, address]);
-        setAddAddress(false); 
+
+    const addNewAddress = async (address) => {
+        setLoading(true);
+        const newAddresses = [...myaddresses, address]
+        try {
+            if (userDoc) {
+                await updateDoc(userDoc, {
+                    addresses: newAddresses,
+                });
+                setMyAddresses(newAddresses);
+                toast.success("New address has been added!", {
+                    style: {
+                        background: isDarkMode ? "#4CAF50" : "#E6F4EA",
+                        color: isDarkMode ? "#fff" : "#333",
+                    },
+                });
+            } else {
+                toast.error("User not found in Firestore.", {
+                    style: {
+                        background: isDarkMode ? "#333" : "#fff",
+                        color: isDarkMode ? "#fff" : "#333",
+                    },
+                });
+            }
+        } catch (error) {
+            console.error("Error updating profile:", error);
+            toast.error("Failed to update profile.", {
+                style: {
+                    background: isDarkMode ? "#333" : "#fff",
+                    color: isDarkMode ? "#fff" : "#333",
+                },
+            });
+        } finally {
+            setLoading(false);
+        }
+        setAddAddress(false);
     };
 
-    const editExistingAddress = (updatedAddress, index) => {
+    const editExistingAddress = async (updatedAddress, index) => {
+        setLoading(true);
         const updatedAddresses = myaddresses.map((addr, i) =>
             i === index ? updatedAddress : addr
         );
-        setMyAddresses(updatedAddresses);
-        setEditAddress(null); // Close the edit form
+        try {
+            if (userDoc) {
+                await updateDoc(userDoc, {
+                    addresses: updatedAddresses,
+                });
+                setMyAddresses(updatedAddresses);
+                toast.success("Address has been edited!", {
+                    style: {
+                        background: isDarkMode ? "#4CAF50" : "#E6F4EA",
+                        color: isDarkMode ? "#fff" : "#333",
+                    },
+                });
+            } else {
+                toast.error("User not found in Firestore.", {
+                    style: {
+                        background: isDarkMode ? "#333" : "#fff",
+                        color: isDarkMode ? "#fff" : "#333",
+                    },
+                });
+            }
+        } catch (error) {
+            console.error("Error updating profile:", error);
+            toast.error("Failed to update profile.", {
+                style: {
+                    background: isDarkMode ? "#333" : "#fff",
+                    color: isDarkMode ? "#fff" : "#333",
+                },
+            });
+        } finally {
+            setLoading(false);
+        }
+        setEditAddress(null);
     };
 
-    const deleteAddress = (index) => {
+    const deleteAddress = async (index) => {
         const updatedAddresses = myaddresses.filter((_, i) => i !== index);
-        setMyAddresses(updatedAddresses);
+        setLoading(true);
+        try {
+            if (userDoc) {
+                await updateDoc(userDoc, {
+                    addresses: updatedAddresses,
+                });
+                setMyAddresses(updatedAddresses);
+                toast.success("Address has been deleted!", {
+                    style: {
+                        background: isDarkMode ? "#4CAF50" : "#E6F4EA",
+                        color: isDarkMode ? "#fff" : "#333",
+                    },
+                });
+            } else {
+                toast.error("User not found in Firestore.", {
+                    style: {
+                        background: isDarkMode ? "#333" : "#fff",
+                        color: isDarkMode ? "#fff" : "#333",
+                    },
+                });
+            }
+        } catch (error) {
+            console.error("Error updating profile:", error);
+            toast.error("Failed to update profile.", {
+                style: {
+                    background: isDarkMode ? "#333" : "#fff",
+                    color: isDarkMode ? "#fff" : "#333",
+                },
+            });
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
