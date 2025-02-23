@@ -3,54 +3,20 @@ import ProfileLayout from '@/components/pages/profile/ProfileLayout'
 import { useTheme } from "@/context/ThemeContext";
 import EditAddress from '@/components/pages/profile/addresses/EditAddress';
 import AddressCard from './AddressCard';
+import LoaderButton from "@/components/buttons/LoaderButton";
+import { useLoading } from "@/context/LoadingContext";
 
 const Addresses = () => {
+    const { loading, setLoading } = useLoading();
     const { isDarkMode } = useTheme();
-    const [myaddresses, setMyAddresses] = useState([
-        {
-            fullName: "Musaraf Hossain",
-            phone: "8389989806",
-            pincode: "736101",
-            locality: "Rail Ghumty, Rail Ghumty",
-            address: "Koch Bihar, West Bengal",
-            city: "Koch Bihar",
-            state: "West Bengal",
-            landmark: "",
-            alternatePhone: "",
-            addressType: "home",
-        },
-        {
-            fullName: "John Doe",
-            phone: "1234567890",
-            pincode: "543210",
-            locality: "Downtown",
-            address: "123 Main St, Some City, Some State",
-            city: "Some City",
-            state: "Some State",
-            landmark: "Near the park",
-            alternatePhone: "0987654321",
-            addressType: "work",
-        },
-        {
-            fullName: "Jane Smith",
-            phone: "5555555555",
-            pincode: "111222",
-            locality: "Suburbia",
-            address: "456 Side Rd, Another City, Another State",
-            city: "Another City",
-            state: "Another State",
-            landmark: "Opposite the mall",
-            alternatePhone: "4444444444",
-            addressType: "home",
-        },
-    ]);
+    const [myaddresses, setMyAddresses] = useState([]);
 
     const [addAddress, setAddAddress] = useState(false);
     const [editAddress, setEditAddress] = useState(null);
 
     const addNewAddress = (address) => {
         setMyAddresses([...myaddresses, address]);
-        setAddAddress(false); // Close the form after adding an address
+        setAddAddress(false); 
     };
 
     const editExistingAddress = (updatedAddress, index) => {
@@ -109,7 +75,7 @@ const Addresses = () => {
                         </div>
                     ))
                 ) : (
-                    <p className='py-5 text-center'>No Addresses</p>
+                    <p className='py-5 text-center'>No Addresses Found</p>
                 )}
             </div>
         </ProfileLayout>

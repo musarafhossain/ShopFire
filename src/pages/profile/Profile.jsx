@@ -4,9 +4,9 @@ import { FaEdit } from "react-icons/fa";
 import ProfileLayout from '@/components/pages/profile/ProfileLayout';
 import toast from "react-hot-toast";
 import { useAuth } from "@/auth/AuthContext";
-import { fireDB } from "@/firebase/firebaseConfig"; // Import Firestore instance
+import { fireDB } from "@/firebase/FirebaseConfig"; // Import Firestore instance
 import { collection, query, where, getDocs, updateDoc } from "firebase/firestore";
-import LoaderButton from "../../components/buttons/LoaderButton";
+import LoaderButton from "@/components/buttons/LoaderButton";
 import { useLoading } from "@/context/LoadingContext";
 
 const Profile = () => {
