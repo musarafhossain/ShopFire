@@ -65,9 +65,6 @@ const Signup = () => {
                 wishlist: [],
                 coupons: [],
                 phoneNumber: "",
-                city: "",
-                country: "",
-                zipCode: "",
                 createdAt: Timestamp.now(),
             };
 

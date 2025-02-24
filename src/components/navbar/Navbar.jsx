@@ -19,6 +19,7 @@ import { useTheme } from '../../context/ThemeContext';
 
 import ThemeToggleButton from '../buttons/ThemeToggleButton';
 import Logo from '../Logo';
+import LazyImage from '@/components/LazyImage';
 
 //import other libraries
 import gsap from 'gsap';
@@ -178,7 +179,7 @@ const Navbar = () => {
                   type="button"
                   className="right-icon cursor-pointer flex items-center justify-center"
                 >
-                  <FaUserCircle size={25} />
+                  <LazyImage src={user?.photoURL || "/mypic.png"} alt="User avatar" className="w-10 h-10 rounded-full" />
                 </button>
                 {isUserMenuOpen && (
                   <div
@@ -189,15 +190,17 @@ const Navbar = () => {
                       <>
                         <Link to="/profile">
                           <button
-                            className={`cursor-pointer w-full rounded-md flex px-4 py-2 border gap-2 items-center text-left transition-transform transform hover:scale-105 ${isDarkMode ? 'border-[#2f2f2f] hover:bg-gray-700' : 'hover:bg-gray-100 border-[#dcdada]'
+                            className={`cursor-pointer w-full rounded-md flex px-2 py-2 border gap-2 items-center text-left transition-transform transform hover:scale-105 ${isDarkMode ? 'border-[#2f2f2f] hover:bg-gray-700' : 'hover:bg-gray-100 border-[#dcdada]'
                               }`}
                           >
-                            <img src="/mypic.jpg" alt="User avatar" className="w-10 h-10 rounded-full" />
-                            <span className="truncate text-md leading-[1]">Musaraf Hossain</span>
+                            <LazyImage src={user?.photoURL || "/mypic.png"} alt="User avatar" className="w-10 h-10 rounded-full" />
+                            <div className="flex flex-col gap-1 w-full truncate">
+                              <span className="truncate text-md leading-[1]">{user.name}</span>
+                              <span className="text-xs text-gray-500">Your Profile</span>
+                            </div>
                           </button>
                         </Link>
 
-                        {/* My Wishlist Button */}
                         <button
                           className={`w-full cursor-pointer rounded-md flex px-4 py-2 border gap-2 items-center text-left transition-transform transform hover:scale-105 ${isDarkMode ? 'border-[#2f2f2f] hover:bg-gray-700' : 'hover:bg-gray-100 border-[#dcdada]'
                             } text-green-500`}
@@ -218,14 +221,6 @@ const Navbar = () => {
                       </>
                     ) : (
                       <>
-                        {/* <button
-                          className={`cursor-pointer w-full rounded-md flex px-4 py-2 border gap-2 items-center text-left transition-transform transform hover:scale-105 ${isDarkMode ? 'border-[#2f2f2f] hover:bg-gray-700' : 'hover:bg-gray-100 border-[#dcdada]'
-                            }`}
-                        >
-                          <div className='h-9 w-10 rounded-full bg-gray-200'></div>
-                          <span className="truncate text-md leading-[1]">Unknown User</span>
-                        </button> */}
-                        {/* Login Button */}
                         <Link to="/login">
                           <button
                             className={`w-full cursor-pointer rounded-md flex px-4 py-2 border gap-2 items-center text-left transition-transform transform hover:scale-105 ${isDarkMode ? 'border-[#2f2f2f] hover:bg-gray-700' : 'hover:bg-gray-100 border-[#dcdada]'

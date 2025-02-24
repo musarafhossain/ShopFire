@@ -94,8 +94,7 @@ const Profile = () => {
                         value={formData.name}
                         onChange={handleChange}
                         disabled={!isEditing}
-                        className={`border p-3 focus:outline-0 text-gray-600 rounded-md max-w-sm ${isDarkMode ? "border-[#2f2f2f]" : "border-[#dcdada]"
-                            }`}
+                        className={`border p-3 focus:outline-0 rounded-md max-w-sm ${isDarkMode ? "border-[#2f2f2f] text-gray-300" : "border-[#dcdada] text-gray-600"}`}
                     />
                 </div>
 
@@ -139,8 +138,8 @@ const Profile = () => {
                         autoComplete="username"
                         value={formData.email}
                         onChange={handleChange}
-                        disabled={!isEditing}
-                        className={`border p-3 focus:outline-0 text-gray-600 rounded-md max-w-sm ${isDarkMode ? "border-[#2f2f2f]" : "border-[#dcdada]"
+                        disabled
+                        className={`border p-3 focus:outline-0 rounded-md max-w-sm ${isDarkMode ? "border-[#2f2f2f] text-gray-300" : "border-[#dcdada] text-gray-600"
                             }`}
                     />
                 </div>
@@ -154,8 +153,8 @@ const Profile = () => {
                         autoComplete="phone"
                         value={formData.phone}
                         onChange={handleChange}
-                        disabled={!isEditing}
-                        className={`border p-3 focus:outline-0 text-gray-600 rounded-md max-w-sm ${isDarkMode ? "border-[#2f2f2f]" : "border-[#dcdada]"
+                        disabled
+                        className={`border p-3 focus:outline-0 rounded-md max-w-sm ${isDarkMode ? "border-[#2f2f2f] text-gray-300 " : "border-[#dcdada] text-gray-600"
                             }`}
                     />
                 </div>
