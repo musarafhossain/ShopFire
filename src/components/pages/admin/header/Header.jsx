@@ -1,6 +1,7 @@
 //import react libraries
 import React from 'react'
 import ThemeToggleButton from '../../../buttons/ThemeToggleButton';
+import ProfileButton from '../../../buttons/ProfileButton';
 
 //import icons
 import { HiMiniBars3BottomRight } from "react-icons/hi2";
@@ -12,7 +13,7 @@ const Header = ({ setIsSidebarOpen }) => {
     const { isDarkMode } = useTheme();
     return (
         <header
-            className={`[box-shadow:rgba(60,_64,_67,_0.3)_0px_1px_2px_0px,_rgba(60,_64,_67,_0.15)_0px_1px_3px_1px] fixed top-0 right-0 left-0 h-16 flex items-center px-4 z-40
+            className={`[box-shadow:rgba(60,_64,_67,_0.3)_0px_1px_2px_0px,_rgba(60,_64,_67,_0.15)_0px_1px_3px_1px] fixed top-0 right-0 left-0 h-16 flex gap-2 items-center px-4 z-40
                         ${isDarkMode ? 'bg-gray-800 border-b border-gray-700' : 'bg-white border-b border-gray-200'}`}
         >
             <button
@@ -23,8 +24,8 @@ const Header = ({ setIsSidebarOpen }) => {
             </button>
 
             <div className="flex-1" />
-
             <ThemeToggleButton className='p-2 rounded-lg'/>
+            <ProfileButton />
         </header>
     )
 }

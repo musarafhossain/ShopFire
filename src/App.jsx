@@ -35,6 +35,7 @@ import Settings from '@/pages/admin/settings/Settings';
 
 import AuthRoutes from './auth/AuthRoutes';
 import PrivateRoute from './auth/PrivateRoute';
+import AdminRoute from './auth/AdminRoutes';
 
 const App = () => {
   return (
@@ -55,11 +56,11 @@ const App = () => {
         <Route path='/profile/addresses' element={<PrivateRoute><Addresses /></PrivateRoute>} />
 
         {/*Admin Routes*/}
-        <Route path='/admin/dashboard' element={<Dashboard />} />
-        <Route path='/admin/users' element={<Users />} />
-        <Route path='/admin/orders' element={<Orders />} />
-        <Route path='/admin/products' element={<Products />} />
-        <Route path='/admin/settings' element={<Settings />} />
+        <Route path='/admin/dashboard' element={<AdminRoute><Dashboard /></AdminRoute>} />
+        <Route path='/admin/users' element={<AdminRoute><Users /></AdminRoute>} />
+        <Route path='/admin/orders' element={<AdminRoute><Orders /></AdminRoute>} />
+        <Route path='/admin/products' element={<AdminRoute><Products /></AdminRoute>} />
+        <Route path='/admin/settings' element={<AdminRoute><Settings /></AdminRoute>} />
         <Route path='/*' element={<NoPage />} />
       </Routes>
     </Router>

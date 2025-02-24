@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTheme } from '@/context/ThemeContext';
 import { FaChevronRight, FaPowerOff } from "react-icons/fa6";
-import { FaUser, FaFolder, FaWallet, FaImage, FaTrash, FaTimes, FaEdit } from "react-icons/fa";
+import { FaUser, FaFolder, FaWallet, FaImage, FaTrash, FaTimes, FaEdit, FaUserLock } from "react-icons/fa";
 import { GiShoppingBag } from "react-icons/gi";
 import { Link } from 'react-router-dom';
 import { useAuth } from "@/auth/AuthContext";
@@ -111,7 +111,6 @@ const LeftSection = ({ pageTitle }) => {
       {/* Greeting Section */}
       <div className={`flex items-center gap-3 p-4 rounded-xl border ${isDarkMode ? ' border-[#2f2f2f] ' : ' border-[#dcdada] '}`}>
         {/* Profile Image Upload */}
-        {/* Profile Image Upload */}
         <div className="relative w-14 h-14 cursor-pointer group" onClick={handleImageClick}>
           <LazyImage
             src={imgUrl}
@@ -134,7 +133,6 @@ const LeftSection = ({ pageTitle }) => {
       </div>
 
       {/* Image Change/Delete Options */}
-
       <ModalLayout isOpenModal={showOptions} closeModal={() => setShowOptions(false)} openModal={() => setShowOptions(true)}>
         <div className="rounded-lg shadow-lg w-80 text-center">
           <p className={`text-lg font-semibold mb-4 ${isDarkMode ? 'dark:text-gray-200' : 'text-gray-800'}  `}>Change Profile Picture</p>
@@ -162,7 +160,6 @@ const LeftSection = ({ pageTitle }) => {
         </div>
       </ModalLayout>
 
-
       {/* Tab Section */}
       <div className={`flex items-center flex-col rounded-xl border ${isDarkMode ? ' border-[#2f2f2f] ' : ' border-[#dcdada] '}`}>
         {/* My orders */}
@@ -173,6 +170,19 @@ const LeftSection = ({ pageTitle }) => {
           </div>
           <FaChevronRight size={20} />
         </div>
+        {/* Admin Panel Link */}
+        {user.role === 'admin' &&
+          <Link
+            className={`uppercase cursor-pointer flex items-center justify-between p-4 w-full border-b ${isDarkMode ? ' border-[#2f2f2f] ' : ' border-[#dcdada] '} text-gray-400 hover:text-blue-800 duration-300`}
+            to='/admin/dashboard'
+          >
+            <div className='flex items-center gap-4'>
+              <FaUserLock size={20} className='text-indigo-400' />
+              <span className='text-md font-semibold'>Admin Panel</span>
+            </div>
+            <FaChevronRight size={20} />
+          </Link>
+        }
         {/* Account Settting */}
         <div className={`flex flex-col p-4 w-full border-b ${isDarkMode ? ' border-[#2f2f2f] ' : ' border-[#dcdada] '}`}>
           <div className='flex items-center gap-4'>

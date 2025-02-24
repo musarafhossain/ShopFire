@@ -1,25 +1,21 @@
 //import react libraries
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { useSelector } from 'react-redux';
-import { useAuth } from "@/auth/AuthContext";
 
 //import react icons
 import { HiMiniBars3BottomRight } from "react-icons/hi2";
 import { IoHomeOutline } from "react-icons/io5";
-import { FiShoppingCart } from "react-icons/fi";
-import { FiShoppingBag } from "react-icons/fi";
+import { FiShoppingCart, FiShoppingBag } from "react-icons/fi";
 import { BsTruck } from "react-icons/bs";
-import { FaUserCircle, FaHeart, FaSignOutAlt, FaSearch, FaUserPlus } from "react-icons/fa";
-import { CiLogin } from "react-icons/ci";
-import { HiMiniPower } from "react-icons/hi2";
+import { FaSearch } from "react-icons/fa";
 
 //import context
 import { useTheme } from '../../context/ThemeContext';
 
 import ThemeToggleButton from '../buttons/ThemeToggleButton';
 import Logo from '../Logo';
-import LazyImage from '@/components/LazyImage';
+import ProfileButton from '../buttons/ProfileButton';
 
 //import other libraries
 import gsap from 'gsap';
@@ -33,7 +29,6 @@ const Navbar = () => {
   const { isDarkMode } = useTheme();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const totalQuantity = useSelector(state => state.cart.totalQuantity);
-  const { user, logout } = useAuth();
 
   useEffect(() => {
     if (isSidebarOpen) {
@@ -43,56 +38,43 @@ const Navbar = () => {
     }
   }, [isSidebarOpen]);
 
-  // Refs for elements to animate
-  const logoRef = useRef(null);
-  const navbarRef = useRef(null);
-
   // State to handle sidebar visibility
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
   const closeSidebar = () => setIsSidebarOpen(false);
 
   useEffect(() => {
-    //let lastScrollY = window.scrollY;
-    ScrollTrigger.create({
+    let lastScrollY = window.scrollY;
+
+    // Create ScrollTrigger instance
+    const trigger = ScrollTrigger.create({
       onUpdate: (self) => {
         const direction = self.direction;
         if (direction === 1) {
-          gsap.to(navbarRef.current, { y: "-100%" });
+          gsap.to('.root-navbar', { y: "-100%" });
         } else {
-          gsap.to(navbarRef.current, { y: "0%" });
+          gsap.to('.root-navbar', { y: "0%" });
         }
-        //lastScrollY = self.scroll();
+        lastScrollY = self.scroll();
       },
     });
+
+    // Cleanup function: kills ScrollTrigger on unmount
+    return () => {
+      trigger.kill();
+    };
   }, []);
-
-  // Dropdown State
-  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-  const dropdownTimeout = useRef(null);
-
-  const handleMouseEnter = () => {
-    if (dropdownTimeout.current) clearTimeout(dropdownTimeout.current);
-    setIsUserMenuOpen(true);
-  };
-
-  const handleMouseLeave = () => {
-    dropdownTimeout.current = setTimeout(() => {
-      setIsUserMenuOpen(false);
-    }, 200);
-  };
 
   return (
     <>
       <header
-        className={`${isDarkMode ? 'bg-[#002031]' : 'bg-white'} [box-shadow:rgba(60,_64,_67,_0.3)_0px_1px_2px_0px,_rgba(60,_64,_67,_0.15)_0px_1px_3px_1px] z-[999] sticky top-0 py-1 left-0`}
-        ref={navbarRef}
+        className={`${isDarkMode ? 'bg-[#002031]' : 'bg-white'} [box-shadow:rgba(60,_64,_67,_0.3)_0px_1px_2px_0px,_rgba(60,_64,_67,_0.15)_0px_1px_3px_1px] z-[999] sticky top-0 py-1 left-0 root-navbar`}
       >
         <center>
           <div
             className={`flex max-w-[1440px] w-full min-h-[60px] gap-2 items-center justify-between px-2 md:pr-5`}
           >
             {/* Logo */}
-            <div className="flex justify-center items-center select-none" ref={logoRef}>
+            <div className="flex justify-center items-center select-none">
               <HiMiniBars3BottomRight
                 className="cursor-pointer lg:hidden ml-1"
                 size={25}
@@ -157,7 +139,6 @@ const Navbar = () => {
                   <FaSearch size={20} />
                 </button>
               </div>
-
               <Link to="/cart" className="relative right-icon">
                 <FiShoppingCart size={25} />
                 {totalQuantity > 0 && (
@@ -166,86 +147,8 @@ const Navbar = () => {
                   </span>
                 )}
               </Link>
-
               <ThemeToggleButton className="right-icon" />
-
-              {/* User Icon with Dropdown on Hover */}
-              <div
-                className="relative flex items-center"
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
-              >
-                <button
-                  type="button"
-                  className="right-icon cursor-pointer flex items-center justify-center"
-                >
-                  <LazyImage src={user?.photoURL || "/mypic.png"} alt="User avatar" className="w-10 h-10 rounded-full" />
-                </button>
-                {isUserMenuOpen && (
-                  <div
-                    className={`absolute right-0 top-8 mt-2 p-2 flex flex-col gap-2 w-48 shadow-md rounded border ${isDarkMode ? 'bg-[#002031] text-white border-gray-600' : 'bg-white text-black border-gray-200'
-                      }`}
-                  >
-                    {user ? (
-                      <>
-                        <Link to="/profile">
-                          <button
-                            className={`cursor-pointer w-full rounded-md flex px-2 py-2 border gap-2 items-center text-left transition-transform transform hover:scale-105 ${isDarkMode ? 'border-[#2f2f2f] hover:bg-gray-700' : 'hover:bg-gray-100 border-[#dcdada]'
-                              }`}
-                          >
-                            <LazyImage src={user?.photoURL || "/mypic.png"} alt="User avatar" className="w-10 h-10 rounded-full" />
-                            <div className="flex flex-col gap-1 w-full truncate">
-                              <span className="truncate text-md leading-[1]">{user.name}</span>
-                              <span className="text-xs text-gray-500">Your Profile</span>
-                            </div>
-                          </button>
-                        </Link>
-
-                        <button
-                          className={`w-full cursor-pointer rounded-md flex px-4 py-2 border gap-2 items-center text-left transition-transform transform hover:scale-105 ${isDarkMode ? 'border-[#2f2f2f] hover:bg-gray-700' : 'hover:bg-gray-100 border-[#dcdada]'
-                            } text-green-500`}
-                        >
-                          <FaHeart size={18} className="transition-colors text-green-500" />
-                          My Wishlist (10)
-                        </button>
-
-                        {/* Logout Button */}
-                        <button
-                          className={`w-full cursor-pointer rounded-md flex px-4 py-2 border gap-2 items-center text-left transition-transform transform hover:scale-105 ${isDarkMode ? 'border-[#2f2f2f] hover:bg-gray-700' : 'hover:bg-gray-100 border-[#dcdada]'
-                            } text-red-500`}
-                          onClick={logout}
-                        >
-                          <HiMiniPower size={18} className="transition-colors text-red-500" />
-                          Logout
-                        </button>
-                      </>
-                    ) : (
-                      <>
-                        <Link to="/login">
-                          <button
-                            className={`w-full cursor-pointer rounded-md flex px-4 py-2 border gap-2 items-center text-left transition-transform transform hover:scale-105 ${isDarkMode ? 'border-[#2f2f2f] hover:bg-gray-700' : 'hover:bg-gray-100 border-[#dcdada]'
-                              } text-red-500`}
-                          >
-                            <CiLogin size={18} className="transition-colors text-red-500" />
-                            Login
-                          </button>
-                        </Link>
-                        <Link to="/signup">
-                          {/* Signup Button */}
-                          <button
-                            className={`w-full cursor-pointer rounded-md flex px-4 py-2 border gap-2 items-center text-left transition-transform transform hover:scale-105 ${isDarkMode ? 'border-[#2f2f2f] hover:bg-gray-700' : 'hover:bg-gray-100 border-[#dcdada]'
-                              } text-green-500`}
-                          >
-                            <FaUserPlus size={18} className="transition-colors text-green-500" />
-                            Signup
-                          </button>
-                        </Link>
-                      </>
-                    )}
-                  </div>
-                )}
-              </div>
-
+              <ProfileButton />
             </div>
           </div>
         </center>
