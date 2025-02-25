@@ -2,6 +2,9 @@ import React, { useState } from 'react'
 import { useTheme } from "@/context/ThemeContext";
 import LoaderButton from "@/components/buttons/LoaderButton";
 import toast from "react-hot-toast";
+import InputText from '../../../input/InputText';
+import InputRadio from '../../../input/InputRadio';
+import InputTextarea from '../../../input/InputTextarea';
 
 const EditAddress = ({ className, onClose, address = null, onSubmit }) => {
     const { isDarkMode } = useTheme();
@@ -17,7 +20,7 @@ const EditAddress = ({ className, onClose, address = null, onSubmit }) => {
         state: address?.state || "",
         landmark: address?.landmark || "",
         alternatePhone: address?.alternatePhone || "",
-        addressType: address?.addressType || "home",
+        addressType: address?.addressType || "Home",
     });
 
     // Handle input change
@@ -53,175 +56,120 @@ const EditAddress = ({ className, onClose, address = null, onSubmit }) => {
             <form onSubmit={handleSubmit} className="flex flex-col gap-4 mt-4">
                 {/* Full Name & Mobile Number */}
                 <div className="flex flex-col md:flex-row gap-4">
-                    <div className="flex flex-col gap-2 w-full">
-                        <label className="text-sm" htmlFor="fullName">
-                            Full Name
-                        </label>
-                        <input
-                            type="text"
-                            name="fullName"
-                            id="fullName"
-                            value={formData.fullName}
-                            onChange={handleChange}
-                            className={`border p-3 focus:outline-none rounded-md w-full ${isDarkMode ? "border-[#2f2f2f]" : "border-[#dcdada]"
-                                }`}
-                        />
-                    </div>
-                    <div className="flex flex-col gap-2 w-full">
-                        <label className="text-sm" htmlFor="phone">
-                            Mobile Number
-                        </label>
-                        <input
-                            type="tel"
-                            name="phone"
-                            id="phone"
-                            value={formData.phone}
-                            onChange={handleChange}
-                            className={`border p-3 focus:outline-none rounded-md w-full ${isDarkMode ? "border-[#2f2f2f]" : "border-[#dcdada]"
-                                }`}
-                        />
-                    </div>
+                    <InputText
+                        label="Full Name"
+                        type="text"
+                        name="fullName"
+                        id="fullName"
+                        autoComplete="name"
+                        value={formData.fullName}
+                        onChange={handleChange}
+                        className='w-full'
+                    />
+                    <InputText
+                        label="Mobile Number"
+                        type="tel"
+                        name="phone"
+                        id="phone"
+                        autoComplete="tel"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        className='w-full'
+                    />
                 </div>
 
                 {/* Pin Code & Locality */}
                 <div className="flex flex-col md:flex-row gap-4">
-                    <div className="flex flex-col gap-2 w-full">
-                        <label className="text-sm" htmlFor="pincode">
-                            Pin Code
-                        </label>
-                        <input
-                            type="number"
-                            name="pincode"
-                            id="pincode"
-                            value={formData.pincode}
-                            onChange={handleChange}
-                            className={`border p-3 focus:outline-none rounded-md w-full ${isDarkMode ? "border-[#2f2f2f]" : "border-[#dcdada]"
-                                }`}
-                        />
-                    </div>
-                    <div className="flex flex-col gap-2 w-full">
-                        <label className="text-sm" htmlFor="locality">
-                            Locality
-                        </label>
-                        <input
-                            type="text"
-                            name="locality"
-                            id="locality"
-                            value={formData.locality}
-                            onChange={handleChange}
-                            className={`border p-3 focus:outline-none rounded-md w-full ${isDarkMode ? "border-[#2f2f2f]" : "border-[#dcdada]"
-                                }`}
-                        />
-                    </div>
-                </div>
-
-                {/* Address (Text Area) */}
-                <div className="flex flex-col gap-2 w-full">
-                    <label className="text-sm" htmlFor="address">
-                        Address (Area & Street)
-                    </label>
-                    <textarea
-                        name="address"
-                        id="address"
-                        value={formData.address}
+                    <InputText
+                        label="Pin Code"
+                        type="text"
+                        name="pincode"
+                        id="pincode"
+                        autoComplete='postal-code'
+                        value={formData.pincode}
                         onChange={handleChange}
-                        className={`border p-3 focus:outline-none rounded-md w-full resize-none h-20 ${isDarkMode ? "border-[#2f2f2f]" : "border-[#dcdada]"
-                            }`}
+                        className='w-full'
+                    />
+                    <InputText
+                        label="Locality"
+                        type="text"
+                        name="locality"
+                        id="locality"
+                        autoComplete='address-line2'
+                        value={formData.locality}
+                        onChange={handleChange}
+                        className='w-full'
                     />
                 </div>
 
+                {/* Address (Text Area) */}
+                <InputTextarea
+                    label='Address (Area & Street)'
+                    name="address"
+                    id="address"
+                    autoComplete='address-line1'
+                    value={formData.address}
+                    onChange={handleChange}
+                    className='w-full'
+                />
+
                 {/* City & State */}
                 <div className="flex flex-col md:flex-row gap-4">
-                    <div className="flex flex-col gap-2 w-full">
-                        <label className="text-sm" htmlFor="city">
-                            City/District/Town
-                        </label>
-                        <input
-                            type="text"
-                            name="city"
-                            id="city"
-                            value={formData.city}
-                            onChange={handleChange}
-                            className={`border p-3 focus:outline-none rounded-md w-full ${isDarkMode ? "border-[#2f2f2f]" : "border-[#dcdada]"
-                                }`}
-                        />
-                    </div>
-                    <div className="flex flex-col gap-2 w-full">
-                        <label className="text-sm" htmlFor="state">
-                            State
-                        </label>
-                        <input
-                            type="text"
-                            name="state"
-                            id="state"
-                            value={formData.state}
-                            onChange={handleChange}
-                            className={`border p-3 focus:outline-none rounded-md w-full ${isDarkMode ? "border-[#2f2f2f]" : "border-[#dcdada]"
-                                }`}
-                        />
-                    </div>
+                    <InputText
+                        label="City/District/Town"
+                        type="text"
+                        name="city"
+                        id="city"
+                        autoComplete="address-level2"
+                        value={formData.city}
+                        onChange={handleChange}
+                        className='w-full'
+                    />
+                    <InputText
+                        label="State"
+                        type="text"
+                        name="state"
+                        id="state"
+                        autoComplete="address-level1"
+                        value={formData.state}
+                        onChange={handleChange}
+                        className='w-full'
+                    />
                 </div>
 
                 {/* Landmark & Alternate Phone */}
                 <div className="flex flex-col md:flex-row gap-4">
-                    <div className="flex flex-col gap-2 w-full">
-                        <label className="text-sm" htmlFor="landmark">
-                            Landmark (Optional)
-                        </label>
-                        <input
-                            type="text"
-                            name="landmark"
-                            id="landmark"
-                            value={formData.landmark}
-                            onChange={handleChange}
-                            className={`border p-3 focus:outline-none rounded-md w-full ${isDarkMode ? "border-[#2f2f2f]" : "border-[#dcdada]"
-                                }`}
-                        />
-                    </div>
-                    <div className="flex flex-col gap-2 w-full">
-                        <label className="text-sm" htmlFor="alternatePhone">
-                            Alternate Phone (Optional)
-                        </label>
-                        <input
-                            type="tel"
-                            name="alternatePhone"
-                            id="alternatePhone"
-                            value={formData.alternatePhone}
-                            onChange={handleChange}
-                            className={`border p-3 focus:outline-none rounded-md w-full ${isDarkMode ? "border-[#2f2f2f]" : "border-[#dcdada]"
-                                }`}
-                        />
-                    </div>
+                    <InputText
+                        label="Landmark (Optional)"
+                        type="text"
+                        name="landmark"
+                        id="landmark"
+                        autoComplete="additional-name"
+                        value={formData.landmark}
+                        onChange={handleChange}
+                        className='w-full'
+                    />
+                    <InputText
+                        label="Alternate Phone (Optional)"
+                        type="text"
+                        name="alternatePhone"
+                        id="alternatePhone"
+                        autoComplete="tel"
+                        value={formData.alternatePhone}
+                        onChange={handleChange}
+                        className='w-full'
+                    />
                 </div>
 
                 {/* Address Type */}
-                <div className="flex flex-col gap-2">
-                    <p className="text-sm">Address Type</p>
-                    <div className="flex gap-4">
-                        <label className="flex items-center">
-                            <input
-                                type="radio"
-                                name="addressType"
-                                value="home"
-                                checked={formData.addressType === "home"}
-                                onChange={handleChange}
-                                className="mr-2"
-                            />
-                            Home
-                        </label>
-                        <label className="flex items-center">
-                            <input
-                                type="radio"
-                                name="addressType"
-                                value="work"
-                                checked={formData.addressType === "work"}
-                                onChange={handleChange}
-                                className="mr-2"
-                            />
-                            Work
-                        </label>
-                    </div>
-                </div>
+                <InputRadio
+                    label="Address Type"
+                    ids={['home', 'work']}
+                    name='addressType'
+                    values={['Home', 'Work']}
+                    checked={[formData.addressType === "Home", formData.addressType === "Work"]}
+                    onChange={handleChange}
+                />
 
                 {/* Buttons */}
                 <div className="flex gap-4 mt-4">
@@ -233,7 +181,7 @@ const EditAddress = ({ className, onClose, address = null, onSubmit }) => {
                     <button
                         type="button"
                         onClick={onClose}
-                        className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-gray-400 cursor-pointer duration-300"
+                        className="bg-gray-300 hover:scale-105  text-gray-800 font-semibold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-gray-400 cursor-pointer duration-300"
                     >
                         Cancel
                     </button>

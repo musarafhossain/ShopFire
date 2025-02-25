@@ -8,6 +8,8 @@ import { updateDoc } from "firebase/firestore";
 import LoaderButton from "@/components/buttons/LoaderButton";
 import { useLoading } from "@/context/LoadingContext";
 import useUserDoc from "@/hooks/useUserDoc";
+import InputText from "@/components/input/InputText";
+import InputRadio from "@/components/input/InputRadio";
 
 const Profile = () => {
     const { userDoc } = useUserDoc();
@@ -86,78 +88,55 @@ const Profile = () => {
             {/* Form Fields */}
             <div className="flex flex-col gap-4">
                 {/* Name */}
-                <div className="flex flex-col gap-2">
-                    <p className="text-sm">Full Name</p>
-                    <input
-                        type="text"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        disabled={!isEditing}
-                        className={`border p-3 focus:outline-0 rounded-md max-w-sm ${isDarkMode ? "border-[#2f2f2f] text-gray-300" : "border-[#dcdada] text-gray-600"}`}
-                    />
-                </div>
+                <InputText
+                    label="Full Name"
+                    type="text"
+                    name="name"
+                    id="name"
+                    autoComplete="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    disabled={!isEditing}
+                    className='max-w-sm'
+                />
 
                 {/* Gender */}
-                <div className="flex flex-col gap-2">
-                    <p className="text-sm">Gender</p>
-                    <div className="flex gap-4">
-                        <label className="flex items-center">
-                            <input
-                                type="radio"
-                                name="gender"
-                                value="Male"
-                                checked={formData.gender === "Male"}
-                                onChange={handleChange}
-                                disabled={(formData.gender === "Female") && !isEditing}
-                                className="mr-2"
-                            />
-                            Male
-                        </label>
-                        <label className="flex items-center">
-                            <input
-                                type="radio"
-                                name="gender"
-                                value="Female"
-                                checked={formData.gender === "Female"}
-                                onChange={handleChange}
-                                className="mr-2"
-                                disabled={(formData.gender === "Male") && !isEditing}
-                            />
-                            Female
-                        </label>
-                    </div>
-                </div>
+                <InputRadio
+                    label="Gender"
+                    ids={['male', 'female']}
+                    name='gender'
+                    values={['Male', 'Female']}
+                    checked={[formData.gender === "Male", formData.gender === "Female"]}
+                    onChange={handleChange}
+                    className=""
+                    disabled={[((formData.gender === "Female") && !isEditing), ((formData.gender === "Male") && !isEditing)]}
+                />
 
                 {/* Email */}
-                <div className="flex flex-col gap-2">
-                    <p className="text-sm">Email Address</p>
-                    <input
-                        type="email"
-                        name="email"
-                        autoComplete="username"
-                        value={formData.email}
-                        onChange={handleChange}
-                        disabled
-                        className={`border p-3 focus:outline-0 rounded-md max-w-sm ${isDarkMode ? "border-[#2f2f2f] text-gray-300" : "border-[#dcdada] text-gray-600"
-                            }`}
-                    />
-                </div>
+                <InputText
+                    label="Email Address"
+                    type="email"
+                    id="email"
+                    name="email"
+                    autoComplete="username"
+                    value={formData.email}
+                    onChange={handleChange}
+                    disabled={true}
+                    className='max-w-sm'
+                />
 
                 {/* Mobile Number */}
-                <div className="flex flex-col gap-2">
-                    <p className="text-sm">Mobile Number</p>
-                    <input
-                        type="tel"
-                        name="phone"
-                        autoComplete="phone"
-                        value={formData.phone}
-                        onChange={handleChange}
-                        disabled
-                        className={`border p-3 focus:outline-0 rounded-md max-w-sm ${isDarkMode ? "border-[#2f2f2f] text-gray-300 " : "border-[#dcdada] text-gray-600"
-                            }`}
-                    />
-                </div>
+                <InputText
+                    label="Mobile Number"
+                    type="tel"
+                    name="phone"
+                    id="phone"
+                    autoComplete="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    disabled={!isEditing}
+                    className='max-w-sm'
+                />
             </div>
 
             {/* Save Button */}

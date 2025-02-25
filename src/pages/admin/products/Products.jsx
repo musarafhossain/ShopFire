@@ -7,7 +7,7 @@ import CommonTable from '../../../components/CommonTable';
 
 const Products = () => {
   const [products, setProducts] = useState(
-    Array.from({ length: 50 }, (_, i) => ({
+    Array.from({ length: 5 }, (_, i) => ({
       id: i + 1,
       name: `Product ${i + 1}`,
       price: Math.floor(Math.random() * 1000) + 50,
@@ -59,7 +59,7 @@ const Products = () => {
   return (
     <AdminLayout className='flex flex-col gap-5 w-full'>
       <div className="flex justify-between items-center">
-        <h1 className="text-xl font-semibold">Manage Product</h1>
+        <h1 className="text-xl font-semibold">Manage Products</h1>
         <Button variant="contained" startIcon={<Add />}>
           Add Product
         </Button>
