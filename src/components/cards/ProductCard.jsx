@@ -28,7 +28,7 @@ const ProductCard = ({ product }) => {
             <div className={`relative overflow-hidden rounded-b-3xl ${isDarkMode ? 'bg-gray-600' : 'bg-white'}`}>
                 <div className="relative">
                     <LazyImage
-                        src={product.image}
+                        src={product.images[0]}
                         alt={product.name}
                         className="w-full h-48 sm:h-56 md:h-64 object-cover transition-transform duration-300 group-hover:scale-105"
                     />

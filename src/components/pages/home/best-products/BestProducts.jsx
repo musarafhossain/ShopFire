@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTheme } from '../../../../context/ThemeContext';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -9,19 +9,11 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/free-mode';
 import Heading from '../../../Heading';
+import useProductsCollection from "@/hooks/useProductsCollection";
 
 const BestProducts = () => {
     const { isDarkMode } = useTheme();
-
-    const [products, setProducts] = useState([]);
-
-    useEffect(() => {
-        // Fetch data from local JSON file
-        fetch("/data/products.json")
-          .then((response) => response.json())
-          .then((data) => setProducts(data))
-          .catch((error) => console.error("Error loading products:", error));
-      }, []);
+    const { products } = useProductsCollection();
 
     return (
         <div className={`py-12 md:py-16 px-4 sm:px-6 lg:px-8 ${isDarkMode ? 'bg-gray-800' : 'bg-gray-50'}`}>

@@ -40,7 +40,7 @@ const Rating = ({ rating = 0 }) => {
         <div className="flex items-center gap-1">
             {renderStars(rating)}
             <span className={`ml-1 text-md ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                {rating.toFixed(1)}
+                {parseFloat(rating).toFixed(1)}
             </span>
         </div>
     )
