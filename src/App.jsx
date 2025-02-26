@@ -50,7 +50,7 @@ const App = () => {
         <Route path='/' element={<Home />} />
         <Route path='/all-products' element={<AllProducts />} />
         <Route path='/cart' element={<Cart />} />
-        <Route path='/product' element={<Product />} />
+        <Route path='/product/:id' element={<Product />} />
         <Route path='/order' element={<PrivateRoute><Order /></PrivateRoute>} />
         <Route path='/profile' element={<PrivateRoute><Profile /></PrivateRoute>} />
         <Route path='/profile/addresses' element={<PrivateRoute><Addresses /></PrivateRoute>} />

@@ -5,19 +5,10 @@ import { FiArrowRightCircle, FiArrowLeftCircle } from "react-icons/fi";
 import { useTheme } from '../../../../context/ThemeContext';
 import { FiShoppingCart } from 'react-icons/fi';
 
-const ProductCatalog = () => {
+const ProductCatalog = ({product}) => {
     const { isDarkMode } = useTheme();
 
-    const imgs = [
-        'https://picsum.photos/id/100/200/300',
-        'https://picsum.photos/id/101/200/300',
-        'https://picsum.photos/id/102/200/300',
-        'https://picsum.photos/id/103/200/300',
-        'https://picsum.photos/id/104/200/300',
-        'https://picsum.photos/id/105/200/300',
-        'https://picsum.photos/id/106/200/300',
-        'https://picsum.photos/id/107/200/300',
-    ];
+    const imgs = product?.images || [];
 
     const [currentIndex, setCurrentIndex] = React.useState(0);
 
@@ -52,7 +43,7 @@ const ProductCatalog = () => {
                                 key={index}
                                 src={img}
                                 alt={`Image ${index}`}
-                                className={`rounded-lg w-full aspect-square ${index === currentIndex ? 'border-2 border-indigo-600 selected-image' : ''}`}
+                                className={`rounded-lg w-full object-contain aspect-square ${index === currentIndex ? 'border-2 border-indigo-600 selected-image' : ''}`}
                                 style={{ scrollSnapAlign: 'start' }}
                                 onClick={() => setCurrentIndex(index)}
                             />
@@ -69,7 +60,7 @@ const ProductCatalog = () => {
                     <LazyImage
                         src={imgs[currentIndex]}
                         alt="Main Image"
-                        className="h-[350px] sm:h-[500px] object-cover border-none"
+                        className="h-[350px] sm:h-[500px] object-contain border-none"
                     />
                 </div>
             </div>

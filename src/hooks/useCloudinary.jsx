@@ -19,8 +19,10 @@ const useCloudinary = () => {
     const uploadImage = async (imageFile, id) => {
         setLoading(true);
         try {
-            const timestamp = Math.floor(Date.now() / 1000);
-            const publicId = `${id}/${timestamp}`;
+            const timestamp = Date.now(); 
+            const uniqueSuffix = Math.random().toString(36).substring(2, 7); 
+            const publicId = `${id}/${timestamp}-${uniqueSuffix}`; 
+
             const stringToSign = `public_id=${publicId}&timestamp=${timestamp}&upload_preset=${uploadPreset}${apiSecret}`;
             const signature = CryptoJS.SHA1(stringToSign).toString();
 

@@ -81,7 +81,7 @@ const useProductsCollection = () => {
       let imageUrls = productData.images.map(img => img.url || img).filter(img => !img.startsWith("blob:"));
 
       if (imageFiles.length > 0) {
-        const uploadedUrls = await Promise.all(imageFiles.map(file => uploadImage(file)));
+        const uploadedUrls = await Promise.all(imageFiles.map(file => uploadImage(file, productId)));
         if (!uploadedUrls) throw new Error("Image upload failed");
         imageUrls = [...uploadedUrls, ...imageUrls];
       }
@@ -139,7 +139,7 @@ const useProductsCollection = () => {
       let imageUrls = currentImages;
 
       if (newImages.length > 0) {
-        const uploadedUrls = await Promise.all(newImages.map(file => uploadImage(file)));
+        const uploadedUrls = await Promise.all(newImages.map(file => uploadImage(file, productId)));
         if (!uploadedUrls) throw new Error("Image upload failed");
         imageUrls = [...uploadedUrls, ...currentImages];
       }

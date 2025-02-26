@@ -4,14 +4,17 @@ import Rating from '../../../Rating';
 import { FiStar, FiThumbsUp, FiThumbsDown, FiClock, FiUser } from 'react-icons/fi';
 import LazyImage from '../../../LazyImage';
 
-const ProductDetails = () => {
+const ProductDetails = ({ product }) => {
   const { isDarkMode } = useTheme();
   return (
     <div className='md:w-[50%] sm:py-4 mb-4 px-4 lg:px-2 text-left flex flex-col gap-4'>
       <div className={`border ${isDarkMode ? ' border-[#2f2f2f] ' : ' border-[#dcdada] '} rounded-xl p-4 flex flex-col gap-2`}>
-        <h1 className='text-gray-500 text-lg font-semibold'>Latest trending stylish high neck</h1>
-        <p className='text-3xl'>₹145</p>
-        <Rating rating={4.5} />
+        <h1 className='text-gray-500 text-lg font-semibold'>{product?.name}</h1>
+        <div className='flex items-baseline gap-2'>
+          <p className='text-3xl'>₹{product?.price}</p>
+          <p className='text-xl line-through text-gray-500'>₹{product?.mrp}</p>
+        </div>
+        <Rating rating={product?.rating} />
         <p className='bg-green-500/30 w-fit p-1 rounded-2xl text-sm px-2 flex gap-1 font-semibold'>
           Trusted by
           <span className={`${isDarkMode ? ' text-green-300 ' : ' text-green-900 '} font-bold`}>
@@ -36,10 +39,9 @@ const ProductDetails = () => {
       <div className={`border ${isDarkMode ? ' border-[#2f2f2f] ' : ' border-[#dcdada] '} rounded-xl p-4 flex flex-col gap-2`}>
         <h1 className={`text-lg font-bold ${isDarkMode ? ' text-[#c2c2c2] ' : ' text-[#373737] '}`}>Product Details</h1>
         <div className={`text-gray-500 font-semibold flex flex-col gap-1`}>
-          <p className={`border-b ${isDarkMode ? 'border-[#222]' : 'border-[#eeeeee]'} pb-1`}>Name : Latest trending stylish high neck</p>
-          <p className={`border-b ${isDarkMode ? 'border-[#222]' : 'border-[#eeeeee]'} pb-1`}>Fabric : Polyester</p>
-          <p className={`border-b ${isDarkMode ? 'border-[#222]' : 'border-[#eeeeee]'} pb-1`}>Sleeve Length : Short Sleeves</p>
-          <p className={`border-b ${isDarkMode ? 'border-[#222]' : 'border-[#eeeeee]'} pb-1`}>Pattern : Checked</p>
+          <p className={`border-b ${isDarkMode ? 'border-[#222]' : 'border-[#eeeeee]'} pb-1`}>Name : {product?.name}</p>
+          <p className={`border-b ${isDarkMode ? 'border-[#222]' : 'border-[#eeeeee]'} pb-1`}>Category : {product?.category}</p>
+          <p className={`border-b ${isDarkMode ? 'border-[#222]' : 'border-[#eeeeee]'} pb-1`}>Brand : {product?.brand}</p>
           <p className={`border-b ${isDarkMode ? 'border-[#222]' : 'border-[#eeeeee]'} pb-1`}>Net Quantity (N) : 1</p>
           <p className={`border-b ${isDarkMode ? 'border-[#222]' : 'border-[#eeeeee]'} pb-1`}>Sizes : S, M, L, XL, XXL, SM</p>
           <p className={``}>Country of Origin : India</p>

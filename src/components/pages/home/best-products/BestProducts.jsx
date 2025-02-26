@@ -55,7 +55,7 @@ const BestProducts = () => {
                     >
                         {products.map((product) => (
                             <SwiperSlide key={product.id}>
-                                <Link to="/product" className='cursor-default'>
+                                <Link to={`/product/${product.id}`} className='cursor-default'>
                                     <ProductCard product={product} />
                                 </Link>
                             </SwiperSlide>
