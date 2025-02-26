@@ -67,6 +67,7 @@ const CommonTable = ({ data, customColumns, onDeleteSelected, emptyMessage = 'No
       <div style={{ width: '100%' }} className='h-fit'>
         <DataGrid
           rows={data}
+          getRowHeight={() => 100}
           columns={customColumns}
           pageSizeOptions={[10, 25, 50, 75, 100]}
           initialState={{

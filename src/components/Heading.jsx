@@ -4,7 +4,7 @@ import { useTheme } from '../context/ThemeContext';
 const Heading = ({ heading, subheading }) => {
     const { isDarkMode } = useTheme();
     return (
-        <div className="max-w-7xl mx-auto px-4 mb-12">
+        <div className="max-w-7xl mx-auto px-4 mb-12 font-[Dosis] font-thin">
             <h2 className={`text-3xl md:text-5xl font-extrabold text-center pb-2 md:pb-4 bg-gradient-to-r ${isDarkMode ? 'from-blue-400 to-indigo-500' : 'from-blue-600 to-indigo-700'} bg-clip-text text-transparent`}>
                 {heading}
             </h2>

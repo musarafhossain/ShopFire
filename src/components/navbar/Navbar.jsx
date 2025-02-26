@@ -85,14 +85,14 @@ const Navbar = () => {
 
             {/* Navigation Menu - Sidebar for Mobile */}
             <nav
-              className={`absolute lg:block lg:static top-[69px] left-0 w-[250px] overflow-y-auto font-[Open Sans] lg:w-fit ${isDarkMode ? 'bg-[#002c44]' : 'bg-gray-200'
+              className={`absolute lg:block lg:static top-[69px]  left-0 w-[250px] overflow-y-auto font-[Open Sans] lg:w-fit ${isDarkMode ? 'bg-[#002c44]' : 'bg-gray-200'
                 } lg:bg-transparent h-[calc(100vh-60px)] lg:h-fit md:transform lg:translate-x-0 transition-transform duration-300 ${isSidebarOpen ? 'transform translate-x-0' : 'transform -translate-x-full'
                 }`}
             >
               <ul className="flex lg:gap-6 text-lg flex-col text-nowrap lg:flex-row pt-5 lg:pt-0">
                 <li className="nav-link">
                   <Link
-                    className="hover:text-blue-500 flex gap-1 items-center px-8 py-4 lg:px-0 lg:py-0 lg:justify-center"
+                    className="hover:text-red-500 flex gap-1 items-center px-8 py-4 lg:px-0 lg:py-0 lg:justify-center"
                     to="/"
                     onClick={closeSidebar}
                   >
@@ -102,7 +102,7 @@ const Navbar = () => {
                 </li>
                 <li className="nav-link">
                   <Link
-                    className="hover:text-blue-500 flex gap-1 items-center px-8 py-4 lg:px-0 lg:py-0 lg:justify-center"
+                    className="hover:text-red-500 flex gap-1 items-center px-8 py-4 lg:px-0 lg:py-0 lg:justify-center"
                     to="/all-products"
                     onClick={closeSidebar}
                   >
@@ -112,7 +112,7 @@ const Navbar = () => {
                 </li>
                 <li className="nav-link">
                   <Link
-                    className="hover:text-blue-500 flex gap-1 items-center px-8 py-4 lg:px-0 lg:py-0 lg:justify-center"
+                    className="hover:text-red-500 flex gap-1 items-center px-8 py-4 lg:px-0 lg:py-0 lg:justify-center"
                     to="/order"
                     onClick={closeSidebar}
                   >

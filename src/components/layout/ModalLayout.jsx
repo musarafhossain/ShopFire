@@ -22,13 +22,14 @@ const ModalLayout = ({ children, isOpenModal, openModal, closeModal }) => {
         >
             <Grow in={isOpenModal}>
                 <Box sx={{
-                    width: 400,
-                    maxWidth: '95%',
+                    width: '95%',
+                    maxWidth: '700px',
+                    maxHeight: '95%',
                     bgcolor: isDarkMode ? '#1e1e1e' : 'background.paper',
                     color: isDarkMode ? '#fff' : 'text.primary',
                     borderRadius: 2,
                     boxShadow: 24,
-                    p: 4,
+                    p: 2,
                 }}>
                     {children}
                 </Box>

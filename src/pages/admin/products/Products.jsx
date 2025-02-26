@@ -1,70 +1,135 @@
 // pages/admin/Products.jsx
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import AdminLayout from '../../../components/layout/AdminLayout';
 import { Button, IconButton } from '@mui/material';
 import { Add, Edit, Delete } from '@mui/icons-material';
 import CommonTable from '../../../components/CommonTable';
+import ProductModal from '../../../components/modals/ProductModal';
+import useProductsCollection from "@/hooks/useProductsCollection";
+import toast from "react-hot-toast";
+import { useTheme } from "@/context/ThemeContext";
+import LazyImage from '@/components/LazyImage'
 
 const Products = () => {
-  const [products, setProducts] = useState(
-    Array.from({ length: 5 }, (_, i) => ({
-      id: i + 1,
-      name: `Product ${i + 1}`,
-      price: Math.floor(Math.random() * 1000) + 50,
-      stock: Math.floor(Math.random() * 100) + 1,
-      category: i % 2 === 0 ? 'Electronics' : 'Apparel',
-      brand: i % 2 === 0 ? 'Dell' : 'Nike',
-      sku: `SKU${i + 1000}`,
-      supplier: i % 2 === 0 ? 'TechSupplier Inc.' : 'FashionTrend',
-      description: 'Sample product description.',
-      rating: Number((Math.random() * 5).toFixed(1)),
-      dateAdded: '2025-02-22',
-    }))
-  );
+  //state
+  const [editedProduct, setEditedProduct] = useState({});
+  const [isOpenModal, setIsOpenModal] = useState(false);
 
+  //hooks
+  const { products, error, addProduct, updateProduct, deleteProduct } = useProductsCollection();
+  const { isDarkMode } = useTheme();
+
+  //modal handle functions
+  const openModal = () => setIsOpenModal(true);
+  const closeModal = () => {
+    setIsOpenModal(false);
+    setEditedProduct({});
+  };
+
+  //products columns
   const productColumns = [
-    { field: 'id', headerName: 'ProductID', width: 100 },
-    { field: 'name', headerName: 'Product', width: 200 },
-    { field: 'brand', headerName: 'Brand', width: 150 },
-    { field: 'sku', headerName: 'SKU', width: 150 },
-    { field: 'price', headerName: 'Price', width: 120, type: 'number' },
-    { field: 'stock', headerName: 'Stock', width: 120, type: 'number' },
-    { field: 'category', headerName: 'Category', width: 150 },
-    { field: 'supplier', headerName: 'Supplier', width: 180 },
-    { field: 'rating', headerName: 'Rating', width: 120, type: 'number' },
-    { field: 'dateAdded', headerName: 'Date Added', width: 150 },
+    { field: "id", headerName: "ProductID", width: 200 },
+    { field: "name", headerName: "Product", width: 200 },
+    { field: "brand", headerName: "Brand", width: 150 },
+    { field: "price", headerName: "Price", width: 120, type: "number" },
+    { field: "mrp", headerName: "MRP", width: 120, type: "number" },
+    { field: "stock", headerName: "Stock", width: 120, type: "number" },
+    { field: "category", headerName: "Category", width: 150 },
+    { field: "rating", headerName: "Rating", width: 120, type: "number" },
     {
-      field: 'actions',
-      headerName: 'Actions',
+      field: "image",
+      headerName: "Image",
       width: 150,
       renderCell: (params) => (
-        <div className="flex gap-2">
-          <IconButton color="primary" onClick={() => console.log('Edit', params.row.id)}>
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "100%", height: "100%" }}>
+          <LazyImage
+            src={params.row.images?.[0]} 
+            alt="Product"
+            className='w-[80px] h-[80px] object-cover rounded-lg'
+          />
+        </div>
+      ),
+    },
+    {
+      field: "actions",
+      headerName: "Actions",
+      width: 150,
+      renderCell: (params) => (
+        <div className="flex gap-2 justify-center h-full items-center">
+          <IconButton
+            color="primary"
+            onClick={async () => {
+              let selectedProduct = products.find(product => product.id === params.row.id);
+              if (!selectedProduct) {
+                toast.error("Product not found");
+                return;
+              }
+              setEditedProduct(selectedProduct); // Set the correct product
+              openModal();
+              //console.log("Editing Product:", selectedProduct);
+            }}
+          >
             <Edit fontSize="small" />
           </IconButton>
-          <IconButton color="error" onClick={() => console.log('Delete', params.row.id)}>
+          <IconButton color="error" onClick={async () => await deleteProduct(params.row.id)}>
             <Delete fontSize="small" />
           </IconButton>
         </div>
       ),
-    },
+    }
   ];
 
-
-  //----------------------------- Title Update -----------------------------------
-  useEffect(() => {
-    document.title = 'Products | Admin Panel';
-  }, []);
+  const handleSaveProduct = async (product) => {
+    if (!product.name || !product.brand || !product.price || !product.mrp || !product.stock || !product.category || !product.rating || !product.images || product.images.length === 0) {
+      toast.error("All fields are required, including images.", {
+        style: {
+          background: isDarkMode ? "#333" : "#fff",
+          color: isDarkMode ? "#fff" : "#333",
+        },
+      });
+      return;
+    }
+    try {
+      if (editedProduct?.id) {
+        // Updating an existing product
+        await updateProduct(editedProduct.id, product);
+        console.log("Updated product");
+      } else {
+        // Adding a new product
+        await addProduct(product);
+        console.log("Added product");
+      }
+      closeModal();
+    } catch (error) {
+      console.error("Error saving product:", error);
+      toast.error("Failed to save product. Please try again.");
+    } finally {
+      closeModal();
+    }
+  };
 
   return (
     <AdminLayout className='flex flex-col gap-5 w-full'>
       <div className="flex justify-between items-center">
         <h1 className="text-xl font-semibold">Manage Products</h1>
-        <Button variant="contained" startIcon={<Add />}>
+        <Button variant="contained" startIcon={<Add />} onClick={() => {
+          setEditedProduct({});
+          openModal();
+        }}>
           Add Product
         </Button>
       </div>
-      <CommonTable type="products" data={products} customColumns={productColumns} />
+      <CommonTable
+        emptyMessage="No products found"
+        data={products}
+        customColumns={productColumns} />
+      <ProductModal
+        isOpen={isOpenModal}
+        openModal={openModal}
+        closeModal={closeModal}
+        product={editedProduct}
+        handleSaveProduct={handleSaveProduct}
+      />
     </AdminLayout>
   );
 };
