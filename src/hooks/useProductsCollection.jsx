@@ -72,7 +72,11 @@ const useProductsCollection = () => {
     setLoading(true);
     setError(null);
     try {
-      // Step 1: Upload Images to Cloudinary
+      // Step 1: Create a blank document in Firestore to get the ID
+      const docRef = await addDoc(productsRef, {});
+      const productId = docRef.id; // Get the generated ID
+
+      // Step 2: Upload Images to Cloudinary
       const imageFiles = productData.images.filter(img => img.file).map(img => img.file);
       let imageUrls = productData.images.map(img => img.url || img).filter(img => !img.startsWith("blob:"));
 
@@ -82,13 +86,12 @@ const useProductsCollection = () => {
         imageUrls = [...uploadedUrls, ...imageUrls];
       }
 
-      // Step 2: Save Product in Firestore
-      const finalProductData = { ...productData, images: imageUrls };
-      const docRef = await addDoc(productsRef, finalProductData);
-      const newProduct = { id: docRef.id, ...finalProductData };
+      // Step 3: Save Product Data in Firestore (Now includes the ID)
+      const finalProductData = {...productData, images: imageUrls, id: productId };
+      await updateDoc(docRef, finalProductData); // Update the blank document
 
-      // Step 3: Update Local State
-      setProducts(prev => [...prev, newProduct]);
+      // Step 4: Update Local State
+      setProducts(prev => [...prev, finalProductData]);
 
       toast.success("Product added successfully!", {
         style: {
@@ -97,10 +100,10 @@ const useProductsCollection = () => {
         },
       });
 
-      return newProduct;
+      return finalProductData;
     } catch (err) {
       setError(err.message);
-      console.log(err)
+      console.log(err);
       toast.error(`Error adding product: ${err.message}`, {
         style: {
           background: isDarkMode ? "#333" : "#fff",
