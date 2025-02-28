@@ -12,7 +12,7 @@ const AddToCart = ({ product }) => {
     if (!cartItem) return null;
 
     return (
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-6">
             <button
                 onClick={(e) => {
                     e.stopPropagation();

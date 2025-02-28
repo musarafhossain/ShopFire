@@ -4,9 +4,18 @@ import { FaAnglesRight } from "react-icons/fa6";
 import { FiArrowRightCircle, FiArrowLeftCircle } from "react-icons/fi";
 import { useTheme } from '../../../../context/ThemeContext';
 import { FiShoppingCart } from 'react-icons/fi';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCart } from '@/redux/cartSlice';
+import AddToCart from '@/components/buttons/AddToCart';
+import toast from "react-hot-toast";
 
-const ProductCatalog = ({product}) => {
+const ProductCatalog = ({ product }) => {
     const { isDarkMode } = useTheme();
+    const dispatch = useDispatch();
+    // Get cart items from Redux
+    const cartItems = useSelector(state => state.cart.items);
+    // Check if product is in cart
+    const cartItem = cartItems.find(item => item.id === product.id);
 
     const imgs = product?.images || [];
 
@@ -65,16 +74,43 @@ const ProductCatalog = ({product}) => {
                 </div>
             </div>
             <div className='flex justify-end items-center mt-3 sm:mt-10 w-full'>
-                <button className={`w-[50%] py-3 sm:py-4 border ${isDarkMode ? 'border-gray-300 text-gray-300' : 'border-indigo-600 text-indigo-600'} text-lg cursor-pointer flex justify-center items-center gap-3 font-semibold transform `}>
-                    <FiShoppingCart size={20} />
-                    <span>Add to Cart</span>
+                <button
+                    className={`w-[50%] py-3 h-15 sm:py-4 border ${isDarkMode ? 'border-gray-300 text-gray-300' : 'border-indigo-600 text-indigo-600'} text-lg cursor-pointer flex justify-center items-center font-semibold transform `}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        e.preventDefault(); 
+                        if(cartItem)
+                            return;
+                        dispatch(addToCart(product));
+                        toast.success(`${product.name} added to cart`, {
+                            position: "top-center",
+                            style: {
+                                background: isDarkMode ? "#4CAF50" : "#E6F4EA",
+                                color: isDarkMode ? "#fff" : "#333",
+                            },
+                        });
+                    }}
+                >
+                    <div className='flex items-center justify-center gap-2'>
+                        {cartItem ? (
+                            <>
+                                <AddToCart product={product} />
+                            </>
+                        ) : (
+                            <>
+                                <FiShoppingCart size={20} />
+                                <span>Add to Cart</span>
+                            </>
+                        )}
+
+                    </div>
                 </button>
-                <button className={`w-[50%] py-3 sm:py-4 border ${isDarkMode ? 'bg-gray-300 border-gray-300 text-black' : 'bg-indigo-600 border-indigo-600 text-white'} font-semibold text-lg cursor-pointer flex justify-center items-center gap-3 transform`}>
+                <button className={`w-[50%] h-15 py-3 sm:py-4 border ${isDarkMode ? 'bg-gray-300 border-gray-300 text-black' : 'bg-indigo-600 border-indigo-600 text-white'} font-semibold text-lg cursor-pointer flex justify-center items-center gap-3 transform`}>
                     <FaAnglesRight size={20} />
                     <span>Buy Now</span>
                 </button>
-            </div>
-        </div>
+            </div >
+        </div >
     );
 }
 
