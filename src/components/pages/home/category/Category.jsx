@@ -2,21 +2,11 @@ import React from 'react';
 import { useTheme } from '../../../../context/ThemeContext'; // Update with your theme context path
 import './Category.css'
 import Heading from '../../../Heading';
-
-const categories = [
-  { name: 'Electronics', image: 'https://cdn-icons-png.flaticon.com/512/324/324445.png' },
-  { name: 'Fashion', image: 'https://cdn-icons-png.flaticon.com/512/3142/3142788.png' },
-  { name: 'Home', image: 'https://cdn-icons-png.flaticon.com/512/2378/2378530.png' },
-  { name: 'Sports', image: 'https://cdn-icons-png.flaticon.com/512/857/857455.png' },
-  { name: 'Beauty', image: 'https://cdn-icons-png.flaticon.com/512/3081/3081559.png' },
-  { name: 'Books', image: 'https://cdn-icons-png.flaticon.com/512/2702/2702134.png' },
-  { name: 'Toys', image: 'https://cdn-icons-png.flaticon.com/512/2832/2832997.png' },
-  { name: 'Health', image: 'https://cdn-icons-png.flaticon.com/512/3053/3053995.png' },
-];
+import useCategoryCollection from '@/hooks/useCategoryCollection';
 
 const Category = () => {
   const { isDarkMode } = useTheme();
-
+  const { categories } = useCategoryCollection();
   return (
     <div className={`${isDarkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
       <section className={`overflow-hidden max-w-[1440px] relative py-16 ${isDarkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
@@ -31,8 +21,8 @@ const Category = () => {
               className="inline-flex flex-col items-center gap-5 transform transition-all duration-300 hover:scale-105 group cursor-pointer"
             >
               <div className={`relative h-24 w-24 rounded-2xl p-5 backdrop-blur-lg border ${isDarkMode
-                  ? 'bg-gray-800/30 border-gray-700 hover:bg-gray-800/50 hover:border-indigo-400'
-                  : 'bg-white/80 border-gray-200 hover:bg-white hover:border-blue-500'
+                ? 'bg-gray-800/30 border-gray-700 hover:bg-gray-800/50 hover:border-indigo-400'
+                : 'bg-white/80 border-gray-200 hover:bg-white hover:border-blue-500'
                 } shadow-lg transition-all`}>
                 <img
                   src={category.image}
@@ -41,8 +31,8 @@ const Category = () => {
                 />
               </div>
               <span className={`font-semibold text-lg tracking-tight transition-colors ${isDarkMode
-                  ? 'text-gray-200 group-hover:text-indigo-400'
-                  : 'text-gray-800 group-hover:text-blue-600'
+                ? 'text-gray-200 group-hover:text-indigo-400'
+                : 'text-gray-800 group-hover:text-blue-600'
                 }`}>
                 {category.name}
               </span>
