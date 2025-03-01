@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
 import ModalLayout from "../layout/ModalLayout";
 import InputText from "@/components/input/InputText";
+import InputSelect from "@/components/input/InputSelect";
 import { RxCross2 } from "react-icons/rx";
 import { FaEdit, FaPlus } from "react-icons/fa";
 import LoaderButton from "../buttons/LoaderButton";
 import imageCompression from "browser-image-compression";
 import { useTheme } from "@/context/ThemeContext";
+import useCategoryCollection from '@/hooks/useCategoryCollection';
 
 const ProductModal = ({ isOpen, closeModal, openModal, product, handleSaveProduct }) => {
+    const { categories } = useCategoryCollection();
     const { isDarkMode } = useTheme();
     const [formData, setFormData] = useState({
         id: product?.id || "",
@@ -16,7 +19,7 @@ const ProductModal = ({ isOpen, closeModal, openModal, product, handleSaveProduc
         price: product?.price || "",
         mrp: product?.mrp || "",
         stock: product?.stock || "",
-        category: product?.category || "",
+        category: product?.category || categories[0],
         rating: product?.rating || "",
         images: product?.images?.map((url) => ({ url, file: null })) || [],
     });
@@ -30,7 +33,7 @@ const ProductModal = ({ isOpen, closeModal, openModal, product, handleSaveProduc
                 price: product.price || "",
                 mrp: product.mrp || "",
                 stock: product.stock || "",
-                category: product.category || "",
+                category: product.category || categories[0].name,
                 rating: product.rating || "",
                 images: product.images?.map((url) => ({ url, file: null })) || [],
             });
@@ -103,7 +106,17 @@ const ProductModal = ({ isOpen, closeModal, openModal, product, handleSaveProduc
                     <InputText label="Price" type="number" id="price" name="price" value={formData.price} onChange={handleChange} className="w-full" />
                     <InputText label="MRP" type="number" id="mrp" name="mrp" value={formData.mrp} onChange={handleChange} className="w-full" />
                     <InputText label="Stock" id="stock" type="number" name="stock" value={formData.stock} onChange={handleChange} className="w-full" />
-                    <InputText label="Category" id="category" type="text" name="category" value={formData.category} onChange={handleChange} className="w-full" />
+                    <InputSelect
+                        label="Choose category"
+                        name="category"
+                        id="category"
+                        value={formData.category}
+                        onChange={handleChange}
+                        options={categories.map(category => ({
+                            label: category.name,
+                            options: category.name,
+                        }))}
+                    />
                     <InputText label="Rating" type="number" id="raring" name="rating" value={formData.rating} onChange={handleChange} className="w-full" />
                 </div>
 

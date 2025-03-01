@@ -79,6 +79,12 @@ const Products = () => {
     }
   ];
 
+  const onDeleteSelected = async (productIds) => {
+    productIds.forEach(async (productId) => {
+      if (productId) await deleteProduct(productId);
+    });
+  }
+
   const handleSaveProduct = async (product) => {
     if (!product.name || !product.brand || !product.price || !product.mrp || !product.stock || !product.category || !product.rating || !product.images || product.images.length === 0) {
       toast.error("All fields are required, including images.", {
@@ -93,11 +99,11 @@ const Products = () => {
       if (editedProduct?.id) {
         // Updating an existing product
         await updateProduct(editedProduct.id, product);
-        console.log("Updated product");
+        //console.log("Updated product", product);
       } else {
         // Adding a new product
         await addProduct(product);
-        console.log("Added product");
+        //console.log("Added product", product);
       }
       closeModal();
     } catch (error) {
@@ -122,7 +128,9 @@ const Products = () => {
       <CommonTable
         emptyMessage="No products found"
         data={products}
-        customColumns={productColumns} />
+        customColumns={productColumns}
+        onDeleteSelected={onDeleteSelected}
+      />
       <ProductModal
         isOpen={isOpenModal}
         openModal={openModal}

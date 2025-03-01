@@ -92,6 +92,12 @@ const Category = () => {
         },
     ];
 
+    const onDeleteSelected = async (categoryIds) => {
+        categoryIds.forEach(async categoryId => {
+            if (categoryId) await deleteCategory(categoryId);
+        });
+    }
+
     return (
         <>
             <AdminLayout className='flex flex-col gap-5 w-full'>
@@ -105,7 +111,7 @@ const Category = () => {
                 <CommonTable
                     data={categories}
                     customColumns={categoryColumns}
-                    onDeleteSelected={() => { }}
+                    onDeleteSelected={onDeleteSelected}
                     emptyMessage="No Category found"
                 />
             </AdminLayout>
