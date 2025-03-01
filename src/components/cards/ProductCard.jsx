@@ -6,7 +6,6 @@ import LazyImage from '../LazyImage';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '@/redux/cartSlice';
 import AddToCart from '@/components/buttons/AddToCart';
-import { Link } from 'react-router-dom';
 import toast from "react-hot-toast";
 
 const ProductCard = ({ product }) => {

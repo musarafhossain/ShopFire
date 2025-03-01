@@ -3,10 +3,12 @@ import { DataGrid, GridToolbarContainer, GridToolbarQuickFilter } from '@mui/x-d
 import { ThemeProvider, createTheme, Button } from '@mui/material';
 import { Delete } from '@mui/icons-material';
 import { useState } from 'react';
+import { useLoading } from "@/context/LoadingContext";
 
 const CommonTable = ({ data, customColumns, onDeleteSelected, emptyMessage = 'No rows' }) => {
   const { isDarkMode } = useTheme();
   const [selectedRows, setSelectedRows] = useState([]);
+  const { loading, setLoading } = useLoading();
 
   const theme = createTheme({
     palette: {
@@ -80,6 +82,7 @@ const CommonTable = ({ data, customColumns, onDeleteSelected, emptyMessage = 'No
           onRowSelectionModelChange={(newSelection) => setSelectedRows(newSelection)}
           slots={{ toolbar: () => <CustomToolbar /> }}
           localeText={{ noRowsLabel: emptyMessage }}
+          loading={loading} // <-- Adds loader inside the table
           sx={{
             '& .MuiDataGrid-toolbarContainer': {
               flexDirection: 'row-reverse',
@@ -119,7 +122,7 @@ const CommonTable = ({ data, customColumns, onDeleteSelected, emptyMessage = 'No
         />
       </div>
     </ThemeProvider>
-  );
+  );  
 };
 
 export default CommonTable;

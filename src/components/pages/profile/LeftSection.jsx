@@ -134,31 +134,38 @@ const LeftSection = ({ pageTitle }) => {
 
       {/* Image Change/Delete Options */}
       <ModalLayout isOpenModal={showOptions} closeModal={() => setShowOptions(false)} openModal={() => setShowOptions(true)}>
-        <div className="rounded-lg shadow-lg w-80 text-center">
-          <p className={`text-lg font-semibold mb-4 ${isDarkMode ? 'dark:text-gray-200' : 'text-gray-800'}  `}>Change Profile Picture</p>
+        <div className="rounded-lg mx-auto text-center py-2 px-4">
+          <p className={`text-xl font-semibold mb-4 ${isDarkMode ? 'dark:text-gray-200' : 'text-gray-800'}`}>
+            Change Profile Picture
+          </p>
 
-          <button
-            className="w-full flex items-center justify-center gap-2 bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-md mb-2 cursor-pointer transform transition-transform duration-200 hover:scale-105"
-            onClick={() => document.getElementById("profile-pic").click()}
-          >
-            <FaImage /> Change Image
-          </button>
+          {/* Responsive Grid for Buttons */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <button
+              className="flex items-center justify-center gap-2 border border-blue-500/40 text-blue-500 py-2 px-4 rounded-md cursor-pointer transform transition-transform duration-200 hover:scale-105"
+              onClick={() => document.getElementById("profile-pic").click()}
+            >
+              <FaImage /> Change Image
+            </button>
 
-          <button
-            className="w-full flex items-center justify-center gap-2 bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded-md mb-2 cursor-pointer transform transition-transform duration-200 hover:scale-105"
-            onClick={handleDeleteImage}
-          >
-            <FaTrash /> Delete Image
-          </button>
+            <button
+              className="flex items-center justify-center gap-2 border border-red-500/40 text-red-500 py-2 px-4 rounded-md cursor-pointer transform transition-transform duration-200 hover:scale-105"
+              onClick={handleDeleteImage}
+            >
+              <FaTrash /> Delete Image
+            </button>
 
-          <button
-            className="w-full flex items-center justify-center gap-2 bg-gray-300 hover:bg-gray-400 text-gray-700 py-2 px-4 rounded-md cursor-pointer transform transition-transform duration-200 hover:scale-105"
-            onClick={() => setShowOptions(false)}
-          >
-            <FaTimes /> Cancel
-          </button>
+            {/* Full width button on mobile, aligns with grid on larger screens */}
+            <button
+              className="flex items-center justify-center gap-2 border border-gray-400/40 text-gray-400 py-2 px-4 rounded-md cursor-pointer transform transition-transform duration-200 hover:scale-105"
+              onClick={() => setShowOptions(false)}
+            >
+              <FaTimes /> Cancel
+            </button>
+          </div>
         </div>
       </ModalLayout>
+
 
       {/* Tab Section */}
       <div className={`flex items-center flex-col rounded-xl border ${isDarkMode ? ' border-[#2f2f2f] ' : ' border-[#dcdada] '}`}>
