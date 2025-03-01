@@ -2,32 +2,33 @@ import React, { useEffect, useState } from "react";
 import ModalLayout from "../layout/ModalLayout";
 import InputText from "@/components/input/InputText";
 import InputRadio from "@/components/input/InputRadio";
+import { RxCross2 } from "react-icons/rx";
 import { FaEdit, FaPlus } from "react-icons/fa";
 import LoaderButton from "../buttons/LoaderButton";
 import imageCompression from "browser-image-compression";
 import { useTheme } from "@/context/ThemeContext";
 
-const CategoryModal = ({ isOpen, closeModal, openModal, editingCategory, handleSaveCategory }) => {
+const CategoryModal = ({ isOpen, closeModal, openModal, category, handleSaveCategory }) => {
     const { isDarkMode } = useTheme();
     const [formData, setFormData] = useState({
-        id: "",
-        name: "",
-        status: "Active",
-        image: "",
+        id: category?.id || "",
+        name: category?.name || "",
+        status: category?.status || "Active", // Default status: active
+        image: category?.image ? { url: category.image, file: null } : null, // Single image
     });
 
     useEffect(() => {
-        if (editingCategory) {
+        if (category) {
             setFormData({
-                id: editingCategory?.id || "",
-                name: editingCategory?.name || "",
-                status: editingCategory?.status || "Active",
-                image: editingCategory?.image || "",
+                id: category.id || "",
+                name: category.name || "",
+                status: category.status || "Active",
+                image: category.image ? { url: category.image, file: null } : null,
             });
-        } else {
-            setFormData({ id: "", name: "", status: "Active", image: "" });
+        }else {
+            setFormData({ id: "", name: "", status: "Active", image: null });
         }
-    }, [editingCategory, isOpen]);
+    }, [category, isOpen]);
 
     // Handle Input Change
     const handleChange = (e) => {
@@ -45,38 +46,44 @@ const CategoryModal = ({ isOpen, closeModal, openModal, editingCategory, handleS
 
         try {
             const compressedFile = await imageCompression(file, options);
-            return URL.createObjectURL(compressedFile); // Return only URL
+            const previewUrl = URL.createObjectURL(compressedFile);
+            return { file: compressedFile, url: previewUrl };
         } catch (error) {
             console.error("Image compression failed:", error);
             return null;
         }
     };
 
-    // Handle Image Upload
+    // Handle Image Upload (Single Image)
     const handleImageUpload = async (e) => {
         const file = e.target.files[0];
         if (!file) return;
 
-        const compressedImageUrl = await compressImage(file);
-        if (compressedImageUrl) {
+        const compressedImage = await compressImage(file);
+        if (compressedImage) {
             setFormData((prevData) => ({
                 ...prevData,
-                image: compressedImageUrl, // Store only the image URL
+                image: compressedImage, // Replace previous image
             }));
         }
     };
 
+    // Remove Image
+    const removeImage = () => {
+        setFormData((prevData) => ({ ...prevData, image: null }));
+    };
+
     return (
         <ModalLayout isOpenModal={isOpen} closeModal={closeModal} openModal={openModal}>
-            <div className="overflow-auto pr-2 sm:p-4 w-full">
+            <div className="max-h-[80vh] overflow-auto pr-2 sm:p-4 w-full">
                 <h1 className="text-xl font-semibold justify-between mb-4 flex items-center gap-2">
-                    {editingCategory?.id ? "Edit Category" : "Add Category"} <FaEdit />
+                    {category?.id ? "Edit Category" : "Add Category"} <FaEdit />
                 </h1>
 
-                {/* Responsive Grid Layout */}
-                <div className="flex flex-col gap-2">
+                {/* Input Fields */}
+                <div className="grid grid-cols-1 gap-4">
                     <InputText
-                        label="Category Name :"
+                        label="Category Name"
                         id="name"
                         type="text"
                         name="name"
@@ -84,12 +91,14 @@ const CategoryModal = ({ isOpen, closeModal, openModal, editingCategory, handleS
                         onChange={handleChange}
                         className="w-full"
                     />
+
+                    {/* Status Dropdown */}
                     <InputRadio
                         label="Status :"
-                        ids={['active', 'deactive']}
+                        ids={['active', 'Inactive']}
                         name='status'
-                        values={['Active', 'Deactive']}
-                        checked={[formData.status === "Active", formData.status === "Deactive"]}
+                        values={['Active', 'Inactive']}
+                        checked={[formData.status === "Active", formData.status === "Inactive"]}
                         onChange={handleChange}
                         className=""
                     />
@@ -97,30 +106,28 @@ const CategoryModal = ({ isOpen, closeModal, openModal, editingCategory, handleS
 
                 {/* Image Upload Section */}
                 <div className="mt-4">
-                    <p className="text-sm">Category Image :</p>
-                    <div className="mt-2 flex flex-wrap gap-2">
+                    <p>Category Image</p>
+                    <div className="mt-2 flex gap-2">
                         {/* Upload Image Button */}
-                        <div
-                            className={`relative w-24 h-24 rounded-md overflow-hidden border ${isDarkMode ? "border-[#2f2f2f]" : "border-[#dcdada]"
-                                }`}
-                        >
-                            <label
-                                className={`text-xl cursor-pointer duration-300 flex items-center justify-center h-full w-full ${isDarkMode ? "hover:bg-gray-700/20 text-gray-400" : "hover:bg-gray-100 text-gray-700"
-                                    }`}
-                                htmlFor="imgs"
-                            >
-                                <FaPlus className="h-5 w-5" />
-                            </label>
-                            <input type="file" id="imgs" name="imgs" accept="image/*" onChange={handleImageUpload} className="hidden" />
-                        </div>
+                        {!formData.image && (
+                            <div className={`relative w-24 h-24 rounded-md overflow-hidden border ${isDarkMode ? ' border-[#2f2f2f] ' : ' border-[#dcdada] '}`}>
+                                <label className={`text-xl cursor-pointer duration-300 flex items-center justify-center h-full w-full ${isDarkMode ? ' hover:bg-gray-700/20 text-gray-400 ' : ' hover:bg-gray-100 text-gray-700 '}`} htmlFor="img">
+                                    <FaPlus className="h-5 w-5" />
+                                </label>
+                                <input type="file" id="img" name="img" accept="image/*" onChange={handleImageUpload} className="hidden" />
+                            </div>
+                        )}
 
-                        {/* Display Uploaded Image */}
+                        {/* Display Image */}
                         {formData.image && (
-                            <div
-                                className={`relative w-24 h-24 rounded-md overflow-hidden border ${isDarkMode ? "border-[#2f2f2f]" : "border-[#dcdada]"
-                                    }`}
-                            >
-                                <img src={formData.image} alt={`Category ${formData.name}`} className="w-full h-full object-cover" />
+                            <div className={`relative w-24 h-24 rounded-md overflow-hidden border ${isDarkMode ? ' border-[#2f2f2f] ' : ' border-[#dcdada] '}`}>
+                                <img src={formData.image.url} alt="Category" className="w-full h-full object-cover" />
+                                <button
+                                    className="absolute top-1 right-1 bg-black/50 hover:bg-black cursor-pointer duration-300 p-1 rounded-full"
+                                    onClick={removeImage}
+                                >
+                                    <RxCross2 className="h-5 w-5 text-white" />
+                                </button>
                             </div>
                         )}
                     </div>

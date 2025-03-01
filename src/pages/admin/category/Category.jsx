@@ -1,47 +1,45 @@
-import React, { useState } from 'react'
-import AdminLayout from '@/components/layout/AdminLayout'
+import React, { useEffect, useState } from 'react';
+import AdminLayout from '@/components/layout/AdminLayout';
 import { Button, IconButton } from '@mui/material';
 import { Add, Edit, Delete } from '@mui/icons-material';
 import CategoryModal from '@/components/modals/CategoryModal';
 import CommonTable from '@/components/CommonTable';
+import useCategoryCollection from '@/hooks/useCategoryCollection';
+import LazyImage from '@/components/LazyImage';
 
 const Category = () => {
     const [isOpenCategoryModal, setOpenCategoryModal] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState(null);
-    const [categories, setCategories] = useState([]); // Categories state
+    const { categories, error, addCategory, updateCategory, deleteCategory } = useCategoryCollection();
 
     //---------------------- Add/Update Modal Functions ----------------------------
     const openCategoryModal = () => setOpenCategoryModal(true);
     const closeCategoryModal = () => {
         setOpenCategoryModal(false);
         setSelectedCategory(null);
-    }
+    };
 
-    const handleSaveCategory = (category) => {
+    const handleSaveCategory = async (category) => {
         if (category.id) {
-            // Update existing category
-            setCategories(prevCategories =>
-                prevCategories.map(cat => (cat.id === category.id ? category : cat))
-            );
+            console.log(category);
+            await updateCategory(category); 
         } else {
-            // Add new category with unique ID
-            setCategories(prevCategories => [...prevCategories, { ...category, id: Date.now().toString() }]);
+            await addCategory(category);
         }
         closeCategoryModal();
     };
 
     // Define columns for the MUI DataTable
     const categoryColumns = [
-        { field: "id", headerName: "ID", width: 150 },
-        { field: "name", headerName: "Category Name", flex: 2, width: 200 },
+        { field: "id", headerName: "ID", minWidth: 200, flex: 1},
+        { field: "name", headerName: "Category Name", flex: 2, minWidth: 200 },
         {
             field: "image",
             headerName: "Image",
-            flex: 1,
             width: 120,
             renderCell: (params) => (
                 <div className='h-full flex items-center'>
-                    <img src={params.value} alt="Category" className="w-20 h-20 object-cover rounded-md" />
+                    <LazyImage src={params.value} alt="Category" className="w-20 h-20 object-cover rounded-md" />
                 </div>
             ),
         },
@@ -67,21 +65,20 @@ const Category = () => {
                 <div className="flex gap-2 justify-center h-full items-center">
                     <IconButton
                         color="primary"
-                        onClick={() => setSelectedCategory(params.row) || openCategoryModal()}
+                        onClick={() => {
+                            setSelectedCategory(params.row);
+                            openCategoryModal();
+                        }}
                     >
                         <Edit fontSize="small" />
                     </IconButton>
-                    <IconButton color="error" onClick={() => handleDeleteCategory(params.row.id)}>
+                    <IconButton color="error" onClick={async () => await deleteCategory(params.row.id)}>
                         <Delete fontSize="small" />
                     </IconButton>
                 </div>
             ),
         },
     ];
-
-    const handleDeleteCategory = (id) => {
-        setCategories(prevCategories => prevCategories.filter(cat => cat.id !== id));
-    };
 
     return (
         <>
@@ -92,6 +89,7 @@ const Category = () => {
                         Add Category
                     </Button>
                 </div>
+
                 <CommonTable
                     data={categories}
                     customColumns={categoryColumns}
@@ -104,11 +102,11 @@ const Category = () => {
                 isOpen={isOpenCategoryModal}
                 closeModal={closeCategoryModal}
                 openModal={openCategoryModal}
-                editingCategory={selectedCategory}
+                category={selectedCategory}
                 handleSaveCategory={handleSaveCategory}
             />
         </>
-    )
-}
+    );
+};
 
 export default Category;

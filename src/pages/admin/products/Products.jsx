@@ -30,12 +30,6 @@ const Products = () => {
   const productColumns = [
     { field: "id", headerName: "ProductID", width: 200 },
     { field: "name", headerName: "Product", width: 200 },
-    { field: "brand", headerName: "Brand", width: 150 },
-    { field: "price", headerName: "Price", width: 120, type: "number" },
-    { field: "mrp", headerName: "MRP", width: 120, type: "number" },
-    { field: "stock", headerName: "Stock", width: 120, type: "number" },
-    { field: "category", headerName: "Category", width: 150 },
-    { field: "rating", headerName: "Rating", width: 120, type: "number" },
     {
       field: "image",
       headerName: "Image",
@@ -43,13 +37,19 @@ const Products = () => {
       renderCell: (params) => (
         <div style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "100%", height: "100%" }}>
           <LazyImage
-            src={params.row.images?.[0]} 
+            src={params.row.images?.[0]}
             alt="Product"
             className='w-[80px] h-[80px] object-cover rounded-lg'
           />
         </div>
       ),
     },
+    { field: "brand", headerName: "Brand", width: 150 },
+    { field: "price", headerName: "Price", width: 120, type: "number" },
+    { field: "mrp", headerName: "MRP", width: 120, type: "number" },
+    { field: "stock", headerName: "Stock", width: 120, type: "number" },
+    { field: "category", headerName: "Category", width: 150 },
+    { field: "rating", headerName: "Rating", width: 120, type: "number" },
     {
       field: "actions",
       headerName: "Actions",
