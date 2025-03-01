@@ -6,11 +6,14 @@ import CategoryModal from '@/components/modals/CategoryModal';
 import CommonTable from '@/components/CommonTable';
 import useCategoryCollection from '@/hooks/useCategoryCollection';
 import LazyImage from '@/components/LazyImage';
+import toast from "react-hot-toast";
+import { useTheme } from "@/context/ThemeContext";
 
 const Category = () => {
     const [isOpenCategoryModal, setOpenCategoryModal] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState(null);
     const { categories, error, addCategory, updateCategory, deleteCategory } = useCategoryCollection();
+    const { isDarkMode } = useTheme();
 
     //---------------------- Add/Update Modal Functions ----------------------------
     const openCategoryModal = () => setOpenCategoryModal(true);
@@ -20,9 +23,18 @@ const Category = () => {
     };
 
     const handleSaveCategory = async (category) => {
+        if (!category.name || !category.status || !category.image) {
+            toast.error(`All fields are required.`, {
+                style: {
+                    background: isDarkMode ? "#333" : "#fff",
+                    color: isDarkMode ? "#fff" : "#333",
+                },
+            });
+            return;
+        }
         if (category.id) {
             console.log(category);
-            await updateCategory(category); 
+            await updateCategory(category);
         } else {
             await addCategory(category);
         }
@@ -31,7 +43,7 @@ const Category = () => {
 
     // Define columns for the MUI DataTable
     const categoryColumns = [
-        { field: "id", headerName: "ID", minWidth: 200, flex: 1},
+        { field: "id", headerName: "ID", minWidth: 200, flex: 1 },
         { field: "name", headerName: "Category Name", flex: 2, minWidth: 200 },
         {
             field: "image",
