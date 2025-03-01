@@ -31,6 +31,7 @@ import Dashboard from '@/pages/admin/dashboard/Dashboard';
 import Users from '@/pages/admin/users/Users';
 import Orders from '@/pages/admin/orders/Orders';
 import Products from '@/pages/admin/products/Products';
+import Category from '@/pages/admin/category/Category';
 import Settings from '@/pages/admin/settings/Settings';
 
 import AuthRoutes from './auth/AuthRoutes';
@@ -60,6 +61,7 @@ const App = () => {
         <Route path='/admin/users' element={<AdminRoute><Users /></AdminRoute>} />
         <Route path='/admin/orders' element={<AdminRoute><Orders /></AdminRoute>} />
         <Route path='/admin/products' element={<AdminRoute><Products /></AdminRoute>} />
+        <Route path='/admin/category' element={<AdminRoute><Category /></AdminRoute>} />
         <Route path='/admin/settings' element={<AdminRoute><Settings /></AdminRoute>} />
         <Route path='/*' element={<NoPage />} />
       </Routes>

@@ -4,26 +4,15 @@ import AdminLayout from '@/components/layout/AdminLayout';
 import { Button, IconButton } from '@mui/material';
 import { Add, Edit, Delete } from '@mui/icons-material';
 import CommonTable from '@/components/CommonTable';
-import DeleteModal from '../../../components/modals/DeleteModal';
-import UserModal from '../../../components/modals/UserModal';
+import DeleteModal from '@/components/modals/DeleteModal';
+import UserModal from '@/components/modals/UserModal';
+import useUsersCollection from "@/hooks/useUsersCollection";
 
 const Users = () => {
-  const [users, setUsers] = useState(
-    Array.from({ length: 150 }, (_, i) => {
-      const roles = ['Admin', 'User', 'Manager'];
-      const date = new Date(2023, 0, 1 + i);
-      return {
-        id: i + 1,
-        name: `User ${i + 1}`,
-        email: `user${i + 1}@example.com`,
-        role: roles[i % roles.length],
-        createdAt: date.toISOString().split('T')[0],
-      };
-    })
-  ); // Users State
   const [isOpenDeleteModal, setOpenDeleteModal] = useState(false);  // Delete Modal State
   const [isOpenUserModal, setOpenUserModal] = useState(false);      // User Modal State
   const [selectedUser, setSelectedUser] = useState(null);           // Selected User State
+  const { users, error, addUser, updateUser, deleteUser } = useUsersCollection();
 
   //------------------------ Delete Modal Functions ------------------------------
   const openDeleteModal = () => setOpenDeleteModal(true);
@@ -62,18 +51,63 @@ const Users = () => {
 
   //---------------------------- Table Columns -----------------------------------
   const userColumns = [
-    { field: 'id', headerName: 'UserID', minWidth: 120 },
-    { field: 'name', headerName: 'Name', flex: 1, minWidth: 150 },
-    { field: 'email', headerName: 'Email', flex: 2, minWidth: 200 },
-    { field: 'role', headerName: 'Role', width: 150 },
-    { field: 'createdAt', headerName: 'Joined', flex: 1, minWidth: 150 },
+    { field: "id", headerName: "User ID", minWidth: 200 },
+    { field: "name", headerName: "Name", flex: 1, minWidth: 150 },
+    { field: "email", headerName: "Email", flex: 2, minWidth: 250 },
+    { field: "phoneNumber", headerName: "Phone", minWidth: 150 },
+    { field: "gender", headerName: "Gender", width: 100 },
+    { field: "role", headerName: "Role", width: 120 },
+
+    // Convert Timestamp to Readable Date
+    /* {
+      field: "createdAt",
+      headerName: "Joined",
+      minWidth: 180,
+      valueGetter: (params) => {
+        const timestamp = params.row.createdAt;
+        return timestamp?.seconds ? new Date(timestamp.seconds * 1000).toLocaleString() : "N/A";
+      },
+    }, */
+
+    // Display Profile Picture
     {
-      field: 'actions',
-      headerName: 'Actions',
-      width: 150,
-      outline: 'none',
+      field: "photoURL",
+      headerName: "Avatar",
+      width: 100,
       renderCell: (params) => (
-        <div className="flex gap-2 items-center h-full">
+        <img
+          src={params.value || "/default-avatar.png"}
+          alt="User Avatar"
+          style={{ width: 40, height: 40, borderRadius: "50%" }}
+        />
+      ),
+    },
+
+    // Display Address as a Readable String
+    {
+      field: "address",
+      headerName: "Address",
+      flex: 2,
+      minWidth: 250,
+      valueGetter: (params) => {
+        const addresses = params?.row?.addresses || [];
+        return addresses.length > 0
+          ? `${addresses[0].address}, ${addresses[0].city}, ${addresses[0].state} - ${addresses[0].pincode}`
+          : "No Address";
+      },
+    },
+
+    // Wishlist & Coupons Count
+    { field: "wishlist", headerName: "Wishlist Items", width: 140, valueGetter: (params) => params?.row?.wishlist?.length || 0 },
+    { field: "coupons", headerName: "Coupons", width: 100, valueGetter: (params) => params?.row?.coupons?.length || 0 },
+
+    // Actions (Edit & Delete)
+    {
+      field: "actions",
+      headerName: "Actions",
+      width: 150,
+      renderCell: (params) => (
+        <div className="flex gap-2 items-center">
           <IconButton
             color="primary"
             onClick={() => {
@@ -97,6 +131,7 @@ const Users = () => {
     },
   ];
 
+
   //----------------------------- Title Update -----------------------------------
   useEffect(() => {
     document.title = 'Users | Admin Panel';
@@ -112,9 +147,9 @@ const Users = () => {
             Add User
           </Button>
         </div>
-        <CommonTable 
-          data={users} 
-          customColumns={userColumns} 
+        <CommonTable
+          data={users}
+          customColumns={userColumns}
           onDeleteSelected={handleDeleteSelected}
           emptyMessage="No users found"
         />

@@ -10,6 +10,7 @@ import Sidebar from '../pages/admin/sidebar/Sidebar';
 
 //import icons
 import { FiHome, FiBarChart2, FiUsers, FiShoppingBag, FiSettings } from "react-icons/fi";
+import { BiCategory } from "react-icons/bi";
 import { SiHackthebox } from "react-icons/si";
 
 const AdminLayout = ({ children, className }) => {
@@ -23,6 +24,7 @@ const AdminLayout = ({ children, className }) => {
         { label: 'Users', icon: <FiUsers className="h-5 w-5" />, link: '/admin/users' },
         { label: 'Orders', icon: <SiHackthebox className="h-5 w-5" />, link: '/admin/orders' },
         { label: 'Products', icon: <FiShoppingBag className="h-5 w-5" />, link: '/admin/products' },
+        { label: 'Category', icon: <BiCategory className="h-5 w-5" />, link: '/admin/category' },
         { label: 'Settings', icon: <FiSettings className="h-5 w-5" />, link: '/admin/settings' },
     ];
 
