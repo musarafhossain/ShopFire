@@ -33,7 +33,7 @@ const ProductModal = ({ isOpen, closeModal, openModal, product, handleSaveProduc
                 price: product.price || "",
                 mrp: product.mrp || "",
                 stock: product.stock || "",
-                category: product.category || categories[0].name,
+                category: product.category || categories[0]?.name,
                 rating: product.rating || "",
                 images: product.images?.map((url) => ({ url, file: null })) || [],
             });
