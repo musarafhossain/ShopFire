@@ -23,7 +23,8 @@ const ProductModal = ({ isOpen, closeModal, openModal, product, handleSaveProduc
         category: product?.category || categories[0]?.name,
         rating: product?.rating || "",
         images: product?.images?.map((url) => ({ url, file: null })) || [],
-        productDetails: product?.productDetails || [{ key: "", value: "" }]
+        productDetails: product?.productDetails || [{ key: "", value: "" }],
+        sizes: product?.sizes || [],
     });
 
 
@@ -39,7 +40,8 @@ const ProductModal = ({ isOpen, closeModal, openModal, product, handleSaveProduc
                 category: product?.category || categories[0]?.name,
                 rating: product?.rating || "",
                 images: product?.images?.map((url) => ({ url, file: null })) || [],
-                productDetails: product?.productDetails || [{ key: "", value: "" }]
+                productDetails: product?.productDetails || [{ key: "", value: "" }],
+                sizes: product?.sizes || [],
             });
         }
     }, [product, isOpen]);
@@ -108,6 +110,26 @@ const ProductModal = ({ isOpen, closeModal, openModal, product, handleSaveProduc
         setFormData((prevData) => ({ ...prevData, productDetails: updatedDetails }));
     };
 
+    const addSizeField = () => {
+        setFormData((prevData) => ({
+            ...prevData,
+            sizes: [...prevData.sizes, { size: "", stock: "" }]
+        }));
+    };
+
+    const handleSizeChange = (index, field, value) => {
+        const updatedSizes = [...formData.sizes];
+        updatedSizes[index][field] = value;
+        setFormData((prevData) => ({ ...prevData, sizes: updatedSizes }));
+    };
+
+    const removeSizeField = (index) => {
+        setFormData((prevData) => ({
+            ...prevData,
+            sizes: prevData.sizes.filter((_, i) => i !== index)
+        }));
+    };
+
     return (
         <ModalLayout isOpenModal={isOpen} closeModal={closeModal} openModal={openModal}>
             <div className="max-h-[80vh] overflow-auto pr-2 sm:p-4 w-full">
@@ -140,6 +162,38 @@ const ProductModal = ({ isOpen, closeModal, openModal, product, handleSaveProduc
                         }))}
                     />
                     <InputText label="Rating" type="number" id="raring" name="rating" value={formData.rating} onChange={handleChange} className="w-full" />
+                </div>
+
+                <div className="mt-4">
+                    <p className="mb-2 font-semibold">Available Sizes</p>
+                    {formData.sizes.map((sizeObj, index) => (
+                        <div key={index} className="flex gap-2 items-center mb-2">
+                            <InputText
+                                placeholder="Size"
+                                value={sizeObj.size}
+                                onChange={(e) => handleSizeChange(index, "size", e.target.value)}
+                                className="w-1/2"
+                            />
+                            <InputText
+                                placeholder="Stock"
+                                value={sizeObj.stock}
+                                onChange={(e) => handleSizeChange(index, "stock", e.target.value)}
+                                className="w-1/2"
+                            />
+                            <button
+                                className="cursor-pointer font-bold text-red-500 p-1 rounded hover:bg-red-100/20 duration-300"
+                                onClick={() => removeSizeField(index)}
+                            >
+                                <MdDelete size={20} />
+                            </button>
+                        </div>
+                    ))}
+                    <button
+                        className="bg-blue-600/50 cursor-pointer hover:bg-blue-600 duration-300 text-white px-3 py-2 rounded mt-2 flex items-center justify-center gap-2"
+                        onClick={addSizeField}
+                    >
+                        <FaPlus /> Add Size
+                    </button>
                 </div>
 
                 {/* Product detail Section */}

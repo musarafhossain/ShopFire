@@ -51,6 +51,24 @@ const Products = () => {
     { field: "category", headerName: "Category", width: 150 },
     { field: "rating", headerName: "Rating", width: 120, type: "number" },
     {
+      field: "sizes",
+      headerName: "Sizes",
+      width: 200,
+      renderCell: (params) => (
+        <div className="flex flex-wrap gap-3 overflow-scroll h-full items-center no-scrollbar">
+          {params.row.sizes?.length > 0 ? (
+            params.row.sizes.map((item, index) => (
+              <span key={index} className="text-lg rounded-md">
+                {item.size}
+              </span>
+            ))
+          ) : (
+            <p className="text-gray-500">No sizes</p>
+          )}
+        </div>
+      ),
+    },
+    {
       field: "productDetails",
       headerName: "Product Details",
       width: 250,
@@ -67,7 +85,7 @@ const Products = () => {
           )}
         </div>
       ),
-    },    
+    },
     {
       field: "actions",
       headerName: "Actions",

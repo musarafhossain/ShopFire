@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useTheme } from '../../../../context/ThemeContext'
 import Rating from '../../../Rating';
 import { FiStar, FiThumbsUp, FiThumbsDown, FiClock, FiUser } from 'react-icons/fi';
 import LazyImage from '../../../LazyImage';
 
 const ProductDetails = ({ product }) => {
+  const [selectedSize, setSelectedSize] = useState(product?.sizes?.[0]?.size || '');
   const { isDarkMode } = useTheme();
   return (
     <div className='md:w-[50%] sm:py-4 mb-4 px-4 lg:px-2 text-left flex flex-col gap-4'>
@@ -26,14 +27,17 @@ const ProductDetails = ({ product }) => {
         </p>
       </div>
       <div className={`border ${isDarkMode ? ' border-[#2f2f2f] ' : ' border-[#dcdada] '} rounded-xl p-4 flex flex-col gap-4`}>
-        <h1 className={`text-lg font-bold ${isDarkMode ? ' text-[#c2c2c2] ' : ' text-[#373737] '}`}>Select Size</h1>
-        <div className='flex gap-2'>
-          <button className={`border text-lg border-indigo-700 px-3 w-16 bg-indigo-500/20 text-indigo-700 font-semibold py-1 rounded-3xl`}>S</button>
-          <button className={`border text-lg w-16 ${isDarkMode ? ' border-[#2f2f2f] ' : ' border-[#dcdada] '} px-3 font-semibold py-1 rounded-3xl`}>M</button>
-          <button className={`border text-lg w-16 ${isDarkMode ? ' border-[#2f2f2f] ' : ' border-[#dcdada] '} px-3 font-semibold py-1 rounded-3xl`}>L</button>
-          <button className={`border text-lg w-16 ${isDarkMode ? ' border-[#2f2f2f] ' : ' border-[#dcdada] '} px-3 font-semibold py-1 rounded-3xl`}>XL</button>
-          <button className={`border text-lg w-16 ${isDarkMode ? ' border-[#2f2f2f] ' : ' border-[#dcdada] '} px-3 font-semibold py-1 rounded-3xl`}>XXL</button>
-          <button className={`border text-lg w-16 ${isDarkMode ? ' border-[#2f2f2f] ' : ' border-[#dcdada] '} px-3 font-semibold py-1 rounded-3xl`}>SM</button>
+        <h1 className={`text-lg font-bold ${isDarkMode ? ' text-[#c2c2c2] ' : ' text-[#373737] '} ${selectedSize === product?.size && 'border-indigo-700 bg-indigo-500/20 text-indigo-700'}`}>Select Size</h1>
+        <div className='flex gap-2 flex-wrap'>
+          {product?.sizes?.map((item, index) => (
+            <button
+              key={index}
+              disabled={item.stock === "0"}
+              className={`border text-lg cursor-pointer w-16 ${isDarkMode ? ' border-[#2f2f2f] disabled:text-gray-700 ' : ' border-[#dcdada] disabled:text-gray-400 '} px-3 disabled:cursor-not-allowed duration-300 not-disabled:hover:border-indigo-700 font-semibold py-1 rounded-3xl ${selectedSize === item.size ? 'border-indigo-700 bg-indigo-500/20 text-indigo-700' : ''}`}
+            >
+              {item.size}
+            </button>
+          ))}
         </div>
       </div>
       <div className={`border ${isDarkMode ? ' border-[#2f2f2f] ' : ' border-[#dcdada] '} rounded-xl p-4 flex flex-col gap-2`}>
@@ -45,7 +49,7 @@ const ProductDetails = ({ product }) => {
               className={`pb-1 ${index !== product?.productDetails.length - 1 ?
                 (isDarkMode ? 'border-[#222] border-b' : 'border-[#eeeeee] border-b') : ''} flex`}
             >
-              <span className='flex-1'>{detail.key}</span> 
+              <span className='flex-1'>{detail.key}</span>
               <span className={`${isDarkMode ? ' text-gray-400 ' : ' text-gray-700 '} flex-1 lg:flex-2`}>: {detail.value}</span>
             </p>
           ))}
