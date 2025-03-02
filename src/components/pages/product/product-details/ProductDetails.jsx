@@ -39,14 +39,19 @@ const ProductDetails = ({ product }) => {
       <div className={`border ${isDarkMode ? ' border-[#2f2f2f] ' : ' border-[#dcdada] '} rounded-xl p-4 flex flex-col gap-2`}>
         <h1 className={`text-lg font-bold ${isDarkMode ? ' text-[#c2c2c2] ' : ' text-[#373737] '}`}>Product Details</h1>
         <div className={`text-gray-500 font-semibold flex flex-col gap-1`}>
-          <p className={`border-b ${isDarkMode ? 'border-[#222]' : 'border-[#eeeeee]'} pb-1`}>Name : {product?.name}</p>
-          <p className={`border-b ${isDarkMode ? 'border-[#222]' : 'border-[#eeeeee]'} pb-1`}>Category : {product?.category}</p>
-          <p className={`border-b ${isDarkMode ? 'border-[#222]' : 'border-[#eeeeee]'} pb-1`}>Brand : {product?.brand}</p>
-          <p className={`border-b ${isDarkMode ? 'border-[#222]' : 'border-[#eeeeee]'} pb-1`}>Net Quantity (N) : 1</p>
-          <p className={`border-b ${isDarkMode ? 'border-[#222]' : 'border-[#eeeeee]'} pb-1`}>Sizes : S, M, L, XL, XXL, SM</p>
-          <p className={``}>Country of Origin : India</p>
+          {product?.productDetails.map((detail, index) => (
+            <p
+              key={index}
+              className={`pb-1 ${index !== product?.productDetails.length - 1 ?
+                (isDarkMode ? 'border-[#222] border-b' : 'border-[#eeeeee] border-b') : ''} flex`}
+            >
+              <span className='flex-1'>{detail.key}</span> 
+              <span className={`${isDarkMode ? ' text-gray-400 ' : ' text-gray-700 '} flex-1 lg:flex-2`}>: {detail.value}</span>
+            </p>
+          ))}
         </div>
       </div>
+
       <div className={`border ${isDarkMode ? 'border-[#2f2f2f]' : 'border-[#dcdada]'} rounded-xl p-4 flex flex-col gap-2`}>
         <h1 className={`text-lg font-bold ${isDarkMode ? 'text-[#c2c2c2]' : 'text-[#373737]'}`}>Product Ratings & Reviews</h1>
         <div className="flex flex-col md:flex-row gap-6">

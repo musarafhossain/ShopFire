@@ -55,7 +55,7 @@ const Products = () => {
       headerName: "Product Details",
       width: 250,
       renderCell: (params) => (
-        <div className="flex flex-col h-full items-center justify-center">
+        <div className="flex flex-col h-full gap-1 scroll-smooth overflow-auto relative py-2 no-scrollbar">
           {params.row.productDetails?.length > 0 ? (
             params.row.productDetails.map((detail, index) => (
               <p key={index} className="text-sm">
