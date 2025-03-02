@@ -51,6 +51,24 @@ const Products = () => {
     { field: "category", headerName: "Category", width: 150 },
     { field: "rating", headerName: "Rating", width: 120, type: "number" },
     {
+      field: "productDetails",
+      headerName: "Product Details",
+      width: 250,
+      renderCell: (params) => (
+        <div className="flex flex-col h-full items-center justify-center">
+          {params.row.productDetails?.length > 0 ? (
+            params.row.productDetails.map((detail, index) => (
+              <p key={index} className="text-sm">
+                <strong>{detail.key}:</strong> {detail.value}
+              </p>
+            ))
+          ) : (
+            <p className="text-gray-500">No details</p>
+          )}
+        </div>
+      ),
+    },    
+    {
       field: "actions",
       headerName: "Actions",
       width: 150,

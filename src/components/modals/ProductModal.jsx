@@ -3,6 +3,7 @@ import ModalLayout from "../layout/ModalLayout";
 import InputText from "@/components/input/InputText";
 import InputSelect from "@/components/input/InputSelect";
 import { RxCross2 } from "react-icons/rx";
+import { MdDelete } from "react-icons/md";
 import { FaEdit, FaPlus } from "react-icons/fa";
 import LoaderButton from "../buttons/LoaderButton";
 import imageCompression from "browser-image-compression";
@@ -19,23 +20,26 @@ const ProductModal = ({ isOpen, closeModal, openModal, product, handleSaveProduc
         price: product?.price || "",
         mrp: product?.mrp || "",
         stock: product?.stock || "",
-        category: product?.category || categories[0],
+        category: product?.category || categories[0]?.name,
         rating: product?.rating || "",
         images: product?.images?.map((url) => ({ url, file: null })) || [],
+        productDetails: product?.productDetails || [{ key: "", value: "" }]
     });
+
 
     useEffect(() => {
         if (product) {
             setFormData({
-                id: product.id || "",
-                name: product.name || "",
-                brand: product.brand || "",
-                price: product.price || "",
-                mrp: product.mrp || "",
-                stock: product.stock || "",
-                category: product.category || categories[0]?.name,
-                rating: product.rating || "",
-                images: product.images?.map((url) => ({ url, file: null })) || [],
+                id: product?.id || "",
+                name: product?.name || "",
+                brand: product?.brand || "",
+                price: product?.price || "",
+                mrp: product?.mrp || "",
+                stock: product?.stock || "",
+                category: product?.category || categories[0]?.name,
+                rating: product?.rating || "",
+                images: product?.images?.map((url) => ({ url, file: null })) || [],
+                productDetails: product?.productDetails || [{ key: "", value: "" }]
             });
         }
     }, [product, isOpen]);
@@ -86,6 +90,24 @@ const ProductModal = ({ isOpen, closeModal, openModal, product, handleSaveProduc
         }));
     };
 
+    const handleDetailChange = (index, field, value) => {
+        const updatedDetails = [...formData.productDetails];
+        updatedDetails[index][field] = value;
+        setFormData((prevData) => ({ ...prevData, productDetails: updatedDetails }));
+    };
+
+    const addDetailField = () => {
+        setFormData((prevData) => ({
+            ...prevData,
+            productDetails: [...prevData.productDetails, { key: "", value: "" }]
+        }));
+    };
+
+    const removeDetailField = (index) => {
+        const updatedDetails = formData.productDetails.filter((_, i) => i !== index);
+        setFormData((prevData) => ({ ...prevData, productDetails: updatedDetails }));
+    };
+
     return (
         <ModalLayout isOpenModal={isOpen} closeModal={closeModal} openModal={openModal}>
             <div className="max-h-[80vh] overflow-auto pr-2 sm:p-4 w-full">
@@ -118,6 +140,42 @@ const ProductModal = ({ isOpen, closeModal, openModal, product, handleSaveProduc
                         }))}
                     />
                     <InputText label="Rating" type="number" id="raring" name="rating" value={formData.rating} onChange={handleChange} className="w-full" />
+                </div>
+
+                {/* Product detail Section */}
+                <div className="mt-4">
+                    <p className="mb-2">Product Details</p>
+                    {formData.productDetails.map((detail, index) => (
+                        <div key={index} className="flex gap-2 items-center mb-2">
+                            <InputText
+                                placeholder="Detail Name"
+                                value={detail.key}
+                                onChange={(e) => handleDetailChange(index, "key", e.target.value)}
+                                className="w-1/2"
+                            />
+                            <InputText
+                                placeholder="Detail Value"
+                                value={detail.value}
+                                onChange={(e) => handleDetailChange(index, "value", e.target.value)}
+                                className="w-1/2"
+                            />
+                            <button
+                                className="cursor-pointer font-bold text-red-500 p-1 rounded hover:bg-red-100/20 duration-300"
+                                onClick={() => removeDetailField(index)}
+                            >
+                                <MdDelete size={20} />
+                            </button>
+                        </div>
+                    ))}
+                    <div className="flex justify-end">
+                        <button
+                            className="bg-blue-600/50 cursor-pointer hover:bg-blue-600 duration-300 text-white px-3 py-2 rounded mt-2 flex items-center justify-center gap-2"
+                            onClick={addDetailField}
+                        >
+                            <FaPlus />
+                            Add Detail
+                        </button>
+                    </div>
                 </div>
 
                 {/* Image Upload Section */}
