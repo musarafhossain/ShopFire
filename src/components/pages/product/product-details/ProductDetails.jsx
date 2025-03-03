@@ -10,6 +10,7 @@ const ProductDetails = ({ product }) => {
   return (
     <div className='md:w-[50%] sm:py-4 mb-4 px-4 lg:px-2 text-left flex flex-col gap-4'>
       <div className={`border ${isDarkMode ? ' border-[#2f2f2f] ' : ' border-[#dcdada] '} rounded-xl p-4 flex flex-col gap-2`}>
+        <h1 className={`font-semibold ${isDarkMode ? ' text-gray-200 ' : ' text-gray-900 '}`}>{product?.brand}</h1>
         <h1 className='text-gray-500 text-lg font-semibold'>{product?.name}</h1>
         <div className='flex items-baseline gap-2'>
           <p className='text-3xl'>₹{product?.price}</p>
