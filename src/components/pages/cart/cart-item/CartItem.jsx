@@ -9,7 +9,7 @@ const CartItem = ({ product, isLast }) => {
   return (
     <div className={`${isLast ? '' : 'border-b'} ${isDarkMode ? 'border-[#222]' : 'border-[#eeeeee]'} py-4 flex flex-col gap-4 text-left`}>
       <div className="flex gap-4">
-        <LazyImage src={product.image} alt={product.name} className="w-24 h-24 rounded-lg object-cover" />
+        <LazyImage src={product?.images[0]} alt={product.name} className="w-24 h-24 rounded-lg object-cover" />
         <div className="flex flex-col gap-[1px]">
           <div className={`text-md ${isDarkMode ? 'text-gray-300' : 'text-gray-600'} font-semibold`}>
             {product.name}

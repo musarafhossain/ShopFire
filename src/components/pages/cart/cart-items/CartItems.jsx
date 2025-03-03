@@ -5,9 +5,9 @@ import CartItem from '../cart-item/CartItem';
 
 const CartItems = () => {
     const { isDarkMode } = useTheme();
-    const cartItems = useSelector(state => state.cart.items); // Get cart items from Redux
-    const totalUniqueItems = useSelector(state => state.cart.totalQuantity); // Get unique item count
-    const totalPrice = useSelector(state => state.cart.totalPrice); // Calculate total price
+    const cartItems = useSelector(state => state.cart.items); 
+    const totalUniqueItems = useSelector(state => state.cart.totalQuantity);
+    const totalPrice = useSelector(state => state.cart.totalPrice); 
 
     return (
         <div className={`border ${isDarkMode ? ' border-[#2f2f2f] ' : ' border-[#dcdada] '} lg:p-5 rounded-2xl w-full md:w-[60%] lg::w-[70%]`}>
