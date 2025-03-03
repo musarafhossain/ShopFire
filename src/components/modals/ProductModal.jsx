@@ -20,7 +20,7 @@ const ProductModal = ({ isOpen, closeModal, openModal, product, handleSaveProduc
         price: product?.price || "",
         mrp: product?.mrp || "",
         stock: product?.stock || "",
-        category: product?.category || categories[0]?.name,
+        category: product?.category || categories[0]?.id,
         rating: product?.rating || "",
         images: product?.images?.map((url) => ({ url, file: null })) || [],
         productDetails: product?.productDetails || [{ key: "", value: "" }],
@@ -37,7 +37,7 @@ const ProductModal = ({ isOpen, closeModal, openModal, product, handleSaveProduc
                 price: product?.price || "",
                 mrp: product?.mrp || "",
                 stock: product?.stock || "",
-                category: product?.category || categories[0]?.name,
+                category: product?.category || categories[0]?.id,
                 rating: product?.rating || "",
                 images: product?.images?.map((url) => ({ url, file: null })) || [],
                 productDetails: product?.productDetails || [{ key: "", value: "" }],
@@ -158,7 +158,7 @@ const ProductModal = ({ isOpen, closeModal, openModal, product, handleSaveProduc
                         onChange={handleChange}
                         options={categories.map(category => ({
                             label: category.name,
-                            options: category.name,
+                            value: category.id,
                         }))}
                     />
                     <InputText label="Rating" type="number" id="raring" name="rating" value={formData.rating} onChange={handleChange} className="w-full" />

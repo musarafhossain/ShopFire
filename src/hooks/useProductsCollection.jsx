@@ -5,6 +5,7 @@ import { useLoading } from "@/context/LoadingContext";
 import toast from "react-hot-toast";
 import useCloudinary from "@/hooks/useCloudinary";
 import { useTheme } from "@/context/ThemeContext";
+import useCategoryCollection from '@/hooks/useCategoryCollection';
 
 const useProductsCollection = () => {
   const { loading, setLoading } = useLoading();
@@ -12,8 +13,13 @@ const useProductsCollection = () => {
   const [error, setError] = useState(null);
   const { uploadImage, deleteImage } = useCloudinary();
   const { isDarkMode } = useTheme();
+  const { categories } = useCategoryCollection();
 
   const productsRef = collection(fireDB, "products");
+
+  const getCategoryNameById = (categoryId) => {
+    return categories.find(category => category.id === categoryId)?.name || "";
+  };
 
   // 🔹 Fetch all products
   const fetchProducts = useCallback(async () => {
@@ -21,10 +27,13 @@ const useProductsCollection = () => {
     setError(null);
     try {
       const snapshot = await getDocs(productsRef);
-      const productList = snapshot.docs.map(doc => ({
-        ...doc.data(),
-        id: doc?.id,
-      }));
+      const productList = snapshot.docs.map(docSnap => {
+        const data = docSnap.data();
+        return {
+          ...data,
+          id: docSnap.id,
+        };
+      });
       //console.log(productList)
       setProducts(productList);
     } catch (err) {
@@ -87,7 +96,7 @@ const useProductsCollection = () => {
       }
 
       // Step 3: Save Product Data in Firestore (Now includes the ID)
-      const finalProductData = {...productData, images: imageUrls, id: productId };
+      const finalProductData = { ...productData, images: imageUrls, id: productId };
       await updateDoc(docRef, finalProductData); // Update the blank document
 
       // Step 4: Update Local State
@@ -213,7 +222,13 @@ const useProductsCollection = () => {
     fetchProducts();
   }, [fetchProducts]);
 
-  return { products, error, addProduct, updateProduct, deleteProduct, getProductFromFirestore };
+  return {
+    products: products.map(product => ({
+      ...product,
+      category: getCategoryNameById(product.category), // Resolve category name dynamically
+    })), 
+    error, addProduct, updateProduct, deleteProduct, getProductFromFirestore
+  };
 };
 
 export default useProductsCollection;

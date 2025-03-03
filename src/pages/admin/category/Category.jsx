@@ -33,7 +33,6 @@ const Category = () => {
             return;
         }
         if (category.id) {
-            console.log(category);
             await updateCategory(category);
         } else {
             await addCategory(category);
