@@ -6,7 +6,7 @@ const BillingSection = () => {
     const { isDarkMode } = useTheme();
     const totalDiscount = useSelector(state => state.cart.totalDiscount);
     const totalPrice = useSelector(state => state.cart.totalPrice);
-    const totalUniqueItems = useSelector(state => state.cart.totalQuantity);
+    const totalUniqueItems = useSelector(state => state.cart.totalItems);
     const isCartEmpty = totalUniqueItems === 0;
 
     const disabledStyles = 'opacity-50 cursor-not-allowed';

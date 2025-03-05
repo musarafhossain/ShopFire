@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from '../../context/ThemeContext';
 import { FaPlus, FaMinus } from "react-icons/fa6";
-import { increaseQuantity, decreaseQuantity, removeFromCart } from '@/redux/cartSlice';
+import { increaseQuantity, decreaseQuantity, removeFromCart } from '@/features/cart/cartSlice';
 
 const AddToCart = ({ product }) => {
     const { isDarkMode } = useTheme();

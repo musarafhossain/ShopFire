@@ -5,7 +5,7 @@ import { FiArrowRightCircle, FiArrowLeftCircle } from "react-icons/fi";
 import { useTheme } from '../../../../context/ThemeContext';
 import { FiShoppingCart } from 'react-icons/fi';
 import { useDispatch, useSelector } from 'react-redux';
-import { addToCart } from '@/redux/cartSlice';
+import { addToCart } from '@/features/cart/cartSlice';
 import AddToCart from '@/components/buttons/AddToCart';
 import toast from "react-hot-toast";
 

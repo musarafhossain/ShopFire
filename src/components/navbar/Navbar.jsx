@@ -28,7 +28,7 @@ gsap.registerPlugin(ScrollTrigger);
 const Navbar = () => {
   const { isDarkMode } = useTheme();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const totalQuantity = useSelector(state => state.cart.totalQuantity);
+  const totalQuantity = useSelector(state => state.cart.totalItems);
 
   useEffect(() => {
     if (isSidebarOpen) {

@@ -6,7 +6,7 @@ import CartItem from '../cart-item/CartItem';
 const CartItems = () => {
     const { isDarkMode } = useTheme();
     const cartItems = useSelector(state => state.cart.items); 
-    const totalUniqueItems = useSelector(state => state.cart.totalQuantity);
+    const totalUniqueItems = useSelector(state => state.cart.totalItems);
     const totalPrice = useSelector(state => state.cart.totalPrice); 
 
     return (
