@@ -2,11 +2,11 @@ import React from 'react';
 import { useTheme } from '../../../../context/ThemeContext'; // Update with your theme context path
 import './Category.css'
 import Heading from '../../../Heading';
-import useCategoryCollection from '@/hooks/useCategoryCollection';
+import useCategories from '@/hooks/useCategories';
 
 const Category = () => {
   const { isDarkMode } = useTheme();
-  const { categories } = useCategoryCollection();
+  const { categories } = useCategories();
   return (
     <div className={`${isDarkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
       <section className={`overflow-hidden max-w-[1440px] relative py-16 ${isDarkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>

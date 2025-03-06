@@ -1,19 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import AdminLayout from '@/components/layout/AdminLayout';
 import { Button, IconButton } from '@mui/material';
 import { Add, Edit, Delete } from '@mui/icons-material';
 import CategoryModal from '@/components/modals/CategoryModal';
 import CommonTable from '@/components/CommonTable';
-import useCategoryCollection from '@/hooks/useCategoryCollection';
+import useCategories from '@/hooks/useCategories';
 import LazyImage from '@/components/LazyImage';
 import toast from "react-hot-toast";
-import { useTheme } from "@/context/ThemeContext";
 
 const Category = () => {
     const [isOpenCategoryModal, setOpenCategoryModal] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState(null);
-    const { categories, error, addCategory, updateCategory, deleteCategory } = useCategoryCollection();
-    const { isDarkMode } = useTheme();
+    const { categories, error, handleAddCategory, handleUpdateCategory, handleDeleteCategory } = useCategories();
 
     //---------------------- Add/Update Modal Functions ----------------------------
     const openCategoryModal = () => setOpenCategoryModal(true);
@@ -24,18 +22,13 @@ const Category = () => {
 
     const handleSaveCategory = async (category) => {
         if (!category.name || !category.status || !category.image) {
-            toast.error(`All fields are required.`, {
-                style: {
-                    background: isDarkMode ? "#333" : "#fff",
-                    color: isDarkMode ? "#fff" : "#333",
-                },
-            });
+            toast.error(`All fields are required.`);
             return;
         }
         if (category.id) {
-            await updateCategory(category);
+            await handleUpdateCategory(category);
         } else {
-            await addCategory(category);
+            await handleAddCategory(category);
         }
         closeCategoryModal();
     };
@@ -83,7 +76,7 @@ const Category = () => {
                     >
                         <Edit fontSize="small" />
                     </IconButton>
-                    <IconButton color="error" onClick={async () => await deleteCategory(params.row.id)}>
+                    <IconButton color="error" onClick={async () => await handleDeleteCategory(params.row.id)}>
                         <Delete fontSize="small" />
                     </IconButton>
                 </div>
@@ -93,13 +86,14 @@ const Category = () => {
 
     const onDeleteSelected = async (categoryIds) => {
         categoryIds.forEach(async categoryId => {
-            if (categoryId) await deleteCategory(categoryId);
+            if (categoryId) await handleDeleteCategory(categoryId);
         });
     }
 
     return (
         <>
             <AdminLayout className='flex flex-col gap-5 w-full'>
+                {error && toast.error(error)}
                 <div className="flex justify-between items-center">
                     <h1 className="text-xl font-semibold">Manage Category</h1>
                     <Button variant="contained" startIcon={<Add />} onClick={openCategoryModal}>

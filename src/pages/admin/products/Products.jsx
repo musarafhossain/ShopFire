@@ -5,19 +5,22 @@ import { Button, IconButton } from '@mui/material';
 import { Add, Edit, Delete } from '@mui/icons-material';
 import CommonTable from '../../../components/CommonTable';
 import ProductModal from '../../../components/modals/ProductModal';
-import useProductsCollection from "@/hooks/useProductsCollection";
+import useProducts from "@/hooks/useProducts";
 import toast from "react-hot-toast";
-import { useTheme } from "@/context/ThemeContext";
 import LazyImage from '@/components/LazyImage'
+import DeleteModal from '@/components/modals/DeleteModal';
 
 const Products = () => {
   //state
   const [editedProduct, setEditedProduct] = useState({});
+  const [deletedProduct, setDeletedProduct] = useState({});
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
+  const [isBulkDeleteModalOpen, setIsBulkDeleteModalOpen] = useState(false);
+  const [selectedProductIds, setSelectedProductIds] = useState([]);
 
   //hooks
-  const { products, error, addProduct, updateProduct, deleteProduct } = useProductsCollection();
-  const { isDarkMode } = useTheme();
+  const { products, error, handleAddProduct, handleUpdateProduct, handleDeleteProduct } = useProducts();
 
   //modal handle functions
   const openModal = () => setIsOpenModal(true);
@@ -25,6 +28,11 @@ const Products = () => {
     setIsOpenModal(false);
     setEditedProduct({});
   };
+  const openDeleteModal = () => setIsOpenDeleteModal(true);
+  const closeDeleteModal = () => {
+    setIsOpenDeleteModal(false);
+    setDeletedProduct({});
+  }
 
   //products columns
   const productColumns = [
@@ -100,14 +108,23 @@ const Products = () => {
                 toast.error("Product not found");
                 return;
               }
-              setEditedProduct(selectedProduct); // Set the correct product
+              setEditedProduct(selectedProduct);
               openModal();
-              //console.log("Editing Product:", selectedProduct);
             }}
           >
             <Edit fontSize="small" />
           </IconButton>
-          <IconButton color="error" onClick={async () => await deleteProduct(params.row.id)}>
+          <IconButton
+            color="error"
+            onClick={async () => {
+              let selectedProduct = products.find(product => product.id === params.row.id);
+              if (!selectedProduct) {
+                toast.error("Product not found");
+                return;
+              }
+              setDeletedProduct(selectedProduct);
+              openDeleteModal();
+            }}>
             <Delete fontSize="small" />
           </IconButton>
         </div>
@@ -115,30 +132,28 @@ const Products = () => {
     }
   ];
 
-  const onDeleteSelected = async (productIds) => {
-    productIds.forEach(async (productId) => {
-      if (productId) await deleteProduct(productId);
-    });
-  }
+  const onDeleteSelected = (productIds) => {
+    if (productIds.length === 0) {
+      toast.error("No products selected for deletion.");
+      return;
+    }
+    setSelectedProductIds(productIds);
+    setIsBulkDeleteModalOpen(true);
+  };
 
   const handleSaveProduct = async (product) => {
     if (!product.name || !product.brand || !product.price || !product.mrp || !product.stock || !product.category || !product.rating || !product.images || product.images.length === 0) {
-      toast.error("All fields are required, including images.", {
-        style: {
-          background: isDarkMode ? "#333" : "#fff",
-          color: isDarkMode ? "#fff" : "#333",
-        },
-      });
+      toast.error("All fields are required, including images.");
       return;
     }
     try {
       if (editedProduct?.id) {
         // Updating an existing product
-        await updateProduct(editedProduct.id, product);
+        await handleUpdateProduct(editedProduct.id, product);
         //console.log("Updated product", product);
       } else {
         // Adding a new product
-        await addProduct(product);
+        await handleAddProduct(product);
         //console.log("Added product", product);
       }
       closeModal();
@@ -150,8 +165,17 @@ const Products = () => {
     }
   };
 
+  const handleBulkDelete = async () => {
+    for (const productId of selectedProductIds) {
+      if (productId) await handleDeleteProduct(productId);
+    }
+    setIsBulkDeleteModalOpen(false);
+    setSelectedProductIds([]);
+  };
+
   return (
     <AdminLayout className='flex flex-col gap-5 w-full'>
+      {error && toast.error(`Error: ${error}`)}
       <div className="flex justify-between items-center">
         <h1 className="text-xl font-semibold">Manage Products</h1>
         <Button variant="contained" startIcon={<Add />} onClick={() => {
@@ -173,6 +197,25 @@ const Products = () => {
         closeModal={closeModal}
         product={editedProduct}
         handleSaveProduct={handleSaveProduct}
+      />
+      <DeleteModal
+        title='Confirm Delete'
+        message={`Are you sure you want to delete this product ${deletedProduct?.name}?`}
+        handleDelete={async () => {
+          await handleDeleteProduct(deletedProduct.id)
+          closeDeleteModal();
+        }}
+        isOpenDeleteModal={isOpenDeleteModal}
+        openModal={openDeleteModal}
+        closeModal={closeDeleteModal}
+      />
+      <DeleteModal
+        title="Confirm Bulk Delete"
+        message={`Are you sure you want to delete ${selectedProductIds.length} selected products?`}
+        handleDelete={handleBulkDelete}
+        isOpenDeleteModal={isBulkDeleteModalOpen}
+        openModal={() => setIsBulkDeleteModalOpen(true)}
+        closeModal={() => setIsBulkDeleteModalOpen(false)}
       />
     </AdminLayout>
   );

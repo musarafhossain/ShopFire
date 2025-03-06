@@ -8,10 +8,10 @@ import { FaEdit, FaPlus } from "react-icons/fa";
 import LoaderButton from "../buttons/LoaderButton";
 import imageCompression from "browser-image-compression";
 import { useTheme } from "@/context/ThemeContext";
-import useCategoryCollection from '@/hooks/useCategoryCollection';
+import useCategories from '@/hooks/useCategories';
 
 const ProductModal = ({ isOpen, closeModal, openModal, product, handleSaveProduct }) => {
-    const { categories } = useCategoryCollection();
+    const { categories } = useCategories();
     const { isDarkMode } = useTheme();
     const [formData, setFormData] = useState({
         id: product?.id || "",
@@ -26,7 +26,6 @@ const ProductModal = ({ isOpen, closeModal, openModal, product, handleSaveProduc
         productDetails: product?.productDetails || [{ key: "", value: "" }],
         sizes: product?.sizes || [],
     });
-
 
     useEffect(() => {
         if (product) {
@@ -93,10 +92,13 @@ const ProductModal = ({ isOpen, closeModal, openModal, product, handleSaveProduc
     };
 
     const handleDetailChange = (index, field, value) => {
-        const updatedDetails = [...formData.productDetails];
-        updatedDetails[index][field] = value;
-        setFormData((prevData) => ({ ...prevData, productDetails: updatedDetails }));
-    };
+        setFormData((prevData) => ({
+            ...prevData,
+            productDetails: prevData.productDetails.map((detail, i) => 
+                i === index ? { ...detail, [field]: value } : detail
+            ),
+        }));
+    };    
 
     const addDetailField = () => {
         setFormData((prevData) => ({
@@ -263,7 +265,7 @@ const ProductModal = ({ isOpen, closeModal, openModal, product, handleSaveProduc
                 <div className="mt-4 flex gap-3">
                     <LoaderButton
                         type="button"
-                        text="Save Product"
+                        text={product?.id ? "Update Product" : "Save Product"}
                         onClick={() => handleSaveProduct(formData)}
                         className="bg-indigo-600 hover:scale-105 duration-200 cursor-pointer text-white font-semibold px-6 py-2 rounded-md w-fit flex"
                     />

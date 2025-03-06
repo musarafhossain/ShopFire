@@ -2,7 +2,7 @@ import React, { lazy, Suspense, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Layout from '../../components/layout/Layout';
 import { useTheme } from '../../context/ThemeContext';
-import useProductsCollection from '@/hooks/useProductsCollection';
+import useProducts from "@/hooks/useProducts";
 import Loader from '../../components/Loader';
 
 // 🔹 Lazy load components
@@ -10,7 +10,7 @@ const ProductCatalog = lazy(() => import('../../components/pages/product/product
 const ProductDetails = lazy(() => import('../../components/pages/product/product-details/ProductDetails'));
 
 const Product = () => {
-    const { products } = useProductsCollection();
+    const { products } = useProducts();
     const { id } = useParams(); // Get product ID from URL
     const { isDarkMode } = useTheme();
     

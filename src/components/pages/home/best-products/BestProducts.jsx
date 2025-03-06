@@ -9,11 +9,11 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/free-mode';
 import Heading from '../../../Heading';
-import useProductsCollection from "@/hooks/useProductsCollection";
+import useProducts from "@/hooks/useProducts";
 
 const BestProducts = () => {
     const { isDarkMode } = useTheme();
-    const { products } = useProductsCollection();
+    const { products, error } = useProducts();
 
     return (
         <div className={`py-12 md:py-16 px-4 sm:px-6 lg:px-8 ${isDarkMode ? 'bg-gray-800' : 'bg-gray-50'}`}>
