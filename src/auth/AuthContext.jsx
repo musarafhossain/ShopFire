@@ -22,6 +22,7 @@ import {
 } from "firebase/firestore";
 import Loader from "@/components/Loader";
 import { useLoading } from "@/context/LoadingContext";
+import { uploadImage, deleteImage } from "@/services/cloudinaryService";
 
 const AuthContext = createContext();
 
@@ -209,8 +210,68 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
+    // Handle Profile Picture
+    const handleProfilePicture = async (picture) => {
+        setLoading(true);
+        try {
+            if (!user || !user.uid) {
+                return { success: false, message: "User not found." };
+            }
+            await deleteImage(user.photoURL);
+            const profilePictureUrl = await uploadImage(picture);
+            await updateUser({
+                photoURL: profilePictureUrl
+            });
+            setUser((prevUser) => ({
+                ...prevUser,
+                photoURL: profilePictureUrl
+            }));
+            return {
+                success: true,
+                message: "Profile picture updated successfully.",
+                updatedPhotoURL: profilePictureUrl
+            };
+        } catch (error) {
+            return { success: false, message: error.message };
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    //Handle Delete Profile Picture
+    const handleDeleteProfilePicture = async () => {
+        setLoading(true);
+        try {
+            if (!user || !user.uid) {
+                return { success: false, message: "User not found." };
+            }
+            await deleteImage(user.photoURL);
+            await updateUser({ photoURL: '/mypic.png' });
+            setUser((prevUser) => ({ ...prevUser, photoURL: '/mypic.png' }));
+            return {
+                success: true,
+                message: "Profile picture deleted successfully.",
+                updatedPhotoURL: '/mypic.png'
+            };
+        } catch (error) {
+            return { success: false, message: error.message };
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
-        <AuthContext.Provider value={{ user, setUser, login, logout, signup, resetPassword, updateUser }}>
+        <AuthContext.Provider value={{
+            user,
+            setUser,
+            login,
+            logout,
+            signup,
+            resetPassword,
+            updateUser,
+            handleProfilePicture,
+            handleDeleteProfilePicture,
+        }}>
             {authLoading ? <Loader /> : children}
         </AuthContext.Provider>
     );

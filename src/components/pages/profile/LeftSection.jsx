@@ -5,28 +5,18 @@ import { FaUser, FaFolder, FaWallet, FaImage, FaTrash, FaTimes, FaEdit, FaUserLo
 import { GiShoppingBag } from "react-icons/gi";
 import { Link } from 'react-router-dom';
 import { useAuth } from "@/auth/AuthContext";
-import { useLoading } from "@/context/LoadingContext";
-import { updateDoc } from "firebase/firestore";
-import useUserDoc from "@/hooks/useUserDoc";
 import toast from "react-hot-toast";
-import imageCompression from 'browser-image-compression';
-import CryptoJS from 'crypto-js';
 import LazyImage from '@/components/LazyImage';
 import ModalLayout from '../../layout/ModalLayout';
+import { useLoading } from "@/context/LoadingContext";
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 const LeftSection = ({ pageTitle }) => {
-  const { user, logout } = useAuth();
+  const { user, logout, handleProfilePicture, handleDeleteProfilePicture } = useAuth();
   const [imgUrl, setImgUrl] = useState(user?.photoURL || "/mypic.png");
-  const [showOptions, setShowOptions] = useState(false); // Modal visibility
-  const { loading, setLoading } = useLoading();
+  const [showOptions, setShowOptions] = useState(false);
   const { isDarkMode } = useTheme();
-  const { userDoc } = useUserDoc();
-
-  // Cloudinary Credentials
-  const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
-  const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
-  const apiKey = import.meta.env.VITE_CLOUDINARY_API_KEY;
-  const apiSecret = import.meta.env.VITE_CLOUDINARY_API_SECRET;
+  const { loading } = useLoading();
 
   // Handle Image Selection
   const handleImageChange = async (event) => {
@@ -36,60 +26,13 @@ const LeftSection = ({ pageTitle }) => {
       toast.error("User ID not found!");
       return;
     }
-
-    try {
-      setLoading(true);
-      // Compress image
-      const options = { maxSizeMB: 0.05, maxWidthOrHeight: 300, useWebWorker: true };
-      const compressedFile = await imageCompression(file, options);
-
-      // Generate timestamp
-      const timestamp = Math.floor(Date.now() / 1000);
-      const paramsToSign = `public_id=${user.uid}&timestamp=${timestamp}&upload_preset=${uploadPreset}${apiSecret}`;
-      const signature = CryptoJS.SHA1(paramsToSign).toString();
-
-      // Prepare FormData
-      const formData = new FormData();
-      formData.append("file", compressedFile);
-      formData.append("upload_preset", uploadPreset);
-      formData.append("timestamp", timestamp);
-      formData.append("api_key", apiKey);
-      formData.append("signature", signature);
-      formData.append("public_id", user.uid);
-
-      const response = await fetch(
-        `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
-        { method: "POST", body: formData }
-      );
-
-      const data = await response.json();
-
-      if (data.secure_url) {
-        setImgUrl(data.secure_url);
-
-        // Save the image URL to the database
-        await updateDoc(userDoc, { photoURL: data.secure_url });
-
-        toast.success("Profile picture updated!", {
-          style: {
-            background: isDarkMode ? "#4CAF50" : "#E6F4EA",
-            color: isDarkMode ? "#fff" : "#333",
-          },
-        });
-      } else {
-        throw new Error("Upload failed");
-      }
-    } catch (error) {
-      console.error("Image upload failed:", error);
-      toast.error("Failed to update profile picture", {
-        style: {
-          background: isDarkMode ? "#333" : "#fff",
-          color: isDarkMode ? "#fff" : "#333",
-        },
-      });
-    } finally {
-      setLoading(false);
-      setShowOptions(false); // Hide modal after upload
+    setShowOptions(false);
+    const result = await handleProfilePicture(file);
+    if (result.success) {
+      toast.success("Profile picture has been updated!");
+      setImgUrl(result.updatedPhotoURL);
+    } else {
+      toast.error(result.message || "Failed to update profile picture.");
     }
   };
 
@@ -100,10 +43,14 @@ const LeftSection = ({ pageTitle }) => {
 
   // Handle delete image
   const handleDeleteImage = async () => {
-    setImgUrl("/mypic.png"); // Set to default image
-    await updateDoc(userDoc, { photoURL: "/mypic.png" });
-    toast.success("Profile picture removed!");
     setShowOptions(false);
+    const result = await handleDeleteProfilePicture();
+    if (result.success) {
+      toast.success("Profile picture removed!");
+      setImgUrl(result.updatedPhotoURL);
+    } else {
+      toast.error(result.message || "Failed to remove profile picture.");
+    }
   };
 
   return (
@@ -111,12 +58,16 @@ const LeftSection = ({ pageTitle }) => {
       {/* Greeting Section */}
       <div className={`flex items-center gap-3 p-4 rounded-xl border ${isDarkMode ? ' border-[#2f2f2f] ' : ' border-[#dcdada] '}`}>
         {/* Profile Image Upload */}
-        <div className="relative w-14 h-14 cursor-pointer group" onClick={handleImageClick}>
-          <LazyImage
-            src={imgUrl}
-            alt="Profile Pic"
-            className="h-14 w-14 rounded-full object-cover"
-          />
+        <div className="relative w-14 h-14 flex justify-center items-center overflow-hidden cursor-pointer group" onClick={handleImageClick}>
+          {loading ?
+            <LoadingSpinner className='bg-transparent'/>
+            : <LazyImage
+              src={imgUrl}
+              alt="Profile Pic"
+              className="h-14 w-14 rounded-full object-cover"
+            />
+          }
+
 
           {/* Overlay with Edit Icon */}
           <div className="absolute inset-0 bg-black/50 flex items-center justify-center rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -165,7 +116,6 @@ const LeftSection = ({ pageTitle }) => {
           </div>
         </div>
       </ModalLayout>
-
 
       {/* Tab Section */}
       <div className={`flex items-center flex-col rounded-xl border ${isDarkMode ? ' border-[#2f2f2f] ' : ' border-[#dcdada] '}`}>

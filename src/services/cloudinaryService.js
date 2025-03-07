@@ -1,5 +1,4 @@
 import CryptoJS from "crypto-js";
-import { fireDB } from "@/firebase/FirebaseConfig"; // Only if needed for Firestore updates
 
 // Cloudinary Credentials
 const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
@@ -10,7 +9,7 @@ const apiSecret = import.meta.env.VITE_CLOUDINARY_API_SECRET;
 /**
  * Upload an image to Cloudinary
  * @param {File} imageFile - The image file to upload
- * @param {string} id - Product ID for structured image storage
+ * @param {string} id - ID for structured image storage
  * @returns {Promise<string | null>} - URL of uploaded image or null if failed
  */
 export const uploadImage = async (imageFile, id) => {

@@ -6,6 +6,8 @@ import { useAuth } from "@/auth/AuthContext";
 import { HiMiniPower } from "react-icons/hi2";
 import { FaHeart, FaUserPlus } from "react-icons/fa";
 import { CiLogin } from "react-icons/ci";
+import { useLoading } from "@/context/LoadingContext";
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 const ProfileButton = () => {
     const { isDarkMode } = useTheme();
@@ -13,6 +15,7 @@ const ProfileButton = () => {
     // Dropdown State
     const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
     const dropdownTimeout = useRef(null);
+    const { loading } = useLoading();
 
     const handleMouseEnter = () => {
         if (dropdownTimeout.current) clearTimeout(dropdownTimeout.current);
@@ -33,9 +36,16 @@ const ProfileButton = () => {
         >
             <button
                 type="button"
-                className="right-icon cursor-pointer flex items-center justify-center"
+                className="right-icon cursor-pointer flex w-10 h-10 items-center justify-center"
             >
-                <LazyImage src={user?.photoURL || "/mypic.png"} alt="User avatar" className={`w-10 h-10 rounded-full object-cover border ${isDarkMode ? ' border-[#2f2f2f] ' : ' border-[#dcdada] '}`} />
+                {loading ?
+                    <LoadingSpinner className='bg-transparent' />
+                    : <LazyImage
+                        src={user?.photoURL || "/mypic.png"}
+                        alt="User avatar"
+                        className={`w-10 h-10 rounded-full object-cover border ${isDarkMode ? ' border-[#2f2f2f] ' : ' border-[#dcdada] '}`}
+                    />
+                }
             </button>
             {isUserMenuOpen && (
                 <div
@@ -49,7 +59,14 @@ const ProfileButton = () => {
                                     className={`cursor-pointer w-full rounded-md flex px-2 py-2 border gap-2 items-center text-left transition-transform transform hover:scale-105 ${isDarkMode ? 'border-[#2f2f2f] hover:bg-gray-700' : 'hover:bg-gray-100 border-[#dcdada]'
                                         }`}
                                 >
-                                    <LazyImage src={user?.photoURL || "/mypic.png"} alt="User avatar" className="w-10 h-10 object-cover rounded-full" />
+                                    {loading ?
+                                        <LoadingSpinner className='bg-transparent' />
+                                        : <LazyImage
+                                            src={user?.photoURL || "/mypic.png"}
+                                            alt="User avatar"
+                                            className="w-10 h-10 object-cover rounded-full"
+                                        />
+                                    }
                                     <div className="flex flex-col gap-1 w-full truncate">
                                         <span className="truncate text-md leading-[1]">{user.name}</span>
                                         <span className="text-xs text-gray-500">Your Profile</span>
