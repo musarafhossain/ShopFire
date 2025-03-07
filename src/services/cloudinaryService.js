@@ -1,5 +1,5 @@
 import CryptoJS from "crypto-js";
-import { fireDB } from "@/firebase/firebaseConfig"; // Only if needed for Firestore updates
+import { fireDB } from "@/firebase/FirebaseConfig"; // Only if needed for Firestore updates
 
 // Cloudinary Credentials
 const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
