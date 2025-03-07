@@ -60,7 +60,7 @@ const LeftSection = ({ pageTitle }) => {
         {/* Profile Image Upload */}
         <div className="relative w-14 h-14 flex justify-center items-center overflow-hidden cursor-pointer group" onClick={handleImageClick}>
           {loading ?
-            <LoadingSpinner className='bg-transparent'/>
+            <LoadingSpinner className='bg-transparent' />
             : <LazyImage
               src={imgUrl}
               alt="Profile Pic"
@@ -172,9 +172,11 @@ const LeftSection = ({ pageTitle }) => {
             <FaFolder size={20} className='text-indigo-400' />
             <span className='text-md font-semibold text-gray-400 uppercase'>My Stuff</span>
           </div>
-          <div className='pt-2 font-semibold'>
+          <div className='pt-2 font-semibold flex flex-col'>
             <p className={`text-sm p-2 pl-9 rounded-lg cursor-pointer duration-200 hover:text-blue-800 ${isDarkMode ? ' hover:bg-gray-800 ' : ' hover:bg-gray-200 '}`}>My Coupons</p>
-            <p className={`text-sm p-2 pl-9 rounded-lg cursor-pointer duration-200 hover:text-blue-800 ${isDarkMode ? ' hover:bg-gray-800 ' : ' hover:bg-gray-200 '}`}>My Wishlist</p>
+            <Link to='/profile/wishlist' className={`text-sm p-2 pl-9 rounded-lg cursor-pointer duration-200 ${pageTitle === "Wishlist" && ' text-blue-800 '} hover:text-blue-800 ${isDarkMode ? ' hover:bg-gray-800 ' : ' hover:bg-gray-200 '}`}>
+              My Wishlist
+            </Link>
           </div>
         </div>
         {/* Logout */}

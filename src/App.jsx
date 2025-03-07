@@ -19,6 +19,7 @@ import Order from '@/pages/order/Order';
 import Product from '@/pages/product/Product';
 import Profile from '@/pages/profile/Profile';
 import Addresses from '@/pages/profile/addresses/Addresses';
+import Wishlist from '@/pages/profile/wishlist/Wishlist';
 import NoPage from '@/pages/nopage/NoPage';
 
 // Auth Section
@@ -55,6 +56,7 @@ const App = () => {
         <Route path='/order' element={<PrivateRoute><Order /></PrivateRoute>} />
         <Route path='/profile' element={<PrivateRoute><Profile /></PrivateRoute>} />
         <Route path='/profile/addresses' element={<PrivateRoute><Addresses /></PrivateRoute>} />
+        <Route path='/profile/wishlist' element={<PrivateRoute><Wishlist /></PrivateRoute>} />
 
         {/*Admin Routes*/}
         <Route path='/admin/dashboard' element={<AdminRoute><Dashboard /></AdminRoute>} />

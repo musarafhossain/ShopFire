@@ -74,13 +74,14 @@ const ProfileButton = () => {
                                 </button>
                             </Link>
 
-                            <button
+                            <Link
+                                to='/profile/wishlist'
                                 className={`w-full cursor-pointer rounded-md flex px-4 py-2 border gap-2 items-center text-left transition-transform transform hover:scale-105 ${isDarkMode ? 'border-[#2f2f2f] hover:bg-gray-700' : 'hover:bg-gray-100 border-[#dcdada]'
                                     } text-green-500`}
                             >
                                 <FaHeart size={18} className="transition-colors text-green-500" />
-                                My Wishlist (10)
-                            </button>
+                                My Wishlist
+                            </Link>
 
                             {/* Logout Button */}
                             <button
