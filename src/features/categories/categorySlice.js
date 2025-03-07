@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { collection, addDoc, getDocs, getDoc, updateDoc, deleteDoc, doc } from "firebase/firestore";
-import { fireDB } from "@/firebase/firebaseConfig";
+import { fireDB } from "@/firebase/FirebaseConfig";
 import { uploadImage, deleteImage } from "@/services/cloudinaryService";
 
 const categoriesRef = collection(fireDB, "categories");
