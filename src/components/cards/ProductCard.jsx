@@ -7,61 +7,51 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '@/features/cart/cartSlice';
 import AddToCart from '@/components/buttons/AddToCart';
 import toast from "react-hot-toast";
-import useUserDoc from "@/hooks/useUserDoc";
-import { useLoading } from "@/context/LoadingContext";
-import { updateDoc, arrayUnion, arrayRemove } from 'firebase/firestore';
-import { ImSpinner2 } from "react-icons/im"; // Import loader icon
+import { ImSpinner2 } from "react-icons/im";
 import { useAuth } from "@/auth/AuthContext";
 
 const ProductCard = ({ product }) => {
     const { isDarkMode } = useTheme();
     const dispatch = useDispatch();
-    const { userDoc } = useUserDoc();
-    const { loading, setLoading } = useLoading();
-    const { user, setUser } = useAuth();
+    const { user, updateUser } = useAuth();
     const [wishlistLoading, setWishlistLoading] = useState(false);
     const [isInWishlist, setIsInWishlist] = useState(false);
+    const [wishlist, setWishList] = useState([]);
 
     // Get cart items from Redux
     const cartItems = useSelector(state => state.cart.items);
     const cartItem = cartItems.find(item => item.id === product.id);
 
-    // Check if product is in wishlist
     useEffect(() => {
-        if (userDoc && userDoc.wishlist) {
-            setIsInWishlist(userDoc.wishlist.includes(product.id));
-        }
-    }, [userDoc, product.id]);
-
-    useEffect(() => {
-        if (userDoc?.wishlist) {
-            setIsInWishlist(userDoc.wishlist.includes(product.id));
+        if (user?.wishlist) {
+            setWishList(user?.wishlist);
+            setIsInWishlist(user?.wishlist?.includes(product.id));
         } else {
             setIsInWishlist(false);
         }
-    }, [userDoc, product.id]);
-    
+    }, [user, product.id]);
+
 
     // Handle wishlist update
     const handleWishlist = async () => {
-        if (!userDoc) {
+        if (!user) {
             toast.error("You need to log in to manage your wishlist.");
             return;
         }
-    
+
         setWishlistLoading(true);
         try {
-            const updatedWishlist = isInWishlist ? arrayRemove(product.id) : arrayUnion(product.id);
-    
-            await updateDoc(userDoc.ref, { wishlist: updatedWishlist });
-    
-            // Fetch updated user data to ensure state is in sync
-            const updatedDoc = await userDoc.ref.get();
-            setUser({ ...user, wishlist: updatedDoc.data().wishlist });
-    
-            setIsInWishlist(!isInWishlist);
-    
-            toast.success(isInWishlist ? "Item removed from wishlist" : "Item added to wishlist!");
+            const updatedWishlist = isInWishlist
+                ? wishlist.filter((id) => id !== product.id)
+                : [...wishlist, product.id];
+
+            const res = await updateUser({ wishlist: updatedWishlist });
+            if (res.success) {
+                setIsInWishlist(!isInWishlist);
+                toast.success(isInWishlist ? "Item removed from wishlist" : "Item added to wishlist!");
+            } else {
+                toast.error("Failed to update wishlist.");
+            }
         } catch (error) {
             console.error("Error updating wishlist:", error);
             toast.error("Failed to update wishlist.");
@@ -69,7 +59,6 @@ const ProductCard = ({ product }) => {
             setWishlistLoading(false);
         }
     };
-    
 
     return (
         <div className={`rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 group
@@ -85,7 +74,7 @@ const ProductCard = ({ product }) => {
                         className="w-full h-48 sm:h-56 md:h-64 object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                     <div className={`absolute inset-0 bg-gradient-to-t ${isDarkMode ? 'from-gray-800/60' : 'from-black/30'} to-transparent`} />
-                    
+
                     {/* Favorite Button */}
                     <button
                         className={`absolute cursor-pointer top-3 right-3 p-2 rounded-full shadow-md transition-colors

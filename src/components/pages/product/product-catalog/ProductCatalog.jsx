@@ -1,25 +1,64 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import LazyImage from '../../../LazyImage'
 import { FaAnglesRight } from "react-icons/fa6";
 import { FiArrowRightCircle, FiArrowLeftCircle } from "react-icons/fi";
 import { useTheme } from '../../../../context/ThemeContext';
-import { FiShoppingCart } from 'react-icons/fi';
+import { FiHeart, FiShoppingCart } from 'react-icons/fi';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '@/features/cart/cartSlice';
 import AddToCart from '@/components/buttons/AddToCart';
 import toast from "react-hot-toast";
+import { ImSpinner2 } from "react-icons/im";
+import { useAuth } from "@/auth/AuthContext";
 
 const ProductCatalog = ({ product }) => {
     const { isDarkMode } = useTheme();
     const dispatch = useDispatch();
-    // Get cart items from Redux
     const cartItems = useSelector(state => state.cart.items);
-    // Check if product is in cart
     const cartItem = cartItems.find(item => item.id === product.id);
-
+    const [wishlistLoading, setWishlistLoading] = useState(false);
+    const [isInWishlist, setIsInWishlist] = useState(false);
+    const { user, updateUser } = useAuth();
     const imgs = product?.images || [];
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [wishlist, setWishList] = useState([]);
 
-    const [currentIndex, setCurrentIndex] = React.useState(0);
+    useEffect(() => {
+        if (user?.wishlist) {
+            setWishList(user?.wishlist);
+            setIsInWishlist(user?.wishlist?.includes(product.id));
+        } else {
+            setIsInWishlist(false);
+        }
+    }, [user, product.id]);
+
+    // Handle wishlist update
+    const handleWishlist = async () => {
+        if (!user) {
+            toast.error("You need to log in to manage your wishlist.");
+            return;
+        }
+
+        setWishlistLoading(true);
+        try {
+            const updatedWishlist = isInWishlist
+                ? wishlist.filter((id) => id !== product.id)
+                : [...wishlist, product.id];
+
+            const res = await updateUser({ wishlist: updatedWishlist });
+            if (res.success) {
+                setIsInWishlist(!isInWishlist);
+                toast.success(isInWishlist ? "Item removed from wishlist" : "Item added to wishlist!");
+            } else {
+                toast.error("Failed to update wishlist.");
+            }
+        } catch (error) {
+            console.error("Error updating wishlist:", error);
+            toast.error("Failed to update wishlist.");
+        } finally {
+            setWishlistLoading(false);
+        }
+    };
 
     const handlePrev = () => {
         setCurrentIndex((prevIndex) => (prevIndex === 0 ? prevIndex : prevIndex - 1));
@@ -65,12 +104,28 @@ const ProductCatalog = ({ product }) => {
                         <span className='hidden sm:block'>▼</span>
                     </button>
                 </div>
-                <div className={`w-full border ${isDarkMode ? ' border-[#2f2f2f] ' : ' border-[#dcdada] '} rounded-xl overflow-hidden`}>
+                <div className={`w-full relative border ${isDarkMode ? ' border-[#2f2f2f] ' : ' border-[#dcdada] '} rounded-xl overflow-hidden`}>
                     <LazyImage
                         src={imgs[currentIndex]}
                         alt="Main Image"
                         className="h-[350px] sm:h-[500px] object-contain border-none"
                     />
+                    {/* Favorite Button */}
+                    <button
+                        className={`absolute bg-red-500 cursor-pointer top-4 right-4 p-2 rounded-full shadow-md transition-colors
+                                         ${isDarkMode ? 'bg-white/80 hover:bg-white' : 'bg-white/80 hover:bg-white'}`}
+                        onClick={(e) => {
+                            e.preventDefault();
+                            handleWishlist();
+                        }}
+                        disabled={wishlistLoading} // Disable button while loading
+                    >
+                        {wishlistLoading ? (
+                            <ImSpinner2 className="w-7 h-7 text-red-500 animate-spin" />
+                        ) : (
+                            <FiHeart className={`w-7 h-7 ${isInWishlist ? 'text-red-500 fill-red-500' : 'text-red-500'}`} />
+                        )}
+                    </button>
                 </div>
             </div>
             <div className='flex justify-end items-center mt-3 sm:mt-10 w-full'>
@@ -78,17 +133,11 @@ const ProductCatalog = ({ product }) => {
                     className={`w-[50%] py-3 h-15 sm:py-4 border ${isDarkMode ? 'border-gray-300 text-gray-300' : 'border-indigo-600 text-indigo-600'} text-lg cursor-pointer flex justify-center items-center font-semibold transform `}
                     onClick={(e) => {
                         e.stopPropagation();
-                        e.preventDefault(); 
-                        if(cartItem)
+                        e.preventDefault();
+                        if (cartItem)
                             return;
                         dispatch(addToCart(product));
-                        toast.success(`${product.name} added to cart`, {
-                            position: "top-center",
-                            style: {
-                                background: isDarkMode ? "#4CAF50" : "#E6F4EA",
-                                color: isDarkMode ? "#fff" : "#333",
-                            },
-                        });
+                        toast.success(`${product.name} added to cart`);
                     }}
                 >
                     <div className='flex items-center justify-center gap-2'>
