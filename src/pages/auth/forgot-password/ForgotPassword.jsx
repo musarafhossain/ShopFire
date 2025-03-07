@@ -1,40 +1,37 @@
 import React, { useState } from "react";
 import Layout from "@/components/layout/Layout";
-import { FaEnvelope, FaLock } from "react-icons/fa";
+import { FaEnvelope } from "react-icons/fa";
 import { useTheme } from "@/context/ThemeContext";
 import Logo from "@/components/Logo";
 import { Link } from "react-router-dom";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
+import { useAuth } from "@/auth/AuthContext";
+import LoaderButton from "../../../components/buttons/LoaderButton";
 
 const ForgotPassword = () => {
     const { isDarkMode } = useTheme();
     const [email, setEmail] = useState("");
-    const [showPasswordField, setShowPasswordField] = useState(false);
-    const [newPassword, setNewPassword] = useState("");
+    const [emailSent, setEmailSent] = useState(false);
+    const { resetPassword } = useAuth();
 
-    const handleEmailSubmit = (e) => {
+    const handlePasswordReset = async (e) => {
         e.preventDefault();
         if (!email) {
-            toast.error("Please enter your email", { position: "top-center" });
+            toast.error("Please enter your email");
             return;
         }
-        // Simulate email verification
-        toast.success("Email verified! Enter your new password", { position: "top-center" });
-        setShowPasswordField(true);
-    };
 
-    const handlePasswordSubmit = (e) => {
-        e.preventDefault();
-        if (!newPassword) {
-            toast.error("Please enter a new password", { position: "top-center" });
-            return;
+        const response = await resetPassword(email);
+        if (response.success) {
+            toast.success(response.message);
+            setEmailSent(true);
+        } else {
+            toast.error(response.message);
         }
-        toast.success("Password reset successfully!", { position: "top-center" });
     };
 
     return (
         <Layout>
-            <Toaster position="top-right" reverseOrder={false} />
             <div className={`flex items-center justify-center px-2 h-[80vh] ${isDarkMode ? "bg-gray-900" : "bg-gray-200"}`}>
                 <div
                     className={`relative w-full max-w-md p-8 space-y-6 rounded-2xl shadow-xl border ${isDarkMode ? "bg-gray-800 border-gray-700" : "bg-white border-gray-200"}`}
@@ -49,27 +46,31 @@ const ForgotPassword = () => {
                         <Logo className='mx-auto' />
                         <p className={`text-sm ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}>Reset your password</p>
                     </div>
-                    {!showPasswordField ? (
-                        <form onSubmit={handleEmailSubmit} className="space-y-4">
+
+                    {emailSent ? (
+                        <p className="text-center text-green-500 font-semibold">
+                            A password reset link has been sent to your email. Please check your inbox.
+                        </p>
+                    ) : (
+                        <form onSubmit={handlePasswordReset} className="space-y-4">
                             <div className="relative">
                                 <FaEnvelope className={`absolute top-3 left-3 ${isDarkMode ? "text-gray-400" : "text-gray-500"}`} />
-                                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className={`w-full pl-10 pr-4 py-2 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none ${isDarkMode ? "bg-gray-700 text-white border-gray-600" : "border-gray-300 text-gray-800 border"}`} placeholder="Email Address" required />
+                                <input
+                                    type="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    className={`w-full pl-10 pr-4 py-2 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none ${isDarkMode ? "bg-gray-700 text-white border-gray-600" : "border-gray-300 text-gray-800 border"}`}
+                                    placeholder="Email Address"
+                                />
                             </div>
-                            <button type="submit" className="w-full px-4 py-2 text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transform cursor-pointer transition hover:scale-105 duration-300 font-bold">
-                                Verify Email
-                            </button>
-                        </form>
-                    ) : (
-                        <form onSubmit={handlePasswordSubmit} className="space-y-4">
-                            <div className="relative">
-                                <FaLock className={`absolute top-3 left-3 ${isDarkMode ? "text-gray-400" : "text-gray-500"}`} />
-                                <input type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} className={`w-full pl-10 pr-4 py-2 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none ${isDarkMode ? "bg-gray-700 text-white border-gray-600" : "border-gray-300 text-gray-800 border"}`} placeholder="New Password" required />
-                            </div>
-                            <button type="submit" className="w-full px-4 py-2 text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transform cursor-pointer transition hover:scale-105 duration-300 font-bold">
-                                Reset Password
-                            </button>
+                            <LoaderButton
+                                type='submit'
+                                text='Send Reset Email'
+                                className='w-full rounded-lg font-bold'
+                            />
                         </form>
                     )}
+
                     <p className={`text-sm text-center ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>
                         Remember your password? <Link to="/login" className="text-indigo-500 hover:underline">Login</Link>
                     </p>

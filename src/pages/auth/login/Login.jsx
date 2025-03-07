@@ -5,78 +5,29 @@ import { useTheme } from "@/context/ThemeContext";
 import Logo from "@/components/Logo";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
-import { useLoading } from "@/context/LoadingContext";
-import { auth } from '@/firebase/FirebaseConfig';
-import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from "react-router-dom";
 import LoaderButton from "../../../components/buttons/LoaderButton";
+import { useAuth } from "@/auth/AuthContext";
 
 const Login = () => {
     const { isDarkMode } = useTheme();
-    const { loading, setLoading } = useLoading();
+    const { login } = useAuth(); 
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         if (!email || !password) {
-            toast.error("Please fill in all fields", {
-                position: "top-center",
-                style: {
-                    background: isDarkMode ? "#333" : "#fff",
-                    color: isDarkMode ? "#fff" : "#333",
-                },
-            });
+            toast.error("Please fill in all fields");
             return;
         }
-
-        setLoading(true);
-
-        try {
-            const result = await signInWithEmailAndPassword(auth, email, password);
-            toast.success("Login successful!", {
-                position: "top-center",
-                style: {
-                    background: isDarkMode ? "#4CAF50" : "#E6F4EA",
-                    color: isDarkMode ? "#fff" : "#333",
-                },
-            });
-
-            // Redirect to homepage or dashboard
-            navigate("/");
-        } catch (error) {
-            let errorMessage = "Something went wrong. Please try again.";
-
-            switch (error.code) {
-                case "auth/user-not-found":
-                    errorMessage = "No user found with this email.";
-                    break;
-                case "auth/wrong-password":
-                    errorMessage = "Incorrect password. Please try again.";
-                    break;
-                case "auth/invalid-email":
-                    errorMessage = "Invalid email address.";
-                    break;
-                case "auth/too-many-requests":
-                    errorMessage = "Too many failed attempts. Please try again later.";
-                    break;
-                case "auth/invalid-credential":
-                    errorMessage = "Invalid username or password.";
-                    break;
-                default:
-                    errorMessage = error.message;
-            }
-
-            toast.error(errorMessage, {
-                style: {
-                    background: isDarkMode ? "#333" : "#fff",
-                    color: isDarkMode ? "#fff" : "#333",
-                },
-            });
-        } finally {
-            setLoading(false);
+        const result = await login(email, password);
+        if (result.success) {
+            toast.success("Login successful!");
+            navigate("/"); 
+        } else {
+            toast.error(result.message);
         }
     };
 
