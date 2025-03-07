@@ -6,6 +6,9 @@ import {
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
     sendPasswordResetEmail,
+    updateEmail,
+    reauthenticateWithCredential,
+    EmailAuthProvider,
 } from "firebase/auth";
 import {
     collection,
@@ -13,6 +16,8 @@ import {
     where,
     getDocs,
     addDoc,
+    updateDoc,
+    doc,
     Timestamp,
 } from "firebase/firestore";
 import Loader from "@/components/Loader";
@@ -177,8 +182,35 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
+    //Update User Function
+    const updateUser = async (updatedData) => {
+        setLoading(true);
+        try {
+            if (!user || !user.uid) {
+                return { success: false, message: "User not found." };
+            }
+            const usersRef = collection(fireDB, "users");
+            const q = query(usersRef, where("uid", "==", user.uid));
+            const querySnapshot = await getDocs(q);
+            if (querySnapshot.empty) {
+                return { success: false, message: "User document not found." };
+            }
+            const userDocRef = doc(fireDB, "users", querySnapshot.docs[0].id);
+            await updateDoc(userDocRef, updatedData);
+            setUser((prevUser) => ({
+                ...prevUser,
+                ...updatedData,
+            }));
+            return { success: true, message: "Profile updated successfully." };
+        } catch (error) {
+            return { success: false, message: error.message };
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
-        <AuthContext.Provider value={{ user, setUser, login, logout, signup, resetPassword }}>
+        <AuthContext.Provider value={{ user, setUser, login, logout, signup, resetPassword, updateUser }}>
             {authLoading ? <Loader /> : children}
         </AuthContext.Provider>
     );

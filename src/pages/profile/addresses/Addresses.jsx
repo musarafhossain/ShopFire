@@ -3,133 +3,56 @@ import ProfileLayout from '@/components/pages/profile/ProfileLayout'
 import { useTheme } from "@/context/ThemeContext";
 import EditAddress from '@/components/pages/profile/addresses/EditAddress';
 import AddressCard from '@/components/pages/profile/addresses/AddressCard';
-import { useLoading } from "@/context/LoadingContext";
-import { updateDoc } from "firebase/firestore";
-import useUserDoc from "@/hooks/useUserDoc";
 import { useAuth } from "@/auth/AuthContext";
 import toast from "react-hot-toast";
 
 const Addresses = () => {
-    const { loading, setLoading } = useLoading();
-    const { userDoc } = useUserDoc();
-    const { user } = useAuth();
+    const { user, updateUser } = useAuth();
     const { isDarkMode } = useTheme();
-
     const [myaddresses, setMyAddresses] = useState(user.addresses);
-
     const [addAddress, setAddAddress] = useState(false);
     const [editAddress, setEditAddress] = useState(null);
 
-
     const addNewAddress = async (address) => {
-        setLoading(true);
         const newAddresses = [...myaddresses, address]
-        try {
-            if (userDoc) {
-                await updateDoc(userDoc, {
-                    addresses: newAddresses,
-                });
-                setMyAddresses(newAddresses);
-                toast.success("New address has been added!", {
-                    style: {
-                        background: isDarkMode ? "#4CAF50" : "#E6F4EA",
-                        color: isDarkMode ? "#fff" : "#333",
-                    },
-                });
-            } else {
-                toast.error("User not found in Firestore.", {
-                    style: {
-                        background: isDarkMode ? "#333" : "#fff",
-                        color: isDarkMode ? "#fff" : "#333",
-                    },
-                });
-            }
-        } catch (error) {
-            console.error("Error updating profile:", error);
-            toast.error("Failed to update profile.", {
-                style: {
-                    background: isDarkMode ? "#333" : "#fff",
-                    color: isDarkMode ? "#fff" : "#333",
-                },
-            });
-        } finally {
-            setLoading(false);
+        const result = await updateUser({
+            addresses: newAddresses,
+        });
+        if (result.success) {
+            toast.success("New address has been added!");
+            setMyAddresses(newAddresses);
+        } else {
+            toast.error(result.message || "Failed to add address.");
         }
         setAddAddress(false);
     };
 
     const editExistingAddress = async (updatedAddress, index) => {
-        setLoading(true);
         const updatedAddresses = myaddresses.map((addr, i) =>
             i === index ? updatedAddress : addr
         );
-        try {
-            if (userDoc) {
-                await updateDoc(userDoc, {
-                    addresses: updatedAddresses,
-                });
-                setMyAddresses(updatedAddresses);
-                toast.success("Address has been edited!", {
-                    style: {
-                        background: isDarkMode ? "#4CAF50" : "#E6F4EA",
-                        color: isDarkMode ? "#fff" : "#333",
-                    },
-                });
-            } else {
-                toast.error("User not found in Firestore.", {
-                    style: {
-                        background: isDarkMode ? "#333" : "#fff",
-                        color: isDarkMode ? "#fff" : "#333",
-                    },
-                });
-            }
-        } catch (error) {
-            console.error("Error updating profile:", error);
-            toast.error("Failed to update profile.", {
-                style: {
-                    background: isDarkMode ? "#333" : "#fff",
-                    color: isDarkMode ? "#fff" : "#333",
-                },
-            });
-        } finally {
-            setLoading(false);
+        const result = await updateUser({
+            addresses: updatedAddresses,
+        });
+        if (result.success) {
+            toast.success("Address has been updated!");
+            setMyAddresses(updatedAddresses);
+        } else {
+            toast.error(result.message || "Failed to update address.");
         }
         setEditAddress(null);
     };
 
     const deleteAddress = async (index) => {
         const updatedAddresses = myaddresses.filter((_, i) => i !== index);
-        setLoading(true);
-        try {
-            if (userDoc) {
-                await updateDoc(userDoc, {
-                    addresses: updatedAddresses,
-                });
-                setMyAddresses(updatedAddresses);
-                toast.success("Address has been deleted!", {
-                    style: {
-                        background: isDarkMode ? "#4CAF50" : "#E6F4EA",
-                        color: isDarkMode ? "#fff" : "#333",
-                    },
-                });
-            } else {
-                toast.error("User not found in Firestore.", {
-                    style: {
-                        background: isDarkMode ? "#333" : "#fff",
-                        color: isDarkMode ? "#fff" : "#333",
-                    },
-                });
-            }
-        } catch (error) {
-            console.error("Error updating profile:", error);
-            toast.error("Failed to update profile.", {
-                style: {
-                    background: isDarkMode ? "#333" : "#fff",
-                    color: isDarkMode ? "#fff" : "#333",
-                },
-            });
-        } finally {
-            setLoading(false);
+        const result = await updateUser({
+            addresses: updatedAddresses,
+        });
+        if (result.success) {
+            toast.success("Address has been deleted!");
+            setMyAddresses(updatedAddresses);
+        } else {
+            toast.error(result.message || "Failed to delete address.");
         }
     };
 
@@ -160,7 +83,7 @@ const Addresses = () => {
                         <div key={index}>
                             {editAddress === address ? (
                                 <EditAddress
-                                    className={`${index === myaddresses.length - 1 ? "" : `border-b ${isDarkMode ? "border-[#2f2f2f] bg-gray-800" : "border-[#dcdada] bg-gray-100"}`} px-3 py-4 text-left shadow-inner`}
+                                    className={`${index === myaddresses.length - 1 ? "" : `border-b ${isDarkMode ? "border-[#2f2f2f] bg-gray-700" : "border-[#dcdada] bg-gray-100"}`} px-3 py-4 text-left shadow-inner`}
                                     address={address}
                                     onClose={() => setEditAddress(null)}
                                     onSubmit={(updatedAddress) => editExistingAddress(updatedAddress, index)}

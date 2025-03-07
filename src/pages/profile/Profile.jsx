@@ -1,27 +1,20 @@
 import React, { useState } from "react";
-import { useTheme } from "@/context/ThemeContext";
 import { FaEdit } from "react-icons/fa";
 import ProfileLayout from '@/components/pages/profile/ProfileLayout';
 import toast from "react-hot-toast";
 import { useAuth } from "@/auth/AuthContext";
-import { updateDoc } from "firebase/firestore";
 import LoaderButton from "@/components/buttons/LoaderButton";
-import { useLoading } from "@/context/LoadingContext";
-import useUserDoc from "@/hooks/useUserDoc";
 import InputText from "@/components/input/InputText";
 import InputRadio from "@/components/input/InputRadio";
 
 const Profile = () => {
-    const { userDoc } = useUserDoc();
-    const { loading, setLoading } = useLoading();
-    const { isDarkMode } = useTheme();
-    const { user } = useAuth();
+    const { user, updateUser } = useAuth();
     const [isEditing, setIsEditing] = useState(false);
     const [formData, setFormData] = useState({
         name: user.name,
         gender: user.gender,
         email: user.email,
-        phone: user.phoneNumber,
+        phoneNumber: user.phoneNumber,
     });
 
     const handleEditToggle = () => {
@@ -33,45 +26,21 @@ const Profile = () => {
         setFormData({ ...formData, [name]: value });
     };
 
-    // 🔥 Function to Update Firestore Document
     const handleSave = async () => {
-        setLoading(true);
-        try {
-            if (userDoc) {
-                await updateDoc(userDoc, {
-                    name: formData.name,
-                    gender: formData.gender,
-                    email: formData.email,
-                    phoneNumber: formData.phone,
-                });
-                toast.success("Profile has been updated!", {
-                    style: {
-                        background: isDarkMode ? "#4CAF50" : "#E6F4EA",
-                        color: isDarkMode ? "#fff" : "#333",
-                    },
-                });
-                setIsEditing(false);
-            } else {
-                toast.error("User not found in Firestore.", {
-                    style: {
-                        background: isDarkMode ? "#333" : "#fff",
-                        color: isDarkMode ? "#fff" : "#333",
-                    },
-                });
-            }
-        } catch (error) {
-            console.error("Error updating profile:", error);
-            toast.error("Failed to update profile.", {
-                style: {
-                    background: isDarkMode ? "#333" : "#fff",
-                    color: isDarkMode ? "#fff" : "#333",
-                },
-            });
-        } finally {
-            setLoading(false);
+        const updatedData = {
+            name: formData.name,
+            gender: formData.gender,
+            phoneNumber: formData.phoneNumber,
+        };
+        const result = await updateUser(updatedData);
+        if (result.success) {
+            toast.success("Profile has been updated!");
+            setIsEditing(false);
+        } else {
+            toast.error(result.message || "Failed to update profile.");
         }
     };
-
+    
     return (
         <ProfileLayout pageTitle="Profile Information">
             {/* Personal Information Header */}
@@ -129,10 +98,10 @@ const Profile = () => {
                 <InputText
                     label="Mobile Number"
                     type="tel"
-                    name="phone"
+                    name="phoneNumber"
                     id="phone"
                     autoComplete="phone"
-                    value={formData.phone}
+                    value={formData.phoneNumber}
                     onChange={handleChange}
                     disabled={!isEditing}
                     className='max-w-sm'
