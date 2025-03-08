@@ -2,8 +2,8 @@ import React from 'react';
 import ProfileLayout from '@/components/pages/profile/ProfileLayout';
 import { useTheme } from "@/context/ThemeContext";
 import { useAuth } from "@/auth/AuthContext";
-import ProductCard from '@/components/cards/ProductCard';
 import useProducts from '@/hooks/useProducts';
+import AspectProductCard from '../../../components/cards/AspectProductCard';
 
 const Wishlist = () => {
     const { user } = useAuth();
@@ -15,10 +15,10 @@ const Wishlist = () => {
 
     return (
         <ProfileLayout pageTitle="Wishlist">
-            <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                 {wishlistProducts.length > 0 ? (
                     wishlistProducts.map(product => (
-                        <ProductCard key={product.id} product={product} />
+                        <AspectProductCard key={product.id} product={product} />
                     ))
                 ) : (
                     <p className="text-center text-gray-500">Your wishlist is empty.</p>
