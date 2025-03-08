@@ -1,21 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import { FiTrash } from "react-icons/fi";
 import { useTheme } from "../../context/ThemeContext";
 import LazyImage from "../LazyImage";
 import { useAuth } from "@/auth/AuthContext";
 import Rating from "../Rating";
 import toast from "react-hot-toast";
+import { ImSpinner2 } from "react-icons/im";
 
-const AspectProductCard = ({ product }) => {
+const WishlistProductCard = ({ product }) => {
     const { isDarkMode } = useTheme();
     const { user, updateUser } = useAuth();
+    const [wishlistLoading, setWishlistLoading] = useState(false);
 
     const handleRemoveFromWishlist = async () => {
         if (!user) {
             toast.error("You need to log in to manage your wishlist.");
             return;
         }
-
+        setWishlistLoading(true);
         try {
             const updatedWishlist = user.wishlist.filter((id) => id !== product.id);
             const res = await updateUser({ wishlist: updatedWishlist });
@@ -28,6 +30,8 @@ const AspectProductCard = ({ product }) => {
         } catch (error) {
             console.error("Error removing from wishlist:", error);
             toast.error("Failed to remove item.");
+        } finally {
+            setWishlistLoading(false);
         }
     };
 
@@ -53,7 +57,11 @@ const AspectProductCard = ({ product }) => {
                     className="absolute top-2 left-2 cursor-pointer bg-red-500/50 p-2 rounded-full text-white shadow-md hover:bg-red-600 transition-all"
                     onClick={handleRemoveFromWishlist}
                 >
-                    <FiTrash className="w-4 h-4" />
+                    {wishlistLoading ? (
+                        <ImSpinner2 className="w-5 h-5 text-white animate-spin" />
+                    ) : (
+                        <FiTrash className="w-4 h-4" />
+                    )}
                 </button>
             </div>
 
@@ -92,4 +100,4 @@ const AspectProductCard = ({ product }) => {
     );
 };
 
-export default AspectProductCard;
+export default WishlistProductCard;
