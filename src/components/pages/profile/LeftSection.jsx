@@ -181,7 +181,7 @@ const LeftSection = ({ pageTitle }) => {
         </div>
         {/* Logout */}
         <button
-          className={`uppercase cursor-pointer flex items-center justify-between p-4 w-full border-b ${isDarkMode ? ' border-[#2f2f2f] ' : ' border-[#dcdada] '} text-gray-400 hover:text-red-600 duration-300`}
+          className={`uppercase cursor-pointer flex items-center justify-between p-4 w-full ${isDarkMode ? ' border-[#2f2f2f] ' : ' border-[#dcdada] '} text-gray-400 hover:text-red-600 duration-300`}
           onClick={logout}
         >
           <div className='flex items-center gap-4 '>

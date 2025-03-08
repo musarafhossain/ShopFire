@@ -54,7 +54,7 @@ const WishlistProductCard = ({ product }) => {
 
                 {/* Remove from Wishlist Button */}
                 <button
-                    className="absolute top-2 right-2 cursor-pointer bg-red-500/50 p-2 rounded-full text-white shadow-md hover:bg-red-600 transition-all"
+                    className="absolute top-2 left-2 cursor-pointer bg-red-500/50 p-2 rounded-full text-white shadow-md hover:bg-red-600 transition-all"
                     onClick={handleRemoveFromWishlist}
                 >
                     {wishlistLoading ? (
@@ -81,7 +81,7 @@ const WishlistProductCard = ({ product }) => {
                 {/* Rating & Discount */}
                 <div className="flex items-center justify-between flex-wrap">
                     <Rating rating={product.rating} />
-                    <span className="text-sm font-medium text-red-500">
+                    <span className="text-sm font-medium text-red-500 hidden md:block">
                         {Math.round(100 - (product.price / product.mrp) * 100)}% OFF
                     </span>
                 </div>
