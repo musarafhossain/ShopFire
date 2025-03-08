@@ -44,7 +44,7 @@ const WishlistProductCard = ({ product }) => {
                 hover:shadow-xl`}
         >
             {/* Image Section */}
-            <div className="relative max-h-30 md:max-h-full min-w-[25%] sm:w-40 md:w-full sm:h-auto overflow-hidden md:rounded-t-xl sm:rounded-l-xl sm:rounded-tr-none md:rounded-xl">
+            <div className="relative max-h-30 md:max-h-full min-w-[35%] sm:w-40 md:w-full sm:h-auto overflow-hidden md:rounded-t-xl sm:rounded-l-xl sm:rounded-tr-none md:rounded-xl">
                 <LazyImage
                     src={product.images[0]}
                     alt={product.name}
@@ -54,7 +54,7 @@ const WishlistProductCard = ({ product }) => {
 
                 {/* Remove from Wishlist Button */}
                 <button
-                    className="absolute top-2 left-2 cursor-pointer bg-red-500/50 p-2 rounded-full text-white shadow-md hover:bg-red-600 transition-all"
+                    className="absolute top-2 right-2 cursor-pointer bg-red-500/50 p-2 rounded-full text-white shadow-md hover:bg-red-600 transition-all"
                     onClick={handleRemoveFromWishlist}
                 >
                     {wishlistLoading ? (
@@ -66,9 +66,9 @@ const WishlistProductCard = ({ product }) => {
             </div>
 
             {/* Product Details */}
-            <div className="px-4 py-1 md:py-4 flex flex-col min-w-[75%] md:w-full justify-between">
+            <div className="px-4 py-1 md:py-4 flex flex-col min-w-[65%] md:w-full justify-between">
                 {/* Product Name */}
-                <h2 className={`text-lg font-thin truncate ${isDarkMode ? "text-gray-100" : "text-gray-800"}`}>
+                <h2 className={`text-md font-thin truncate ${isDarkMode ? "text-gray-100" : "text-gray-800"}`}>
                     {product.name}
                 </h2>
 
