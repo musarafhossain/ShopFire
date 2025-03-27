@@ -1,7 +1,8 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { useTheme } from '../../../../context/ThemeContext';
 import Lottie from 'lottie-react';
 import animationData from '../../../../assets/Lottie/home/Shop_Lottie.json';
+import { Link } from 'react-router-dom';
 
 const Hero = () => {
   const { isDarkMode } = useTheme();
@@ -48,9 +49,9 @@ const Hero = () => {
             </p>
 
             <div className="group relative inline-block">
-              <a
+              <Link
                 ref={buttonRef}
-                href="#"
+                to='/all-products'
                 className={`inline-flex items-center justify-center px-8 py-4 text-lg font-semibold transition-all duration-200 rounded-lg hover:shadow-xl hover:scale-105 ${isDarkMode
                     ? 'text-white bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600'
                     : 'text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700'
@@ -70,7 +71,7 @@ const Hero = () => {
                     d="M17 8l4 4m0 0l-4 4m4-4H3"
                   />
                 </svg>
-              </a>
+              </Link>
               <div className={`absolute inset-0 blur-2xl -z-10 group-hover:opacity-40 transition-opacity ${isDarkMode ? 'bg-white/10' : 'bg-blue-400/20'
                 }`} />
             </div>
