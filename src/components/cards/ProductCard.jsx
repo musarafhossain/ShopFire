@@ -61,9 +61,8 @@ const ProductCard = ({ product }) => {
     };
 
     return (
-        <div className={`rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 group
-        ${isDarkMode ? 'bg-gray-700 hover:bg-gray-600' : 'bg-white hover:bg-gray-50'}
-        h-full`}>
+        <div className={`rounded-2xl min-w-[300px] max-w-[301px] overflow-hidden ${isDarkMode ? 'border-[#2f2f2f]' : 'border-[#dcdada]'} border transition-shadow duration-300 group
+        h-fit`}>
 
             {/* Image Section */}
             <div className={`relative overflow-hidden rounded-b-3xl ${isDarkMode ? 'bg-gray-600' : 'bg-white'}`}>

@@ -8,8 +8,8 @@ const Category = () => {
   const { isDarkMode } = useTheme();
   const { categories } = useCategories();
   return (
-    <div className={`${isDarkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
-      <section className={`overflow-hidden max-w-[1440px] relative py-16 ${isDarkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
+    <div className={`${isDarkMode ? 'bg-gray-800' : 'bg-gray-50'}`}>
+      <section className={`overflow-hidden max-w-[1440px] relative py-16 ${isDarkMode ? 'bg-gray-800' : 'bg-gray-50'}`}>
         {/* Heading Section */}
         <Heading heading='Categories' subheading='Discover products in popular collections' />
 

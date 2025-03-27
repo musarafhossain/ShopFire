@@ -27,7 +27,7 @@ const BestProducts = () => {
     }, [swiperRef]);
 
     return (
-        <div className={`py-12 md:py-16 px-4 sm:px-6 lg:px-8 ${isDarkMode ? 'bg-gray-800' : 'bg-gray-50'}`}>
+        <div className={`py-12 md:py-16 px-4 sm:px-6 lg:px-8 ${isDarkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
             <section className="max-w-[1440px] mx-auto overflow-hidden">
                 <Heading heading='Best Selling Products' subheading='Discover our most loved items' />
 
