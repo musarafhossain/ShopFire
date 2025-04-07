@@ -35,7 +35,7 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen, isSidebarCollapsed, setIsSid
 
             <div className="flex-1 shadow-[1px_2px_5px_rgba(0,0,0,0.3)] flex flex-col overflow-y-auto">
                 <nav className="p-4 flex-1">
-                    <ul className="space-y-2">
+                    <ul className="space-y-2 flex flex-col">
                         {navItems.map((item) => (
                             <li key={item.label}>
                                 <Link
